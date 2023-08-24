@@ -78,12 +78,6 @@ class SupplierController extends Controller
                 ],
                 "message" => "Check All Inputs"
             ],Response::HTTP_UNPROCESSABLE_ENTITY,);
-        }else{
-            return response()->json([
-                "status" => true,
-                "code" => Response::HTTP_OK,
-                "message" => "Successfully Submit"
-            ]);
         }
 
         $supplier = Supplier::create([
