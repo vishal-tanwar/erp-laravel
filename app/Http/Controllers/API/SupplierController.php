@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Supplier;
 use App\Models\SupplierContact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Http\Response;
 
 class SupplierController extends Controller
 {
@@ -34,6 +37,55 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+
+        if( $request->contacts ){
+
+            foreach( $request->contacts as $contacts ){
+                $validator = Validator::make($contacts,[
+                    "name" => "required",
+                    "designation"   => "required",
+                    "email" => "required|exists:supplier_contacts,email|email",
+                    "phone" => "required|exists:supplier_contacts,phone|min:10|max:10",
+                ]);
+
+                if($validator->fails()){
+                    return response()->json([
+                        "status" => false,
+                        "code" => Response::HTTP_UNPROCESSABLE_ENTITY,
+                        "data" => [
+                            "errors" => $validator->errors()
+                        ],
+                        "message" => "Check All Inputs"
+                    ],Response::HTTP_UNPROCESSABLE_ENTITY,);
+                }
+            }
+
+        }
+
+        $validator= Validator::make($request->all(),[
+                "firm_name" => "required|string",
+                "address" => "required|string",
+                "email" => "required|email|unique",
+                "number" => "required|unique|min:10|max:10"
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "status" => false,
+                "code" => Response::HTTP_UNPROCESSABLE_ENTITY,
+                "data" => [
+                    "errors" => $validator->errors()
+                ],
+                "message" => "Check All Inputs"
+            ],Response::HTTP_UNPROCESSABLE_ENTITY,);
+        }else{
+            return response()->json([
+                "status" => true,
+                "code" => Response::HTTP_OK,
+                "message" => "Successfully Submit"
+            ]);
+        }
+
         $supplier = Supplier::create([
             "firm_name" => $request->SupplierName,
             "address"   => $request->Address1,
