@@ -1,0 +1,112 @@
+.form-container_itemgroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+  }
+  
+  .itemgroup_form {
+    width: 450px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #deecf5;
+  }
+  
+.temgroup_label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  #itemgroup[type='text'] {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .itemgroup_btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #0d6efd;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .itemgroup_btn:hover {
+    background-color: #1c76fc;
+  }
+  
+
+/* Subitem group Css */
+
+.form-container_subitem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+  }
+  
+  .subitemgroup_form {
+    width: 450px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .subitemgroup_label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  #subitemgroup {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .subitemgroup_option {
+    padding: 8px;
+    color: black;
+  }
+  
+  .subitemgroup_btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #0d6efd;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .subitemgroup_btn:hover {
+    background-color: #1c76fc;
+  }
+  
+
+
+  .select-box-createItem{
+    color: black;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    font-size: 14px;
+  }
+
+
+  .select-box-createItem option {
+    background-color: #f2f2f2;
+    color: #333;
+    padding: 8px;
+  }

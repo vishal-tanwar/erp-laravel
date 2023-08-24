@@ -1,0 +1,208 @@
+
+/* Supplier table form staRT */
+
+form.mainSubform{
+    border: 1px solid #d8d5d5;
+    max-width: 100%;
+    /* padding: 0% 1% 1% 1%; */
+    background-color: #ffffff;
+}
+.bgcaption11 h4{
+    background: #b6c4fc;
+/* border: 1px dashed rgba(0, 0, 0, 0.65); */
+box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 3px;
+color: #000;
+font-family: Inter, sans-serif;
+font-style: normal;
+font-weight: 500;
+line-height: 1.2rem;
+padding: 12px !important;
+font-size: 1.2rem;
+}
+
+.bgcaption1w1{
+    background: #b6c4fc;
+    /* background: #2F92BE; */
+box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 3px;
+color: #000;
+/* font-family: 'Inria Serif';
+font-style: normal; */
+font-family: Inter, sans-serif;
+font-style: normal;
+font-weight: 500;
+line-height: 1.1rem;
+padding: 5px 0 5px 5px;
+font-size: 1.1rem;
+}
+
+.bgcaption12{
+    font-family: Inter, sans-serif;
+    font-style: normal;
+font-weight: 500;
+font-size: 25px;
+line-height: 18px;
+color: #141414;
+background-color: #FFFFFF;
+}
+
+.lable-des{
+    font-family: Inter, sans-serif;
+font-style: normal;
+font-weight: 600;
+color: #292828;
+font-size: 14px;
+}
+
+.lable-des-sec{
+    font-family: Inter, sans-serif;
+font-style: normal;
+font-weight: 400;
+color: #111010;
+font-size: 14px;
+}
+
+.lable-des2e {
+    font-family: Inter, sans-serif;
+font-style: normal;
+font-weight: 400;
+color: #0e0d0d;
+font-size: 14px;
+
+}
+
+
+.forPadmar{
+    /* padding: 0px 0px 0px 4px; */
+    margin-top: 2px;
+}
+
+.forPadmarInn{
+    padding: 0px 0px 0px 8px;
+}
+
+.forborder12{
+    border: 1px solid #dfdbdb;
+    /* margin: 0 0 0 0px; */
+    margin: auto;
+}
+
+input.inputInnClr{
+    background-color: #F5F5F5;
+    border: 1px solid #D9D9D9;
+    padding: 1px;
+    border-radius: 4px;
+}
+
+.thtable-des{
+    font-family: Inter, sans-serif;
+font-style: normal;
+font-weight: 700;
+text-align: center;
+font-size: 14px;
+}
+
+/* .county-code-des{
+    position: absolute;
+width: 120px;
+height: 8px;
+left: 300px;
+top: 220px;
+
+font-family: Inter, sans-serif;
+font-style: normal;
+font-weight: 600;
+font-size: 15px;
+line-height: 8px;
+
+color: #000000;
+}
+
+.county-code1-des{
+    position: absolute;
+width: 120px;
+height: 8px;
+left: 660px;
+top: 220px;
+
+font-family: Inter, sans-serif;
+font-style: normal;
+font-weight: 600;
+font-size: 15px;
+line-height: 8px;
+
+color: #000000;
+}
+
+.county-code2-des{
+    position: absolute;
+width: 120px;
+height: 8px;
+left: 1010px;
+top: 220px;
+
+font-family: Inter, sans-serif;
+font-style: normal;
+font-weight: 600;
+font-size: 15px;
+line-height: 8px;
+
+color: #000000;
+} */
+
+.part-tel-des{
+    padding: 0px 0px 0px 8px;
+}
+
+.new-des2er{
+    font-family: Inter, sans-serif;
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+color: #111111;
+}
+
+.forMarpadd2-des12{
+    padding-left: 6px;
+}
+.btnkeYSub1{
+    background-color: #6366F1;
+    border: 1px solid #3639e4;
+    color: #FFFFFF;
+    font-family: Inter, sans-serif;
+font-style: normal;
+}
+
+.btnkeYSub1:hover{
+    background-color: #1f22da;
+    border: 1px solid #0a0d97;
+    color: #FFFFFF;
+    font-family: Inter, sans-serif;
+font-style: normal;
+}
+
+::placeholder {
+    color: rgb(209, 205, 205);
+    opacity: 1; 
+    font-family: Inter, sans-serif;
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+padding-left: 5px;
+  }
+
+   .select-box {
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: sans-serif; 
+ }
+
+  .select-box option {
+    font-family: sans-serif;
+    padding: 5px;
+  }
