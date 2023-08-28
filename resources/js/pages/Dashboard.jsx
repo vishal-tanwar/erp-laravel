@@ -43,7 +43,6 @@ function Dashboard() {
                     <span className="hidden xs:block ml-2">Add view</span>
                 </button>                
               </div>
-              
             </div>
 
             {/* Cards */}

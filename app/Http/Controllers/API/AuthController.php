@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -32,10 +33,9 @@ class AuthController extends Controller
 
         $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        $request->merge([
-            $type => $login,
-            "password" => $request->password
-        ]);
+        if($type == "email" ){
+            $request->merge([ "email" => Str::lower($login ) ] );
+        }
 
         $credentials = $request->only($type, 'password');
 
@@ -50,7 +50,9 @@ class AuthController extends Controller
                 "success" => false,
                 "code" => Response::HTTP_UNAUTHORIZED,
                 "message" => $validator->messages()->get($type),
-                "data" => []
+                "data" => [
+                    $request->all()
+                ]
             ], Response::HTTP_UNAUTHORIZED);
         }
 
@@ -60,7 +62,7 @@ class AuthController extends Controller
             return response()->json([
                 "success" => false,
                 "code" => Response::HTTP_UNAUTHORIZED,
-                "message" => "Invalid Username/Email or Password!",
+                "message" => "Invalid Password!",
                 "data"  => []
             ], Response::HTTP_UNAUTHORIZED);
         }
@@ -83,6 +85,10 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        if ($request->email) {
+            $request->merge(["email" => Str::lower($request->email)]);
+        }
+
         $request->validate([
             'firstname'     => 'required|string|max:255',
             'lastname'      => 'string|max:255',

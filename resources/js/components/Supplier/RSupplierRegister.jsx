@@ -11,20 +11,20 @@ export default function RSupplierRegister() {
     const navigate = useNavigate();
 
 
-useEffect(() => {
-    var requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-      };
+// useEffect(() => {
+//     var requestOptions = {
+//         method: 'GET',
+//         redirect: 'follow'
+//       };
       
-      fetch("http://localhost:5123/api/Supplier", requestOptions)
-        .then(response => response.json())
-        .then((result) => {
-            setData(result);
-            console.log(result);
-        })
-        .catch(error => console.log('error', error));
-}, [])
+//       fetch("http://localhost:5123/api/Supplier", requestOptions)
+//         .then(response => response.json())
+//         .then((result) => {
+//             setData(result);
+//             console.log(result);
+//         })
+//         .catch(error => console.log('error', error));
+// }, [])
 
 
 const _apicallupdate = (supplierId) =>{
