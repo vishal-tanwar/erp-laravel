@@ -12,13 +12,16 @@ import { ToastContainer, toast } from 'react-toastify';
 // Logo
 import Logo from '../images/Logo.png'
 import axios from 'axios';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
     const navigate = useNavigate();
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const [isPasswordHidden, setPasswordHidden] = useState( true );
 
-    const _apicallupdate = () => {
+    const _apicallupdate = (e) => {
+        e.preventDefault();
         if (!username || !password) {
             toast.error('Please fill in all the fields');
             return;
@@ -101,12 +104,11 @@ const Login = () => {
                 </div>
                 <div className="login-form-right">
                     {/* Right side with login inputs */}
-                    <form className='login_form'>
+                    <form className='login_form' onSubmit={ e => _apicallupdate(e)}>
                         <div>
                             <img src={Logo} alt="Logo" className='logo' />
                         </div>
                         <div className='fields'>
-
 
                             <label htmlFor="loginID" className='login_lable'>Username/Email:</label>
 
@@ -121,21 +123,24 @@ const Login = () => {
 
                             <label htmlFor="password" className='login_lable'>Password:</label>
 
-                            <input
-                                type="password"
-                                className='input'
-                                id="password"
-                                placeholder='Password'
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
+                            <div className='password-field'>
+                                <input
+                                    type={isPasswordHidden? "password": "text"}
+                                    className='input'
+                                    id="password"
+                                    placeholder='Password'
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                {isPasswordHidden ? <FaRegEye onClick={() => setPasswordHidden(false)} /> : <FaRegEyeSlash onClick={() => setPasswordHidden(true)} />}
+                            </div>
 
                             {(!username || !password) && (
                                 <p className="validation-error">Please enter both login ID and password</p>
                             )}
 
                             <div>
-                                <button type="button" className='sign_in' onClick={() => _apicallupdate()}>Sign in</button>
+                                <button type="submit" className='sign_in'>Sign in</button>
                             </div>
                         </div>
                     </form>

@@ -26,7 +26,7 @@
 .gst_heading {
     word-spacing: 10px;
     font-family: 'Poppins';
-    
+
 
 }
 
@@ -173,6 +173,19 @@ input {
 .input-container input:valid+label {
     transform: translateY(-100%);
 }
+
+.password-field {
+    position: relative;
+    
+    svg {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+}
+
 
 /* Responsive styles */
 @media screen and (min-width: 768px) {
