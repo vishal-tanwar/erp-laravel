@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default function AddSupplierIn() {
 
@@ -128,6 +129,33 @@ export default function AddSupplierIn() {
 
         axios.post('/supplier', raw ).then( res => {
             console.log(res);
+        }).catch( res => {
+             
+             let errors = Object.entries( res.response.data.data.errors ).map(el => el[1][0]);
+                
+             let lis = '';
+             errors.forEach( errorText => {
+                lis += `<li class="text-danger mb-1">${errorText}</li>`;
+             } );
+
+             Swal.fire({
+                title: "Error",
+                titleText: "Fill the follwing errors",
+                icon: "error",
+                toast:true,
+                position: 'top-right',
+                showConfirmButton: false,
+                customClass:{
+                    popup: "colored-toast",
+                    timerProgressBar: "bg-danger",
+                    icon: "text-danger"
+                    
+                },
+                timer: 5000,
+                timerProgressBar: true,
+                html: `<ul>${lis}</ul>`
+             })
+
         })
 
         // fetch("http://localhost:5123/api/supplier", requestOptions)

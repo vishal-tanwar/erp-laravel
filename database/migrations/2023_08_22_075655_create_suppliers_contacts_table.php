@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string("designation", 155);
             $table->string("email", 155)->unique();
             $table->string("phone", 155)->unique();
-            $table->timestamps();
         });
     }
 

@@ -25,13 +25,13 @@ return new class extends Migration
             $table->string("country_code");
             $table->string("number");
             $table->string("website")->nullable();
-            $table->string("company_nature");
-            $table->string("business_nature");
-            $table->string("is_iso_resgitered");
-            $table->string("related_working");
+            $table->string("company_nature")->nullable();
+            $table->string("business_nature")->nullable();
+            $table->string("is_iso_resgitered")->nullable();
+            $table->string("related_working")->nullable();
             $table->string("company_size");
             $table->string("established_year");
-            $table->string("investment_value");
+            $table->string("investment_value")->nullable();
             $table->string("registration_number");
             $table->dateTime("registration_date");
             $table->string("gst_number");

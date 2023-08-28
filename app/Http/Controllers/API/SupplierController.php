@@ -21,6 +21,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
+     
         
     }
 
@@ -51,33 +52,33 @@ class SupplierController extends Controller
                 if($validator->fails()){
                     return response()->json([
                         "status" => false,
-                        "code" => Response::HTTP_UNPROCESSABLE_ENTITY,
+                        "code" => Response::HTTP_BAD_REQUEST,
                         "data" => [
                             "errors" => $validator->errors()
                         ],
                         "message" => "Check All Inputs"
-                    ],Response::HTTP_UNPROCESSABLE_ENTITY,);
+                    ],Response::HTTP_BAD_REQUEST,);
                 }
             }
 
         }
 
         $validator= Validator::make($request->all(),[
-                "firm_name" => "required|string",
-                "address" => "required|string",
-                "email" => "required|email|unique",
-                "number" => "required|unique|min:10|max:10"
+                "SupplierName" => "required|string",
+                "Address1" => "required|string",
+                "Email" => "required|email",
+                "Mobile" => "required|min:10|max:10"
         ]);
 
         if($validator->fails()){
             return response()->json([
                 "status" => false,
-                "code" => Response::HTTP_UNPROCESSABLE_ENTITY,
+                "code" => Response::HTTP_BAD_REQUEST,
                 "data" => [
                     "errors" => $validator->errors()
                 ],
                 "message" => "Check All Inputs"
-            ],Response::HTTP_UNPROCESSABLE_ENTITY,);
+            ],Response::HTTP_BAD_REQUEST,);
         }
 
         $supplier = Supplier::create([
