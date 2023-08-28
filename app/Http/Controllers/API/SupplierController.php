@@ -67,7 +67,25 @@ class SupplierController extends Controller
                 "SupplierName" => "required|string",
                 "Address1" => "required|string",
                 "Email" => "required|email",
-                "Mobile" => "required|min:10|max:10"
+                "Mobile" => "required|min:10|max:10",
+                "STDCode" =>"required",
+                "Phone" =>"required|min:10|max:10",
+                "Fax" => "required|string",
+                "Website" => "nullable|string",
+                "NatureOfCompany"=>"nullable|string",     
+                "NatureOfBusiness"=>"nullable|string",     
+                "IsCertified"=>"nullable|string",     
+                "RelativeWorkingWithUs"=>"nullable|string",     
+                "SizeOfCompany"=>"required|string",     
+                "YearOfEstablishment"=>"required|string",     
+                "InvestmentValue"=>"nullable|string",     
+                "RegistrationNo"=>"required|string",     
+                "RegistrationDate"=>"required|string",     
+                "GSTRegistrationNo"=>"required|string",     
+                "GSTRegistrationDate"=>"required|string",     
+                "PANNo"=>"required|string",     
+                "PANRegistrationDate"=>"required|string",     
+                "ExpectedDateOfCertificateRecieve"=>"nullable|string",     
         ]);
 
         if($validator->fails()){
@@ -93,22 +111,22 @@ class SupplierController extends Controller
             "fax_number" => $request->Fax,
             "country_code" => "+91",
             "number" => $request->Mobile,
-            "website" => $request->Website,
-            "company_nature" => $request->NatureOfCompany,
-            "business_nature" => $request->NatureOfBusiness,
-            "is_iso_resgitered" => $request->IsCertified ? "yes" : "no" ,
-            "related_working"   => $request->RelativeWorkingWithUs,
+            "website" => $request->Website, // null
+            "company_nature" => $request->NatureOfCompany, //null
+            "business_nature" => $request->NatureOfBusiness, //null
+            "is_iso_resgitered" => $request->IsCertified ? "yes" : "no" , //null
+            "related_working"   => $request->RelativeWorkingWithUs, //null
             "company_size"  => $request->SizeOfCompany,
             "established_year"  => $request->YearOfEstablishment,
-            "investment_value"  => $request->InvestmentValue,
+            "investment_value"  => $request->InvestmentValue,  //null
             "registration_number"   => $request->RegistrationNo,
             "registration_date" => $request->RegistrationDate,
             "gst_number"    => $request->GSTRegistrationNo,
             "gst_reg_date"  => $request->GSTRegistrationDate,
             "pan"   => $request->PANNo,
             "pan_reg_date"  => $request->PANRegistrationDate,
-            "receipt_date"  => $request->ExpectedDateOfCertificateRecieve,
-            "have_certification_copy" => 'no' 
+            "receipt_date"  => $request->ExpectedDateOfCertificateRecieve,  //null
+            "have_certification_copy" => 'no'  //null
         ]);
 
 
