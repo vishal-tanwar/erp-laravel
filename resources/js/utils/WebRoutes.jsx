@@ -24,15 +24,14 @@ export function route(path) {
 
 
 route.get = function( name ){
-    let routePath;
-    Endpoints.forEach( route => {
-        if( typeof route.name !== "undefined" && route.name == name ){
-            routePath = route.path;
-            return;
-        }
-    });
-
-    return routePath;
+    let searched = Endpoints.find( route => route.name == name ) ;
+    if (typeof searched == "undefined" ){
+        throw new Error(`Route ${name} is not defined. check route name or define it first`);
+    }
+    else{
+        return searched.path;
+    }
+        
 }
 
 route.make = function( route={} ){
@@ -47,7 +46,7 @@ export const Endpoints = [
         path: route("/dashboard"),
         component: Dashboard,
         exact: true,
-        name: "dashbaord"
+        name: "dashboard"
     },
     {
         path: route("/supplier/registration"),
