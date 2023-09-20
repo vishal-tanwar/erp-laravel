@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import NavLink from '../components/NavLink';
 import {route} from '../utils/WebRoutes';
 import { MdDashboard } from 'react-icons/md';
+import IconSupplier from '../Icons/IconSupplier';
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
  
@@ -57,12 +58,20 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
         {/* Links */}
         <div className="space-y-8">
           {/* Pages group */}
-          <ul>
+          <ul className='navbar w-100'>
             <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0`}>
               <NavLink to={route.get('dashboard')} className='text-slate-400 hover:text-slate-200' >
                 <MdDashboard />
                 <span className="text-lg font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                   Dashboard
+                </span></NavLink>
+            </li>
+
+            <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0`}>
+              <NavLink to={route.get('supplier')} className='text-slate-400 hover:text-slate-200' >
+                <IconSupplier />
+                <span className="text-lg font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                  Supplier
                 </span></NavLink>
             </li>
           </ul>
