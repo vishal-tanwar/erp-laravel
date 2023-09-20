@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps: 
-      - uses: action/checkout@v3
+      - uses: actions/checkout@v3
       - name: Sync and merge upstream repository with your current repository
         # You may pin to the exact commit or the version.
         # uses: dabreadman/sync-upstream-repo@fc5fe9952946b1daaafd9abd7fcd7e260b81ddbe
