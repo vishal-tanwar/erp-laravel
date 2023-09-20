@@ -8,7 +8,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-const Layout = ( {title, children, icon} ) => {
+const Layout = ({ title, children, icon, hideBanner } ) => {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const navigate = useNavigate();
@@ -30,8 +30,8 @@ const Layout = ( {title, children, icon} ) => {
                         timerProgressBar: true,
                     }).then( result => {
                         if(result.isDismissed){
-                            sessionStorage.removeItem("user");
-                            sessionStorage.removeItem("X-Auth-Token");
+                            localStorage.removeItem("user");
+                            localStorage.removeItem("X-Auth-Token");
 
                             setTimeout(() => {
                                 navigate('/')
@@ -56,10 +56,10 @@ const Layout = ( {title, children, icon} ) => {
                 <main>
 
                     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-                        <WelcomeBanner />
+                        {hideBanner ??<WelcomeBanner />}
 
                         <Container fluid>
-                            <H1 className="mb-4" element="h1" icon={icon}>{title}</H1>
+                            {title?<H1 className="mb-4" element="h1" icon={icon}>{title}</H1>: ''}
 
                             {children}
                         </Container>

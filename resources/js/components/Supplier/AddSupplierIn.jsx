@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { route } from '../../utils/WebRoutes';
 
 export default function AddSupplierIn() {
 
@@ -128,7 +129,7 @@ export default function AddSupplierIn() {
         };
 
         axios.post('/supplier', raw ).then( res => {
-            console.log(res);
+            navigate(route.get('supplier'));
         }).catch( res => {
              
              let errors = Object.entries( res.response.data.data.errors ).map(el => el[1][0]);
@@ -155,25 +156,7 @@ export default function AddSupplierIn() {
                 timerProgressBar: true,
                 html: `<ul>${lis}</ul>`
              })
-
-        })
-
-        // fetch("http://localhost:5123/api/supplier", requestOptions)
-        //     .then(response => response.text())
-        //     .then((res) => {
-        //         console.log(res);
-        //         if (res === 1 || "1") {
-        //             toast.success('Supplier Registred Successfully');
-
-        //             setTimeout(() => navigate('/supplier/registration'), 2000);
-
-        //         }
-        //         else {
-        //             toast.error('Supplier Registred failed')
-        //         }
-
-        //     })
-        //     .catch(error => console.log('error', error));
+        });
     }
 
     const handleSubmit = (e) => {

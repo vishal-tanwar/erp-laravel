@@ -3,6 +3,7 @@ import '../Dummy Pages/Dummy1.css';
 import logoleft from '../../images/logoERP.jpeg';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import axios from "axios";
 
 
 export default function RSupplierRegister() {
@@ -11,82 +12,19 @@ export default function RSupplierRegister() {
     const navigate = useNavigate();
 
 
-// useEffect(() => {
-//     var requestOptions = {
-//         method: 'GET',
-//         redirect: 'follow'
-//       };
-      
-//       fetch("http://localhost:5123/api/Supplier", requestOptions)
-//         .then(response => response.json())
-//         .then((result) => {
-//             setData(result);
-//             console.log(result);
-//         })
-//         .catch(error => console.log('error', error));
-// }, [])
+useEffect(() => {
+
+    axios.get("/supplier").then(res => {
+        setData(res.data.data.supplier);
+    })
+}, [])
 
 
-const _apicallupdate = (supplierId) =>{
-    var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-confirm("Are you want to delete this supplier");
-
-var raw = JSON.stringify({
-    "supplierId": 0,
-    "supplierName": "string",
-    "address1": "string",
-    "address2": "string",
-    "email": "string",
-    "fax": "string",
-    "stdCode": "string",
-    "phone": "string",
-    "mobile": "string",
-    "website": "string",
-    "natureOfBusiness": "string",
-    "natureOfCompany": "string",
-    "yearOfEstablishment": "string",
-    "investmentValue": 0,
-    "sizeOfCompany": 0,
-    "registrationNo": "string",
-    "registrationDate": "string",
-    "gstRegistrationNo": "string",
-    "gstRegistrationDate": "string",
-    "panNo": "string",
-    "panRegistrationDate": "string",
-    "isCertified": true,
-    "certificateCopy": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "expectedDateOfCertificateRecieve": "string",
-    "totalNoOfEmployee": 0,
-    "relativeWorkingWithUs": "string",
-    "isActive": true
-  });
-var requestOptions = {
-method: 'DELETE',
-redirect: 'follow',
-headers: {
-  'Accept': '*/*'
-},
-body: raw,
-};
-
-fetch(`http://localhost:5123/api/Supplier/DelteSupplier?id=${supplierId}`, requestOptions)
-.then(response => response.text())
-.then((res)=>{
-console.log(res); 
-if(res === 1 || "1"){
-    toast.success('Deleted Successfully');
- 
-        setTimeout(() => navigate('/supplier/registration'), 2000);
- 
-    
- }
- else{
-    toast.error('deleted failed')
- }
-
-})
-.catch(error => console.log('error', error));
+const _apicallDelete = (supplierId, index) =>{
+    axios.delete(`/supplier/${supplierId}`).then( res => {
+        console.log(res);
+        setData(data.filter((v, i) => i !== index));
+    })
   }
   
 
@@ -138,19 +76,19 @@ if(res === 1 || "1"){
                         {
                             data.map((Item,i) => {
                                 return(
-                                    <tr>
+                                    <tr key={`key-${i}`}>
                                         <td>{i+1}</td>
-                                        <td>{Item.supplierName}</td>
-                                        <td>{Item.address1}</td>
+                                        <td>{Item.firm_name}</td>
+                                        <td>{Item.address}</td>
                                         <td>{Item.email}</td>
-                                        <td>{Item.mobile}</td>
-                                        <td>{Item.gstRegistrationNo}</td>
-                                        <td>{Item.panNo}</td>
-                                        <td>{Item.natureOfBusiness}</td>
-                                        <td>{Item.natureOfCompany}</td>
-                                        <td>{Item.registrationDate}</td>
+                                        <td>{Item.number}</td>
+                                        <td>{Item.gst_number}</td>
+                                        <td>{Item.pan}</td>
+                                        <td>{Item.business_nature}</td>
+                                        <td>{Item.company_nature}</td>
+                                        <td>{Item.registration_date}</td>
                                         <td><button type="button" className="btn btn-success bg-success" onClick={() => {navigate('/supplier/editSupplier',{state:Item})}}>Edit</button></td>
-                                        <td><button type="button" className="btn btn-danger bg-danger" onClick={() => _apicallupdate(Item.supplierId)}>Delete</button></td>
+                                        <td><button type="button" className="btn btn-danger bg-danger" onClick={() => _apicallDelete(Item.id, i)}>Delete</button></td>
                                         </tr>
                                 )
                                 

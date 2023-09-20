@@ -3,15 +3,15 @@ import axios from 'axios';
 /**
  * Add Axios Default Headers to access
  */
-axios.defaults.baseURL = "http://localhost:8000/api/v1";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.headers.common["X-CSRF-TOKEN"] = document.head.querySelector("[name=X-CSRF]").content;
 
 /**
  * Set Authorization Bearer Token default to all request
  */
 
-if( sessionStorage.getItem("X-Auth-Token") ){
-    axios.defaults.headers.common["Authorization"] = `Bearer ${sessionStorage.getItem("X-Auth-Token")}`;
+if( localStorage.getItem("X-Auth-Token") ){
+    axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("X-Auth-Token")}`;
 }
 
 
