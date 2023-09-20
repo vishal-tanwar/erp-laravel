@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const Layout = ({ title, children, icon, hideBanner } ) => {
 
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
     const navigate = useNavigate();
 
     const initiated = useRef( false );
@@ -47,10 +47,10 @@ const Layout = ({ title, children, icon, hideBanner } ) => {
 
     return (
         <div className="flex h-screen overflow-hidden">
-            <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            <Sidebar isSidebarOpen={sidebarOpen}/>
 
             <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-                <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                <Header onClick={ () => { setSidebarOpen(!sidebarOpen) }} />
 
                 {/* Main Content */}
                 <main>
