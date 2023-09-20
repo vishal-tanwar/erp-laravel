@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 
 class SuggestPrompt extends Prompt
 {
+    use Concerns\ReducesScrollingToFitTerminal;
     use Concerns\Truncation;
     use Concerns\TypedValue;
 
@@ -14,6 +15,11 @@ class SuggestPrompt extends Prompt
      * The index of the highlighted option.
      */
     public ?int $highlighted = null;
+
+    /**
+     * The index of the first visible option.
+     */
+    public int $firstVisible = 0;
 
     /**
      * The options for the suggest prompt.
@@ -46,11 +52,13 @@ class SuggestPrompt extends Prompt
     ) {
         $this->options = $options instanceof Collection ? $options->all() : $options;
 
+        $this->reduceScrollingToFitTerminal();
+
         $this->on('key', fn ($key) => match ($key) {
-            Key::UP, Key::UP_ARROW, Key::SHIFT_TAB => $this->highlightPrevious(),
-            Key::DOWN, Key::DOWN_ARROW, Key::TAB => $this->highlightNext(),
+            Key::UP, Key::UP_ARROW, Key::SHIFT_TAB, Key::CTRL_P => $this->highlightPrevious(),
+            Key::DOWN, Key::DOWN_ARROW, Key::TAB, Key::CTRL_N => $this->highlightNext(),
             Key::ENTER => $this->selectHighlighted(),
-            Key::LEFT, Key::LEFT_ARROW, Key::RIGHT, Key::RIGHT_ARROW => $this->highlighted = null,
+            Key::LEFT, Key::LEFT_ARROW, Key::RIGHT, Key::RIGHT_ARROW, Key::CTRL_B, Key::CTRL_F, Key::HOME, Key::END, Key::CTRL_A, Key::CTRL_E => $this->highlighted = null,
             default => (function () {
                 $this->highlighted = null;
                 $this->matches = null;
@@ -99,6 +107,16 @@ class SuggestPrompt extends Prompt
     }
 
     /**
+     * The current visible matches.
+     *
+     * @return array<string>
+     */
+    public function visible(): array
+    {
+        return array_slice($this->matches(), $this->firstVisible, $this->scroll, preserve_keys: true);
+    }
+
+    /**
      * Highlight the previous entry, or wrap around to the last entry.
      */
     protected function highlightPrevious(): void
@@ -111,6 +129,12 @@ class SuggestPrompt extends Prompt
             $this->highlighted = null;
         } else {
             $this->highlighted = $this->highlighted - 1;
+        }
+
+        if ($this->highlighted < $this->firstVisible) {
+            $this->firstVisible--;
+        } elseif ($this->highlighted === count($this->matches()) - 1) {
+            $this->firstVisible = count($this->matches()) - min($this->scroll, count($this->matches()));
         }
     }
 
@@ -125,6 +149,12 @@ class SuggestPrompt extends Prompt
             $this->highlighted = 0;
         } else {
             $this->highlighted = $this->highlighted === count($this->matches()) - 1 ? null : $this->highlighted + 1;
+        }
+
+        if ($this->highlighted > $this->firstVisible + $this->scroll - 1) {
+            $this->firstVisible++;
+        } elseif ($this->highlighted === 0 || $this->highlighted === null) {
+            $this->firstVisible = 0;
         }
     }
 
