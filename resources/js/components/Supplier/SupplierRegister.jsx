@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Layout from '../../partials/Layout';
 
 
-export default function NewSupTable() {
+export default function SupplierRegister() {
 
   return (
 

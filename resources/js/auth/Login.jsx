@@ -3,18 +3,15 @@ import './styles/login.scss';
 import { useNavigate } from 'react-router-dom';
 
 import Swal from 'sweetalert2';
-
 // icons
-
 import { ToastContainer, toast } from 'react-toastify';
-
-
 // Logo
 import Logo from '../images/Logo.png'
 import axios from 'axios';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
+    
     const navigate = useNavigate();
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -32,10 +29,10 @@ const Login = () => {
         })
         .then(res => {
             let response = res.data;
-            sessionStorage.setItem("X-Auth-Token", response.data.authorization.token);
-            sessionStorage.setItem("user", JSON.stringify(response.data.user));
+            localStorage.setItem("X-Auth-Token", response.data.authorization.token);
+            localStorage.setItem("user", JSON.stringify(response.data.user));
 
-            axios.defaults.headers.common["Authorization"] = `Bearer ${sessionStorage.getItem("X-Auth-Token")}`;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("X-Auth-Token")}`;
 
             Swal.fire({
                 toast: true,
@@ -67,7 +64,7 @@ const Login = () => {
         })
     };
 
-    if (sessionStorage.getItem("user")) {
+    if (localStorage.getItem("user")) {
         useEffect(() => {
             navigate('/dashboard');
         }, []);
@@ -145,6 +142,8 @@ const Login = () => {
                         </div>
                     </form>
                 </div>
+
+
                 <ToastContainer />
             </div>
 

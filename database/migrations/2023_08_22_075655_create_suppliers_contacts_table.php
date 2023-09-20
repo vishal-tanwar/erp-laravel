@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('supplier_contacts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("supplier_id")->references('id')->on("suppliers");
+            $table->foreignId("supplier_id")
+            ->references('id')
+            ->on("suppliers")
+            ->onDelete("cascade")
+            ->onUpdate("cascade");
             $table->string("name", 155);
             $table->string("designation", 155);
             $table->string("email", 155)->unique();
