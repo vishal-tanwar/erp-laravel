@@ -25,7 +25,7 @@ function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-        <Layout title="Dashboard" icon={<MdDashboard />}>
+        <Layout title="Dashboard" icon={<MdDashboard />} hideBanner>
 
             {/* Dashboard actions */}
             <div className="sm:flex sm:justify-end sm:items-center mb-8">

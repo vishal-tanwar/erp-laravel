@@ -15,7 +15,7 @@ export const NavLink = ({ Icon, title, to, className, ...props }) => {
             <span className="link_name">{title}</span>
         </Link>
             <ul className="sub-menu blank">
-                <li><Link className="link_name" href={to}>Dashboard</Link></li>
+                <li><Link className="link_name" href={to}>{title}</Link></li>
             </ul>
         </li>
     );

@@ -35,7 +35,7 @@ function Sidebar({ isSidebarOpen }) {
           </Dropdown>
 
           <Dropdown title="Item Master" Icon={<FaCartArrowDown/>}>
-              <DropdownItem title="Items List"></DropdownItem>
+              <DropdownItem title="Items List" to={route.get('items.list')}></DropdownItem>
               <DropdownItem title="Units"></DropdownItem>
               <DropdownItem title="Groups"></DropdownItem>
               <DropdownItem title="Sub Group"></DropdownItem>
