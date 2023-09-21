@@ -13,7 +13,7 @@ import ItemUnitList from "../components/Inventory/ItemMaster/ItemUnitList";
 import ReceivingVoucher from "../components/Inventory/R.M/ReceivingVoucher";
 import RMInventory from "../components/Inventory/R.M/RMInventory";
 import Customer from "../pages/Customer";
-import List from "../pages/List";
+import List from "../pages/Stores/List";
 
 export function route(path) {
 
@@ -136,10 +136,10 @@ export const Endpoints = [
     },
 
     {
-        path: route("/list"),
+        path: route("stores/list"),
         component: List,
         exact: true,
-        name: "list"
+        name: "store.list"
     },
     
 ]
