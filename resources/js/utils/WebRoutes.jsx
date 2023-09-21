@@ -68,43 +68,37 @@ export const Endpoints = [
         name: 'supplier.add'
     },
     {
-        path: route("/inventory/item_master/create_item"),
-        component: CreateItem,
-        exact: true,
-        name: "item.create"
-    },
-    {
-        path: route("inventory/item_master/item_list"),
-        component: ItemList,
-        exact: true,
-        name: "item.list"
-    },
-    {
-        path: route("inventory/item_master/createItem_list"),
+        path: route("/items/create"),
         component: CreateItemList,
         exact: true,
-        name: "item.create.list"
+        name: "items.create"
     },
     {
-        path: route("inventory/item_master/item_unit"),
+        path: route("items/list"),
+        component: CreateItem,
+        exact: true,
+        name: "items.list"
+    },
+    {
+        path: route("items/units"),
         component: ItemUnit,
         exact: true,
-        name: "item.unit"
+        name: "items.units"
     },
     {
-        path: route("inventory/item_master/add_itemUnit"),
+        path: route("items/unit/add"),
         component: ItemUnitList,
         exact: true,
-        name: "item.unit.add"
+        name: "items.unit.add"
     },
     {
-        path: route("inventory/item_master/item_group"),
+        path: route("items/groups"),
         component: ItemGroup,
         exact: true,
-        name: "item.group"
+        name: "items.groups"
     },
     {
-        path: route("inventory/item_master/add_itemGroup"),
+        path: route("items/group"),
         component: ItemGroupList,
         exact: true,
         name: "item.group.add"
@@ -113,13 +107,13 @@ export const Endpoints = [
         path: route("inventory/item_master/sub_group"),
         component: SubItemGroup,
         exact: true,
-        name: "item.subgroup"
+        name: "items.subgroup"
     },
     {
         path: route("inventory/item_master/add_itemSubGroup"),
         component: ItemSubGrpList,
         exact: true,
-        name: "item.subgroup.add"
+        name: "items.subgroup.add"
     },
     {
         path: route("/inventory/r_m/receiving_voucher"),
