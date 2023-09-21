@@ -159,7 +159,7 @@ export const Endpoints = [
         name: "store.vouchers"
     },
     {
-        path: route("/store/:name/vouchers/create/:id"),
+        path: route("/store/:name/vouchers/create"),
         component: StoreView,
         exact: true,
         name: "store.vouchers.create"
