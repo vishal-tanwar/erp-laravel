@@ -12,8 +12,8 @@ import ItemSubGrpList from "../components/Inventory/ItemMaster/ItemSubGrpList";
 import ItemUnitList from "../components/Inventory/ItemMaster/ItemUnitList";
 import ReceivingVoucher from "../components/Inventory/R.M/ReceivingVoucher";
 import RMInventory from "../components/Inventory/R.M/RMInventory";
-import RM from "../pages/RM/Index";
-import createstore from "../pages/createstore";
+import Customer from "../pages/Customer";
+import List from "../pages/List";
 
 export function route(path) {
 
@@ -129,17 +129,17 @@ export const Endpoints = [
         name: "rm.receiving.item"
     },
     {
-        path: route("/RM"),
-        component: RM,
+        path: route("/customer"),
+        component: Customer,
         exact: true,
-        name: "RM"
-    },
-    {
-        path: route("/createstore"),
-        component: createstore,
-        exact: true,
-        name: "createstore"
+        name: "customer"
     },
 
+    {
+        path: route("/list"),
+        component: List,
+        exact: true,
+        name: "list"
+    },
 
 ]

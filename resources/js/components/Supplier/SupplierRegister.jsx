@@ -5,13 +5,15 @@ import Datepicker from '../Datepicker';
 import RSupplierRegiter from './RSupplierRegister';
 import { Link } from 'react-router-dom';
 import Layout from '../../partials/Layout';
+import IconSupplier from '../../Icons/IconSupplier';
 
 
 export default function SupplierRegister() {
 
   return (
 
-    <Layout title="Suppliers">
+    <Layout title="Suppliers"  icon={<IconSupplier />} hideBanner>
+      
 
             {/* Dashboard actions */}
             <div className="sm:flex sm:justify-between sm:items-center mb-8">

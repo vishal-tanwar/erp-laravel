@@ -44,3 +44,7 @@ export const Dropdown = ({ children, Icon, title, to, className, ...props }) => 
 export const DropdownItem = ({to, title} ) => {
     return <li><Link to={to}>{title}</Link></li>
 } 
+
+export const Divider = ({ title }) => {
+    return <li className='divider'><span>{title}</span> <hr /> </li>
+}

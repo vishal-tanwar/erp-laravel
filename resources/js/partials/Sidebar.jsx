@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { route } from '../utils/WebRoutes';
-import { MdDashboard } from 'react-icons/md';
+import { MdDashboard, MdPerson, MdSettings } from 'react-icons/md';
 import IconSupplier from '../Icons/IconSupplier';
 import { Dropdown, Nav, NavLink, DropdownItem } from '../components/Nav';
+import {BiSolidStoreAlt} from 'react-icons/bi'
+import {FaCartArrowDown} from 'react-icons/fa'
 
 function Sidebar({ isSidebarOpen }) {
 
@@ -25,16 +27,34 @@ function Sidebar({ isSidebarOpen }) {
 
           <NavLink title="Dashboard" to={route.get('dashboard')} Icon={<MdDashboard />} />
 
-          <Dropdown title="Store" Icon={<i className='bx bx-collection' ></i>}>
-            <DropdownItem title="R.M Master" to='/RM'/>
-            <DropdownItem title="B.P.O Master" to='#' />
-            <DropdownItem title="Store Location" to='#' />
+          <NavLink title="Customer" to={route.get('customer')} Icon={<MdPerson />} />
+
+          <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>}>
+              <DropdownItem title="Add New" to='#' />
+              <DropdownItem title="List" to='/list' />
           </Dropdown>
 
+          <Dropdown title="Item Master" Icon={<FaCartArrowDown/>}>
+              <DropdownItem title="Items List"></DropdownItem>
+              <DropdownItem title="Units"></DropdownItem>
+              <DropdownItem title="Groups"></DropdownItem>
+              <DropdownItem title="Sub Group"></DropdownItem>
+              <DropdownItem title="Grades"></DropdownItem>
+              <DropdownItem title="Sizes"></DropdownItem>
+              <DropdownItem title="Parts"></DropdownItem>
+          </Dropdown>
 
+          <NavLink title="Suppliers" to={route.get('supplier')} Icon={<IconSupplier />} />
 
-
-
+          <Dropdown title="Setting" Icon={<MdSettings/>}>
+              <DropdownItem title="Items List"></DropdownItem>
+              <DropdownItem title="Units"></DropdownItem>
+              <DropdownItem title="Groups"></DropdownItem>
+              <DropdownItem title="Sub Group"></DropdownItem>
+              <DropdownItem title="Grades"></DropdownItem>
+              <DropdownItem title="Sizes"></DropdownItem>
+              <DropdownItem title="Parts"></DropdownItem>
+          </Dropdown>
 
 
 
