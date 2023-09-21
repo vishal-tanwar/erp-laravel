@@ -6,11 +6,15 @@ main{
 
 button, [type='button'], [type='reset'], [type='submit'], .btn {
 
-    background-color: var( --bs-btn-bg) !important;
+    &:not(.swal2-styled) {
 
-    &:hover{
-        color: var(--bs-btn-hover-color) !important;
-        background-color: var(--bs-btn-hover-bg) !important;
-        border-color: var(--bs-btn-hover-border-color) !important;
+        
+        background-color: var( --bs-btn-bg) !important;
+        
+        &:hover{
+            color: var(--bs-btn-hover-color) !important;
+            background-color: var(--bs-btn-hover-bg) !important;
+            border-color: var(--bs-btn-hover-border-color) !important;
+        }
     }
 }
