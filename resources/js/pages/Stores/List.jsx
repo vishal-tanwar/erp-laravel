@@ -2,10 +2,9 @@ import React from "react";
 
 import "./style.scss";
 import Layout from "../../partials/Layout";
-import { BsCaretDownFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import {Form, Col, InputGroup, Row } from "react-bootstrap";
+import { Form, Col, InputGroup, Row, Dropdown, DropdownButton } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
+import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
 export default function List() {
     return (
@@ -16,33 +15,55 @@ export default function List() {
                     <h2 className="fs-3 m-2 px-4"><b>Store Summary </b></h2>
                 </Col>
                 <Col xs={12}>
-                <Row className="summary-bar">
-                    <Col xs={3} className="text-center">
-                        <h4 className="fs-2">21</h4>
-                        <h4 className="mt-3">Total Item</h4>
-                    </Col>
-                    <Col xs={3} className="text-center green">
-                        <h4 className="fs-2">13</h4>
-                        <h4 className="mt-3">Available Stock</h4>
-                    </Col>
-                    <Col xs={3} className="text-center">
-                        <h4 className="fs-2">1</h4>
-                        <h4 className="mt-3">About to Stock out</h4>
-                    </Col>
-                    <Col xs={3} className="text-center red">
-                        <h4 className="fs-2">11</h4>
-                        <h4 className="mt-3">Out of Stock</h4>
-                    </Col>
-                </Row>
+                    <Row className="summary-bar">
+                        <Col xs={3} className="text-center">
+                            <h4 className="fs-2">21</h4>
+                            <h4 className="mt-3">Total Item</h4>
+                        </Col>
+                        <Col xs={3} className="text-center green">
+                            <h4 className="fs-2">13</h4>
+                            <h4 className="mt-3">Available Stock</h4>
+                        </Col>
+                        <Col xs={3} className="text-center">
+                            <h4 className="fs-2">1</h4>
+                            <h4 className="mt-3">About to Stock out</h4>
+                        </Col>
+                        <Col xs={3} className="text-center red">
+                            <h4 className="fs-2">11</h4>
+                            <h4 className="mt-3">Out of Stock</h4>
+                        </Col>
+                    </Row>
                 </Col>
-               
+
             </Row>
             <div>
                 <Row>
                     <Col xs={5}>
-                        <div className="d-flex gap-5">
-                            <button type="button" className="btn  btn-sm border w-16 justify-content-around border-black shadow">25  <BsCaretDownFill /></button>
-                            <button type="button" className="btn  btn-sm border w-25 justify-content-around border-black shadow">Export  <BsCaretDownFill /></button>
+                        <div className="d-flex gap-3">
+                            <Dropdown>
+                                <Dropdown.Toggle className="btn-light border border-black shadow" id="dropdown-basic">
+                                    25
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu className="bg-dark-subtle">
+                                    <Dropdown.Item >10</Dropdown.Item>
+                                    <Dropdown.Item >25</Dropdown.Item>
+                                    <Dropdown.Item >50</Dropdown.Item>
+                                    <Dropdown.Item className="text">All</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                            <Dropdown>
+                                <Dropdown.Toggle id="dropdown-basic" className="btn-light border border-black shadow">
+                                Export
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu className="bg-dark-subtle">
+                                    <Dropdown.Item >Excel</Dropdown.Item>
+                                    <Dropdown.Item >Print</Dropdown.Item>
+                                    <Dropdown.Item >PDF</Dropdown.Item>
+                                    <Dropdown.Item >CSV</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
                         </div>
                     </Col>
                     <Col xs={7}>
@@ -53,6 +74,9 @@ export default function List() {
                             </InputGroup>
                         </Form>
                     </Col>
+                </Row>
+                <Row className="border-2 my-4">
+
                 </Row>
             </div>
         </Layout>
