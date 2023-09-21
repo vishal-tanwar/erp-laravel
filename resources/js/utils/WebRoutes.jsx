@@ -12,6 +12,8 @@ import ItemSubGrpList from "../components/Inventory/ItemMaster/ItemSubGrpList";
 import ItemUnitList from "../components/Inventory/ItemMaster/ItemUnitList";
 import ReceivingVoucher from "../components/Inventory/R.M/ReceivingVoucher";
 import RMInventory from "../components/Inventory/R.M/RMInventory";
+import RM from "../pages/RM/Index";
+import createstore from "../pages/createstore";
 
 export function route(path) {
 
@@ -31,7 +33,7 @@ route.get = function( name ){
     else{
         return searched.path;
     }
-        
+
 }
 
 route.make = function( route={} ){
@@ -126,6 +128,18 @@ export const Endpoints = [
         exact: true,
         name: "rm.receiving.item"
     },
+    {
+        path: route("/RM"),
+        component: RM,
+        exact: true,
+        name: "RM"
+    },
+    {
+        path: route("/createstore"),
+        component: createstore,
+        exact: true,
+        name: "createstore"
+    },
 
-    
+
 ]
