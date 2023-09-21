@@ -33,7 +33,7 @@ route.get = function( name ){
     else{
         return searched.path;
     }
-        
+
 }
 
 route.make = function( route={} ){
@@ -141,5 +141,5 @@ export const Endpoints = [
         exact: true,
         name: "list"
     },
-    
+
 ]
