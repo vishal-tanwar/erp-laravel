@@ -14,6 +14,7 @@ import ReceivingVoucher from "../components/Inventory/R.M/ReceivingVoucher";
 import RMInventory from "../components/Inventory/R.M/RMInventory";
 import Customer from "../pages/Customer";
 import List from "../pages/List";
+import RM from "../pages/RM/Index";
 
 export function route(path) {
 
@@ -140,6 +141,12 @@ export const Endpoints = [
         component: List,
         exact: true,
         name: "list"
+    },
+    {
+        path: route("/RM"),
+        component: RM,
+        exact: true,
+        name: "RM"
     },
 
 ]

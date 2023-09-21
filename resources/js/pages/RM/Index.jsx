@@ -6,8 +6,8 @@ export default function RM(){
     return(
         <Layout hideBanner className="pt-0">
             <Container fluid>
-           <button type="button" className=" btn-sm bg-primary text-white mt-3">Create Receiving Voucher</button>
-           
+           <button type="button" className=" btn-sm bg-primary text-white">Create Receiving Voucher</button>
+
 
 
            </Container>
