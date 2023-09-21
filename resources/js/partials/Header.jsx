@@ -5,7 +5,7 @@ import Notifications from '../components/DropdownNotifications';
 import UserMenu from '../components/DropdownProfile';
 import ThemeToggle from '../components/ThemeToggle';
 
-function Header({ sidebarOpen, setSidebarOpen }) {
+function Header({ onClick }) {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   return (
@@ -16,13 +16,9 @@ function Header({ sidebarOpen, setSidebarOpen }) {
           <div className="flex">
             {/* Hamburger button */}
             <button
-              className="text-slate-500 hover:text-slate-600 lg:hidden"
+              className="text-slate-500 hover:text-slate-600"
               aria-controls="sidebar"
-              aria-expanded={sidebarOpen}
-              onClick={(e) => {
-                e.stopPropagation();
-                setSidebarOpen(!sidebarOpen);
-              }}
+              onClick={onClick}
             >
               <span className="sr-only">Open sidebar</span>
               <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
