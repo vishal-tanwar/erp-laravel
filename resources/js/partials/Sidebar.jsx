@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { route } from '../utils/WebRoutes';
-import { MdDashboard } from 'react-icons/md';
+import { MdDashboard, MdPerson, MdSettings } from 'react-icons/md';
 import IconSupplier from '../Icons/IconSupplier';
 import { Dropdown, Nav, NavLink, DropdownItem } from '../components/Nav';
+import {BiSolidStoreAlt} from 'react-icons/bi'
+import {FaCartArrowDown} from 'react-icons/fa'
 
 function Sidebar({ isSidebarOpen }) {
 
@@ -25,102 +27,36 @@ function Sidebar({ isSidebarOpen }) {
 
           <NavLink title="Dashboard" to={route.get('dashboard')} Icon={<MdDashboard />} />
 
-          <Dropdown title="Store" Icon={<i className='bx bx-collection' ></i>}>
-            <DropdownItem title="R.M" to='#' />
-            <DropdownItem title="B.P.O" to='#' />
+          <NavLink title="Customer" to={route.get('customer')} Icon={<MdPerson />} />
+
+          <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>}>
+              <DropdownItem title="Add New" to='#' />
+              <DropdownItem title="List" to='/list' />
+          </Dropdown>
+
+          <Dropdown title="Item Master" Icon={<FaCartArrowDown/>}>
+              <DropdownItem title="Items List"></DropdownItem>
+              <DropdownItem title="Units"></DropdownItem>
+              <DropdownItem title="Groups"></DropdownItem>
+              <DropdownItem title="Sub Group"></DropdownItem>
+              <DropdownItem title="Grades"></DropdownItem>
+              <DropdownItem title="Sizes"></DropdownItem>
+              <DropdownItem title="Parts"></DropdownItem>
+          </Dropdown>
+
+          <NavLink title="Suppliers" to={route.get('supplier')} Icon={<IconSupplier />} />
+
+          <Dropdown title="Setting" Icon={<MdSettings/>}>
+              <DropdownItem title="Items List"></DropdownItem>
+              <DropdownItem title="Units"></DropdownItem>
+              <DropdownItem title="Groups"></DropdownItem>
+              <DropdownItem title="Sub Group"></DropdownItem>
+              <DropdownItem title="Grades"></DropdownItem>
+              <DropdownItem title="Sizes"></DropdownItem>
+              <DropdownItem title="Parts"></DropdownItem>
           </Dropdown>
 
 
-          <li className="active">
-            <div className="iocn-link">
-              <a href="#">
-                <i className='bx bx-collection' ></i>
-                <span className="link_name">Category</span>
-              </a>
-              <i className='bx bxs-chevron-down arrow' ></i>
-            </div>
-            <ul className="sub-menu">
-              <li><a className="link_name" href="#">Category</a></li>
-              <li><a href="#">HTML & CSS</a></li>
-              <li><a href="#">JavaScript</a></li>
-              <li><a href="#">PHP & MySQL</a></li>
-            </ul>
-          </li>
-          <li>
-            <div className="iocn-link">
-              <a href="#">
-                <i className='bx bx-book-alt' ></i>
-                <span className="link_name">Posts</span>
-              </a>
-              <i className='bx bxs-chevron-down arrow' ></i>
-            </div>
-            <ul className="sub-menu">
-              <li><a className="link_name" href="#">Posts</a></li>
-              <li><a href="#">Web Design</a></li>
-              <li><a href="#">Login Form</a></li>
-              <li><a href="#">Card Design</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">
-              <i className='bx bx-pie-chart-alt-2' ></i>
-              <span className="link_name">Analytics</span>
-            </a>
-            <ul className="sub-menu blank">
-              <li><a className="link_name" href="#">Analytics</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">
-              <i className='bx bx-line-chart' ></i>
-              <span className="link_name">Chart</span>
-            </a>
-            <ul className="sub-menu blank">
-              <li><a className="link_name" href="#">Chart</a></li>
-            </ul>
-          </li>
-          <li>
-            <div className="iocn-link">
-              <a href="#">
-                <i className='bx bx-plug' ></i>
-                <span className="link_name">Plugins</span>
-              </a>
-              <i className='bx bxs-chevron-down arrow' ></i>
-            </div>
-            <ul className="sub-menu">
-              <li><a className="link_name" href="#">Plugins</a></li>
-              <li><a href="#">UI Face</a></li>
-              <li><a href="#">Pigments</a></li>
-              <li><a href="#">Box Icons</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">
-              <i className='bx bx-compass' ></i>
-              <span className="link_name">Explore</span>
-            </a>
-            <ul className="sub-menu blank">
-              <li><a className="link_name" href="#">Explore</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">
-              <i className='bx bx-history'></i>
-              <span className="link_name">History</span>
-            </a>
-            <ul className="sub-menu blank">
-              <li><a className="link_name" href="#">History</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">
-              <i className='bx bx-cog' ></i>
-              <span className="link_name">Setting</span>
-            </a>
-            <ul className="sub-menu blank">
-              <li><a className="link_name" href="#">Setting</a></li>
-            </ul>
-          </li>
 
         </Nav>
       </div >

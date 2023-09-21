@@ -38,7 +38,7 @@ function select(string $label, array|Collection $options, int|string $default = 
  * @param  array<int|string>|Collection<int, int|string>  $default
  * @return array<int|string>
  */
-function multiselect(string $label, array|Collection $options, array|Collection $default = [], int $scroll = 5, bool|string $required = false, Closure $validate = null, string $hint = ''): array
+function multiselect(string $label, array|Collection $options, array|Collection $default = [], int $scroll = 5, bool|string $required = false, Closure $validate = null, string $hint = 'Use the space bar to select options.'): array
 {
     return (new MultiSelectPrompt($label, $options, $default, $scroll, $required, $validate, $hint))->prompt();
 }
@@ -138,4 +138,15 @@ function intro(string $message): void
 function outro(string $message): void
 {
     (new Note($message, 'outro'))->display();
+}
+
+/**
+ * Display a table.
+ *
+ * @param  array<int, string|array<int, string>>|Collection<int, string|array<int, string>>  $headers
+ * @param  array<int, array<int, string>>|Collection<int, array<int, string>>  $rows
+ */
+function table(array|Collection $headers = [], array|Collection $rows = null): void
+{
+    (new Table($headers, $rows))->display();
 }
