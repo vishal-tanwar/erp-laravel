@@ -35,7 +35,7 @@ export default function List() {
                     </Col>
                 </Row>
                 </Col>
-               
+
             </Row>
             <div>
                 <Row>

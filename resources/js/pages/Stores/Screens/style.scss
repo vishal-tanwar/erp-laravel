@@ -1,0 +1,39 @@
+.green{
+    color: #60ed09;
+}
+.red{
+    color: rgb(255, 0, 0);
+}
+
+.summary-bar{
+
+    & > div {
+        margin: {
+            top: 8px;
+            bottom: 8px;
+        };
+
+        &:not(:last-child){
+            border-right: 2px solid #cecece;
+        }
+    }
+}
+
+
+table {
+    border-collapse: collapse;
+    margin: 50px 30px;
+    th,
+    td {
+        text-align: left;
+        border: 2px solid #000;
+        padding: 8px 16px;
+    }
+}
+
+tr:has(~ tr:hover),
+tr:hover ~ tr {
+    filter: blur(2px);
+    transition: filter 0.4s ease; //cosmetic
+}
+

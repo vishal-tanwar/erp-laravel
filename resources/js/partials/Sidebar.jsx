@@ -31,7 +31,7 @@ function Sidebar({ isSidebarOpen }) {
 
           <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>}>
               <DropdownItem title="Add New" to='#' />
-              <DropdownItem title="List" to='/list' />
+              <DropdownItem title="List" to={route.get('store.list')} />
           </Dropdown>
 
           <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='items'>
