@@ -1,0 +1,26 @@
+.green{
+    color: #60ed09;
+}
+.red{
+    color: rgb(255, 0, 0);
+}
+
+.text{
+    color: blue;
+}
+.summary-bar{
+
+    & > div {
+        margin: {
+            top: 8px;
+            bottom: 8px;
+        };
+
+        &:not(:last-child){
+            border-right: 2px solid #cecece;
+        }
+    }
+}
+td {
+    vertical-align: baseline;
+}

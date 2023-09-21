@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { MdChevronRight } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Nav = ({ children }) => {
     return <ul className='nav-links'>{children}</ul>
 }
 
-export const NavLink = ({ Icon, title, to, className, ...props }) => {
+export const NavLink = ({ Icon, title, to, activeName, className, ...props }) => {
+    
+    const {pathname} = useLocation();
+
+    activeName = activeName ?? to ;
     return (
-        <li>
+        <li className={pathname.includes(activeName)? 'active': ''}>
 
         <Link to={to} className={className || ''} {...props}>
             {Icon}
@@ -21,11 +25,16 @@ export const NavLink = ({ Icon, title, to, className, ...props }) => {
     );
 }
 
-export const Dropdown = ({ children, Icon, title, to, className, ...props }) => {
-
+export const Dropdown = ({ children, Icon, title, activeName, className, ...props }) => {
+    const {pathname} = useLocation();
     const [isVisible, setVisible ] = React.useState( false );
+    useEffect( () => {
+        if(pathname.includes(activeName)){
+            setVisible( true );
+        }
+    }, []);
     return (
-        <li className={ isVisible ? 'showMenu' : '' }>
+        <li className={`${ isVisible ? 'showMenu' : '' } ${pathname.includes(activeName)? 'active': ''}`}>
             <div className="iocn-link" onClick={() => { setVisible(!isVisible)}}>
                 <a href="#">
                     {Icon}

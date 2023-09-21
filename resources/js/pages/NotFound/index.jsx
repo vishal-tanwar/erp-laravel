@@ -18,7 +18,7 @@ export default function NotFound() {
                 <h2>we are sorry, but the page you requested was not found</h2>
 
                 <Row>
-                    <Col sm={12}><Link className="btn text-sm btn-primary" to={route.get("dashbaord")} replace={true}>Go To Dashboard</Link></Col>
+                    <Col sm={12}><Link className="btn text-sm btn-primary" to={route.get("dashboard")} replace={true}>Go To Dashboard</Link></Col>
                 </Row>
             </div>
         </Layout>

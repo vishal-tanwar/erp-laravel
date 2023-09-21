@@ -13,7 +13,9 @@ import ItemUnitList from "../components/Inventory/ItemMaster/ItemUnitList";
 import ReceivingVoucher from "../components/Inventory/R.M/ReceivingVoucher";
 import RMInventory from "../components/Inventory/R.M/RMInventory";
 import Customer from "../pages/Customer";
-import List from "../pages/List";
+import List from "../pages/Stores/List";
+import StoreView from "../pages/Stores/Screens/StoreView";
+
 
 export function route(path) {
 
@@ -25,12 +27,15 @@ export function route(path) {
 }
 
 
-route.get = function( name ){
+route.get = function( name, params = {} ){
     let searched = Endpoints.find( route => route.name == name ) ;
     if (typeof searched == "undefined" ){
         throw new Error(`Route ${name} is not defined. check route name or define it first`);
     }
     else{
+        if( Object.keys( params ).length > 0 && params.constructor == Object){
+            return searched.path.replace(/\:(\w+)/g, (match,key) => params[key] || match );
+        }
         return searched.path;
     }
 
@@ -130,10 +135,34 @@ export const Endpoints = [
     },
 
     {
-        path: route("/list"),
+        path: route("stores/list"),
         component: List,
         exact: true,
-        name: "list"
+        name: "store.list"
+    },
+    {
+        path: route("stores/create"),
+        component: List,
+        exact: true,
+        name: "store.create"
+    },
+    {
+        path: route("stores/edit/:id"),
+        component: List,
+        exact: true,
+        name: "store.edit"
+    },
+    {
+        path: route("/store/:name/vouchers"),
+        component: StoreView,
+        exact: true,
+        name: "store.vouchers"
+    },
+    {
+        path: route("/store/:name/vouchers/create"),
+        component: StoreView,
+        exact: true,
+        name: "store.vouchers.create"
     },
 
 ]
