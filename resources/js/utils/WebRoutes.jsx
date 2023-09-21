@@ -31,6 +31,9 @@ route.get = function( name ){
         throw new Error(`Route ${name} is not defined. check route name or define it first`);
     }
     else{
+        if( Object.keys( params ).length > 0 && params.constructor == Object){
+            return searched.path.replace(/\:(\w+)/g, (match,key) => params[key] || match );
+        }
         return searched.path;
     }
 
