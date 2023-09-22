@@ -15,6 +15,9 @@ import RMInventory from "../components/Inventory/R.M/RMInventory";
 import Customer from "../pages/Customer";
 import List from "../pages/Stores/List";
 import StoreView from "../pages/Stores/Screens/StoreView";
+import Units from "../pages/ItemMaster/Units";
+import Group from "../pages/ItemMaster/Group";
+import SubGroup from "../pages/ItemMaster/SubGroup";
 
 
 export function route(path) {
@@ -135,7 +138,7 @@ export const Endpoints = [
     },
 
     {
-        path: route("stores/list"),
+        path: route("store/list"),
         component: List,
         exact: true,
         name: "store.list"
@@ -163,6 +166,24 @@ export const Endpoints = [
         component: StoreView,
         exact: true,
         name: "store.vouchers.create"
+    },
+    {
+        path: route("item_master/units"),
+        component: Units,
+        exact: true,
+        name: "item_master.units"
+    },
+    {
+        path: route("item_master/group"),
+        component: Group,
+        exact: true,
+        name: "item_master.group"
+    },
+    {
+        path: route("item_master/sub_group"),
+        component: SubGroup,
+        exact: true,
+        name: "item_master.sub_group"
     },
 
 ]
