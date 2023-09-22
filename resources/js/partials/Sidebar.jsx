@@ -38,7 +38,7 @@ function Sidebar({ isSidebarOpen }) {
               <DropdownItem title="Sub Group" to={route.get('item_master.sub_group')}></DropdownItem>
           </Dropdown>
 
-          <NavLink title="Suppliers" to="#" Icon={<IconSupplier />} />
+          <NavLink title="Suppliers" to={route.get('supplier')} Icon={<IconSupplier />} />
 
           <Dropdown title="Setting" Icon={<MdSettings/>}>
               <DropdownItem title="Items List"></DropdownItem>

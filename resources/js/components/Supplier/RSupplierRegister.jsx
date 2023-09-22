@@ -1,5 +1,4 @@
 import React, {useEffect, useState } from "react";
-import '../Dummy Pages/Dummy1.css';
 import logoleft from '../../images/logoERP.jpeg';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
