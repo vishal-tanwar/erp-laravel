@@ -4,6 +4,7 @@ import AddSupplier from '../components/Supplier/AddSupplier';
 import Customer from "../pages/Customer";
 import List from "../pages/Stores/List";
 import StoreView from "../pages/Stores/Screens/StoreView";
+import voucherform from "../pages/voucherform";
 import Units from "../pages/ItemMaster/Units";
 import Group from "../pages/ItemMaster/Group";
 import SubGroup from "../pages/ItemMaster/SubGroup";
@@ -88,6 +89,12 @@ export const Endpoints = [
         name: "store.vouchers.create"
     },
     {
+        path: route("/Voucherform"),
+        component: voucherform,
+        exact: true,
+        name: "Voucherform"
+  },
+  {
         path: route("item_master/units"),
         component: Units,
         exact: true,
