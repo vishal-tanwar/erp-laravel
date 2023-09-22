@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ItemController;
 use App\Http\Controllers\API\SupplierController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,4 +42,13 @@ Route::group(["prefix" => "v1"], function(){
     Route::get('/validate-session', [AuthController::class, "verifySession"]);
 
     Route::resource("supplier", SupplierController::class );
+
+
+    Route::controller(ItemController::class)->group( function(){
+        Route::get('items', 'index');
+        Route::post('item', 'store' );
+        Route::get('item/{id}', 'show');
+        Route::match(['put', 'patch'], 'item/{id}', 'show');
+        Route::delete('item/{id}', 'show');
+    });
 });

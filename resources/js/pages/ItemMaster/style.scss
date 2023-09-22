@@ -1,0 +1,13 @@
+.remove-arrow button{
+
+    &::after{
+        display: none;
+    }
+}
+
+#react-select-3-input{
+    grid-area: auto !important;
+    min-width: auto !important;
+    border-color: #000 !important;
+    outline-color: #000 !important;
+}

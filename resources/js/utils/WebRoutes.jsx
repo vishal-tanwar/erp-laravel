@@ -12,6 +12,7 @@ import ItemList from "../pages/ItemMaster/ItemList";
 import Viewpage from "../pages/Viewpage";
 import Editpage from "../pages/Editpage";
 import Issuancevoucher from "../pages/Issuancevoucher";
+import AddItem from "../pages/ItemMaster/AddItem";
 
 
 export function route(path) {
@@ -139,6 +140,12 @@ export const Endpoints = [
         component: ItemList,
         exact: true,
         name: "item_master.item_list"
+    },
+    {
+        path: route("item_master/add_item"),
+        component: AddItem,
+        exact: true,
+        name: "item_master.add_item"
     },
 
 ]
