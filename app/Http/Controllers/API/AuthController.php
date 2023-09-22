@@ -37,7 +37,7 @@ class AuthController extends Controller
             $request->merge([ "email" => Str::lower($login ) ] );
         }
 
-        $credentials = $request->only($type, 'password');
+        $credentials = $request->only([$type, 'password']);
 
         $validator = Validator::make($credentials, [
             $type => "required|string|exists:users,{$type}",
