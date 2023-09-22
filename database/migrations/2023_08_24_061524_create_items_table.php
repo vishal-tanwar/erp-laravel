@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string("size");
             $table->string("part");
             $table->string("grade");
-            $table->string("barcode");
             $table->string("group");
             $table->string("sub_group");
             $table->string("unit");
