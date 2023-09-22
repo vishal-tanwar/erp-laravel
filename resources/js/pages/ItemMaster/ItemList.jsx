@@ -5,6 +5,7 @@ import { Form, Col, Row, Dropdown} from "react-bootstrap";
 import { MdFilterListAlt,  } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { route } from "../../utils/WebRoutes";
+import DropdownFilter from "../../components/DropdownFilter";
 
 export default function ItemList() {
     const [show, setShow] = useState(false);
@@ -18,18 +19,8 @@ export default function ItemList() {
                     <Link className="btn btn-primary btn-sm bg-primary" to={route.get('item_master.add_item')}> Add Item</Link>
                 </Col>
                 <Col xs={6} className="d-flex justify-content-end">
-                    <Dropdown className="my-2 remove-arrow">
-                        <Dropdown.Toggle className="btn-light border" id="dropdown-basic">
-                            <MdFilterListAlt />
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu className="bg-dark-subtle">
-                            <Dropdown.Item >Name</Dropdown.Item>
-                            <Dropdown.Item >A.B.C</Dropdown.Item>
-                            <Dropdown.Item >A.B.C</Dropdown.Item>
-                            <Dropdown.Item className="text">All</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    <DropdownFilter align="right"/>
+                    
                 </Col>
             </Row>
 
