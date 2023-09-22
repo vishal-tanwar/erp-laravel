@@ -8,6 +8,7 @@ import Units from "../pages/ItemMaster/Units";
 import Group from "../pages/ItemMaster/Group";
 import SubGroup from "../pages/ItemMaster/SubGroup";
 import ItemList from "../pages/ItemMaster/ItemList";
+import Viewpage from "../pages/Viewpage";
 
 
 export function route(path) {
@@ -48,7 +49,7 @@ export const Endpoints = [
         exact: true,
         name: "dashboard"
     },
-    
+
     {
         path: route("/customer"),
         component: Customer,
@@ -62,7 +63,7 @@ export const Endpoints = [
         exact: true,
         name: "store.list"
     },
-   
+
     {
         path: route("/store/:name/vouchers"),
         component: StoreView,
@@ -80,6 +81,12 @@ export const Endpoints = [
         component: voucherform,
         exact: true,
         name: "Voucherform"
+  },
+    {
+        path: route("/Viewpage"),
+        component: Viewpage,
+        exact: true,
+        name: "Viewpage"
   },
   {
         path: route("item_master/units"),

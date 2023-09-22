@@ -8,12 +8,11 @@ import { MdAddBox, MdCalendarMonth, MdCheck, MdOutlineClose } from "react-icons/
 
 
 
-export default function Voucherform() {
-
+export default function Viewpage() {
     const [date, setDate] = React.useState(new Date());
 
     return (
-        <Layout title=" R.M Receiving Voucher" hideBanner>
+        <Layout title="View Voucher" hideBanner>
             <Form>
                 <Row>
                     <Col xs={6} >
@@ -80,15 +79,7 @@ export default function Voucherform() {
 
                     </Col>
                 </Row>
-                <Row>
-                    <Col xs="4">
-                        <Form.Select>
-                            <option value={false}> Select to add Item</option>
 
-                        </Form.Select>
-
-                    </Col>
-                </Row>
 
                 <Row className="my-4">
                     <table className="table  table-bordered  table-responsive">
@@ -112,11 +103,6 @@ export default function Voucherform() {
 
                                 <td>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
-                                    </Form.Group>
-                                </td>
-                                <td>
-                                    <Form.Group className="mb-3" controlId="formBasicEmail">
                                         <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
@@ -137,7 +123,7 @@ export default function Voucherform() {
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
+                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
@@ -145,22 +131,22 @@ export default function Voucherform() {
                                         <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
-                                <td><button type="button"><MdCheck /></button></td>
+                                <td>
+                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                    </Form.Group>
+                                </td>
+                                <td><button type="button" className=" btn btn-primary btn-sm bg-primary ">View Barcode</button>
+                                </td>
 
                             </tr>
                         </tbody>
-
 
                         <tbody className="text-center">
                             <tr className="text-center">
 
                                 <td>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
-                                    </Form.Group>
-                                </td>
-                                <td>
-                                    <Form.Group className="mb-3" controlId="formBasicEmail">
                                         <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
@@ -181,7 +167,7 @@ export default function Voucherform() {
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
+                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
@@ -189,7 +175,13 @@ export default function Voucherform() {
                                         <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
-                                <td><button type="button"><MdCheck /></button></td>
+                                <td>
+                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                    </Form.Group>
+                                </td>
+                                <td><button type="button" className=" btn btn-primary btn-sm bg-primary ">View Barcode</button>
+                                </td>
 
                             </tr>
                         </tbody>

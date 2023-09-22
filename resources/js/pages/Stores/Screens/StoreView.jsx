@@ -144,7 +144,7 @@ export default function StoreView() {
                                         <td></td>
                                         <td></td>
                                         <td className="d-flex justify-content-evenly">
-                                            <button type="button" className="btn btn-primary btn-sm rounded shadow w-16">View</button>
+                                        <Link to="/Viewpage"><button type="button" className="btn btn-primary btn-sm rounded shadow w-16">View</button></Link>
                                             <button type="button" className="btn btn-success btn-sm rounded shadow ">Edit</button>
                                             <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
                                         </td>
