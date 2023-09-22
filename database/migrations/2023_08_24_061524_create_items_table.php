@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->string("code");
             $table->string("name");
             $table->string("size");
             $table->string("part");
@@ -21,7 +20,8 @@ return new class extends Migration
             $table->string("group");
             $table->string("sub_group");
             $table->string("unit");
-            $table->text("description");
+            $table->string('store_id');
+            $table->text('suppliers');
             $table->timestamps();
         });
     }

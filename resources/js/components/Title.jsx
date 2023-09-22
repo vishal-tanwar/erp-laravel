@@ -6,8 +6,8 @@ export function H1({children, icon, className}){
     // console.log(className);
     return(
         <Row className={className}>
-            <Col xs={12} className="bg--white shadow-lg rounded-3 py-2 border-primary-subtle">
-                <h1 className="text-3xl font-bold d-flex align-items-center text-slate-600">{icon? icon:''} {children}</h1>
+            <Col xs={12} className="bg--white py-2 border-bottom-2 border-bottom">
+                <h1 className="text-3xl font-bold d-flex align-items-center text-slate-600">{icon ? icon : ''} <span className="ms-2">{children}</span></h1>
             </Col>
         </Row>
     )
