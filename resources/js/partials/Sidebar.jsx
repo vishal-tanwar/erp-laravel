@@ -3,8 +3,10 @@ import { route } from '../utils/WebRoutes';
 import { MdDashboard, MdPerson, MdSettings } from 'react-icons/md';
 import IconSupplier from '../Icons/IconSupplier';
 import { Dropdown, Nav, NavLink, DropdownItem } from '../components/Nav';
-import {BiSolidStoreAlt} from 'react-icons/bi'
-import {FaCartArrowDown} from 'react-icons/fa'
+import {BiSolidPurchaseTag, BiSolidStoreAlt} from 'react-icons/bi'
+import {FaCartArrowDown} from 'react-icons/fa';
+import {GiEntryDoor} from 'react-icons/gi';
+import {RiEqualizerFill} from 'react-icons/ri';
 
 function Sidebar({ isSidebarOpen }) {
 
@@ -44,13 +46,13 @@ function Sidebar({ isSidebarOpen }) {
          
           <NavLink title="Suppliers" to={route.get('supplier')} Icon={<IconSupplier />} />
 
-          <Dropdown title="Purchase" Icon={<FaCartArrowDown/>} activeName='purchase'>
+          <Dropdown title="Purchase" Icon={<BiSolidPurchaseTag/>} activeName='purchase'>
               <DropdownItem title="Schedule"></DropdownItem>
           </Dropdown>
 
-          <NavLink title="Gate Entry" to={route.get('supplier')} Icon={<IconSupplier />} />
+          <NavLink title="Gate Entry" to={route.get('supplier')} Icon={<GiEntryDoor />} />
 
-          <NavLink title="Quality" to={route.get('supplier')} Icon={<IconSupplier />} />
+          <NavLink title="Quality" to={route.get('supplier')} Icon={<RiEqualizerFill />} />
 
           <Dropdown title="Setting" Icon={<MdSettings/>}>
               <DropdownItem title="Items List"></DropdownItem>
