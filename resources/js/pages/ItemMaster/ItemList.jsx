@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./style.scss";
 import Layout from "../../partials/Layout";
-import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-bootstrap";
-import { MdOutlineSearch } from "react-icons/md";
+import { Form, Col, Row, Dropdown} from "react-bootstrap";
+import { MdFilterListAlt,  } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { route } from "../../utils/WebRoutes";
 
 export default function ItemList() {
     const [show, setShow] = useState(false);
@@ -11,37 +13,25 @@ export default function ItemList() {
     const handleShow = () => setShow(true);
     return (
         <Layout title="Item List" hideBanner>
-            <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow} > Add Item</button>
-
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Body className="pb-3">
-                    <h2 className="fs-4">Sub Group</h2>
-                    <Dropdown className="my-2">
+            <Row>
+                <Col xs={6}>
+                    <Link className="btn btn-primary btn-sm bg-primary" to={route.get('item_master.add_item')}> Add Item</Link>
+                </Col>
+                <Col xs={6} className="d-flex justify-content-end">
+                    <Dropdown className="my-2 remove-arrow">
                         <Dropdown.Toggle className="btn-light border" id="dropdown-basic">
-                            Select Group Name
+                            <MdFilterListAlt />
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu className="bg-dark-subtle">
-                            <Dropdown.Item >A.B.C</Dropdown.Item>
+                            <Dropdown.Item >Name</Dropdown.Item>
                             <Dropdown.Item >A.B.C</Dropdown.Item>
                             <Dropdown.Item >A.B.C</Dropdown.Item>
                             <Dropdown.Item className="text">All</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-                    <InputGroup className="my-3">
-                        <Form.Control
-                            placeholder="Sub Group" />
-                    </InputGroup>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Add Sub Group
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+                </Col>
+            </Row>
 
             <div className="my-3">
                 <Row>
@@ -82,13 +72,17 @@ export default function ItemList() {
                             </Dropdown>
                         </div>
                     </Col>
-                    <Col xs={7}>
-                        <Form className="w-64 ms-auto">
-                            <InputGroup>
-                                <Form.Control className="m-0" type="text" placeholder="Search..."></Form.Control>
-                                <InputGroup.Text><MdOutlineSearch className="fs-4" /></InputGroup.Text>
-                            </InputGroup>
-                        </Form>
+                    <Col xs={7} className="d-flex justify-content-end">
+                        <Dropdown>
+                            <Dropdown.Toggle id="dropdown-basic" className="btn-light border border-black shadow">
+                                Select
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu className="bg-dark-subtle">
+                                <Dropdown.Item >R.M Master</Dropdown.Item>
+                                <Dropdown.Item >B.O.P</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </Col>
                 </Row>
                 <Row className="my-4">
@@ -101,9 +95,13 @@ export default function ItemList() {
                                     <tr className="text-center">
                                         <th scope="col"> <Form.Check type="checkbox" /></th>
                                         <th scope="col">Sr. No. </th>
-                                        <th scope="col">Group Name</th>
-                                        <th scope="col">Sub Group Name</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Item Name</th>
+                                        <th scope="col">Store Name</th>
+                                        <th scope="col">Item Part</th>
+                                        <th scope="col">Item Grade</th>
+                                        <th scope="col">Item Size</th>
+                                        <th scope="col">Available Stock</th>
+                                        <th scope="col">Total Item</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
@@ -112,13 +110,14 @@ export default function ItemList() {
                                             <Form.Check type="checkbox" />
                                         </td>
                                         <td>1</td>
-                                        <td>A.B.C Pvt Ltd</td>
-                                        <td>D.E.F Pvt Ltd</td>
+                                        <td>Item</td>
+                                        <td>Store</td>
+                                        <td>Part</td>
+                                        <td>Grade</td>
+                                        <td>Size</td>
+                                        <td>Ava. Stock</td>
+                                        <td>Total Item</td>
 
-                                        <td className="d-flex justify-content-evenly">
-                                            <button type="button" className="btn btn-success btn-sm rounded shadow w-25">Edit</button>
-                                            <button type="button" className="btn btn-danger btn-sm rounded shadow w-25">Delete</button>
-                                        </td>
 
                                     </tr>
 

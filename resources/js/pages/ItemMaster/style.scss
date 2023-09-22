@@ -1,0 +1,6 @@
+.remove-arrow button{
+
+    &::after{
+        display: none;
+    }
+}
