@@ -6,7 +6,7 @@ import { BsCaretDownFill } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 import { route } from "../../../utils/WebRoutes";
 import NotFound from "../../NotFound";
-import { MdFilterAlt, MdOutlineSearch } from "react-icons/md";
+import { MdFilterAlt, MdOutlinePrint, MdOutlineSearch } from "react-icons/md";
 
 
 export default function StoreView() {
@@ -24,10 +24,15 @@ export default function StoreView() {
                         <Col xs={12}>
                             <Row>
 
-                                <Col xs={10}>
-                                <Link to="/Voucherform"><button type="button" className=" btn btn-primary btn-sm bg-primary ">Create Receiving Voucher</button></Link>
+                                <Col xs={2}>
+                                    <Link to="/Voucherform"><button type="button" className=" btn btn-primary btn-sm bg-primary "> Receiving Voucher</button></Link>
                                 </Col>
-                                <Col xs={2} className="d-flex justify-content-evenly">
+
+                                <Col xs={6}>
+                                <button type="button" className=" btn btn-success btn-sm bg-primary "> Issuance Voucher</button>
+
+                                </Col>
+                                <Col xs={4} className="d-flex justify-content-end">
                                     <button type="button"><MdFilterAlt className="fs-4" /></button>
 
                                 </Col>
@@ -128,13 +133,14 @@ export default function StoreView() {
                                         <th scope="col">E-Mail</th>
                                         <th scope="col">Contact No.</th>
                                         <th scope="col">Actions</th>
+                                        <th scope="col"></th>
 
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
                                     <tr className="text-center">
 
-                                        <td><Form.Check type="checkbox"/></td>
+                                        <td><Form.Check type="checkbox" /></td>
                                         <td>1</td>
                                         <td></td>
                                         <td></td>
@@ -144,13 +150,25 @@ export default function StoreView() {
                                         <td></td>
                                         <td></td>
                                         <td className="d-flex justify-content-evenly">
-                                        <Link to="/Viewpage"><button type="button" className="btn btn-primary btn-sm rounded shadow w-16">View</button></Link>
-                                            <button type="button" className="btn btn-success btn-sm rounded shadow ">Edit</button>
+                                            <Link to="/Viewpage"><button type="button" className="btn btn-primary btn-sm rounded shadow w-16">View</button></Link>
+                                            <Link to="/Editpage"><button type="button" className="btn btn-success btn-sm rounded shadow ">Edit</button></Link>
                                             <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
+                                        </td>
+                                        <td>
+                                            <Dropdown>
+                                                <Dropdown.Toggle id="dropdown-basic" className="btn-light border border-black shadow">
+                                                    <MdOutlinePrint />
+                                                </Dropdown.Toggle>
+
+                                                <Dropdown.Menu className="bg-white">
+                                                    <Dropdown.Item >Print</Dropdown.Item>
+                                                    <Dropdown.Item >Pdf</Dropdown.Item>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><Form.Check type="checkbox"/></td>
+                                        <td><Form.Check type="checkbox" /></td>
                                         <td>2</td>
                                         <td></td>
                                         <td></td>
@@ -163,6 +181,18 @@ export default function StoreView() {
                                             <button type="button" className="btn btn-primary btn-sm rounded shadow w-16">View</button>
                                             <button type="button" className="btn btn-success btn-sm rounded shadow ">Edit</button>
                                             <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
+                                        </td>
+                                        <td>
+                                            <Dropdown>
+                                                <Dropdown.Toggle id="dropdown-basic" className="btn-light border border-black shadow">
+                                                    <MdOutlinePrint />
+                                                </Dropdown.Toggle>
+
+                                                <Dropdown.Menu className="bg-white">
+                                                    <Dropdown.Item >Print</Dropdown.Item>
+                                                    <Dropdown.Item >Pdf</Dropdown.Item>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
                                         </td>
                                     </tr>
 

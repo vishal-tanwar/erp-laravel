@@ -1,5 +1,6 @@
-
+import SupplierRegister from "../components/Supplier/SupplierRegister";
 import Dashboard from "../pages/Dashboard";
+import AddSupplier from '../components/Supplier/AddSupplier';
 import Customer from "../pages/Customer";
 import List from "../pages/Stores/List";
 import StoreView from "../pages/Stores/Screens/StoreView";
@@ -9,6 +10,8 @@ import Group from "../pages/ItemMaster/Group";
 import SubGroup from "../pages/ItemMaster/SubGroup";
 import ItemList from "../pages/ItemMaster/ItemList";
 import Viewpage from "../pages/Viewpage";
+import Editpage from "../pages/Editpage";
+import Issuancevoucher from "../pages/Issuancevoucher";
 
 
 export function route(path) {
@@ -21,22 +24,22 @@ export function route(path) {
 }
 
 
-route.get = function( name, params = {} ){
-    let searched = Endpoints.find( route => route.name == name ) ;
-    if (typeof searched == "undefined" ){
+route.get = function (name, params = {}) {
+    let searched = Endpoints.find(route => route.name == name);
+    if (typeof searched == "undefined") {
         throw new Error(`Route ${name} is not defined. check route name or define it first`);
     }
-    else{
-        if( Object.keys( params ).length > 0 && params.constructor == Object){
-            return searched.path.replace(/\:(\w+)/g, (match,key) => params[key] || match );
+    else {
+        if (Object.keys(params).length > 0 && params.constructor == Object) {
+            return searched.path.replace(/\:(\w+)/g, (match, key) => params[key] || match);
         }
         return searched.path;
     }
 
 }
 
-route.make = function( route={} ){
-    if( typeof route == "object" && !Array.isArray(route) ){
+route.make = function (route = {}) {
+    if (typeof route == "object" && !Array.isArray(route)) {
         Endpoints.push(route);
     }
 }
@@ -48,6 +51,19 @@ export const Endpoints = [
         component: Dashboard,
         exact: true,
         name: "dashboard"
+    },
+
+    {
+        path: route("/supplier/registration"),
+        component: SupplierRegister,
+        exact: true,
+        name: "supplier"
+    },
+    {
+        path: route("supplier/addSupplier"),
+        component: AddSupplier,
+        exact: true,
+        name: 'supplier.add'
     },
 
     {
@@ -81,14 +97,26 @@ export const Endpoints = [
         component: voucherform,
         exact: true,
         name: "Voucherform"
-  },
+    },
     {
         path: route("/Viewpage"),
         component: Viewpage,
         exact: true,
         name: "Viewpage"
-  },
-  {
+    },
+    {
+        path: route("/Editpage"),
+        component: Editpage,
+        exact: true,
+        name: "Editpage"
+    },
+    {
+        path: route("/Issuancevoucher"),
+        component: Issuancevoucher,
+        exact: true,
+        name: "Issuancevoucher"
+    },
+    {
         path: route("item_master/units"),
         component: Units,
         exact: true,

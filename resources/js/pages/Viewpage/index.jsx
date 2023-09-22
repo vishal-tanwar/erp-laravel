@@ -94,7 +94,7 @@ export default function Viewpage() {
                                 <th scope="col">Total GWT</th>
                                 <th scope="col">Total PKT.</th>
                                 <th scope="col">PKT Receiver</th>
-
+                                <th scope="col" style={{width: '12%'}}></th>
 
                             </tr>
                         </thead>

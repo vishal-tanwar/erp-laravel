@@ -4,7 +4,7 @@ import Layout from "../../partials/Layout";
 import { Form, Col, Row, Dropdown, Button, InputGroup } from "react-bootstrap";
 import { Input } from "postcss";
 import DatePicker from "react-flatpickr";
-import { MdAddBox, MdCalendarMonth, MdCheck, MdOutlineClose } from "react-icons/md";
+import { MdAddBox, MdCalendarMonth, MdCheck, MdClose, MdOutlineClose } from "react-icons/md";
 
 
 
@@ -45,7 +45,7 @@ export default function Voucherform() {
 
                     <Col xs={6}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Supplier</Form.Label>
+                            <Form.Label>Supplier Name</Form.Label>
                             <Form.Control type="email" placeholder="Enter name " className="rounded-2" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -103,6 +103,8 @@ export default function Voucherform() {
                                 <th scope="col">Total GWT</th>
                                 <th scope="col">Total PKT.</th>
                                 <th scope="col">PKT Receiver</th>
+                                <th scope="col" style={{width: '5%'}}></th>
+
 
 
                             </tr>
@@ -145,7 +147,7 @@ export default function Voucherform() {
                                         <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
-                                <td><button type="button"><MdCheck /></button></td>
+                                <td><button type="button" className="btn btn-success"><MdCheck /></button></td>
 
                             </tr>
                         </tbody>
@@ -189,11 +191,19 @@ export default function Voucherform() {
                                         <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
-                                <td><button type="button"><MdCheck /></button></td>
+                                <td><button type="button" className="btn btn-danger"><MdClose /></button></td>
 
                             </tr>
                         </tbody>
                     </table>
+
+                    <Row>
+                        <Col xs={12} className="justify-content-end d-flex gap-3">
+                        <button type="button" className=" btn btn-secondary btn-md bg-primary ">Cancel</button>
+                        <button type="button" className=" btn btn-primary btn-md bg-primary ">Save</button>
+
+                        </Col>
+                    </Row>
 
                 </Row>
 
