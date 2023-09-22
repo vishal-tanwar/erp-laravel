@@ -1,30 +1,36 @@
 import React, { useState } from "react";
-
 import "./style.scss";
 import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
 
-
-export default function List() {
-
+export default function SubGroup() {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     return (
-        <Layout title="Store List" hideBanner>
-            <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow}> Create Store</button>
+        <Layout title="Sub Groups" hideBanner>
+            <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow} > Add Sub Groups</button>
 
             <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title className="fs-2">Store Name</Modal.Title>
-                </Modal.Header>
                 <Modal.Body className="pb-3">
-                    <h2 className="fs-4">Add Store Name</h2>
-                    <InputGroup className="my-2">
-                        <Form.Control 
-                        placeholder="Store Name"/>
+                    <h2 className="fs-4">Sub Group</h2>
+                    <Dropdown className="my-2">
+                        <Dropdown.Toggle className="btn-light border" id="dropdown-basic">
+                            Select Group Name
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu className="bg-dark-subtle">
+                            <Dropdown.Item >A.B.C</Dropdown.Item>
+                            <Dropdown.Item >A.B.C</Dropdown.Item>
+                            <Dropdown.Item >A.B.C</Dropdown.Item>
+                            <Dropdown.Item className="text">All</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <InputGroup className="my-3">
+                        <Form.Control
+                            placeholder="Sub Group" />
                     </InputGroup>
                 </Modal.Body>
                 <Modal.Footer>
@@ -32,37 +38,12 @@ export default function List() {
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleClose}>
-                        Save Changes
+                        Add Sub Group
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <Row className="border-2 my-4">
-                <Col xs={12}>
-                    <h2 className="fs-3 m-2 px-4"><b>Store Summary </b></h2>
-                </Col>
-                <Col xs={12}>
-                    <Row className="summary-bar">
-                        <Col xs={3} className="text-center">
-                            <h4 className="fs-2">21</h4>
-                            <h4 className="mt-3">Total Item</h4>
-                        </Col>
-                        <Col xs={3} className="text-center green">
-                            <h4 className="fs-2">13</h4>
-                            <h4 className="mt-3">Available Stock</h4>
-                        </Col>
-                        <Col xs={3} className="text-center">
-                            <h4 className="fs-2">1</h4>
-                            <h4 className="mt-3">About to Stock out</h4>
-                        </Col>
-                        <Col xs={3} className="text-center red">
-                            <h4 className="fs-2">11</h4>
-                            <h4 className="mt-3">Out of Stock</h4>
-                        </Col>
-                    </Row>
-                </Col>
 
-            </Row>
-            <div>
+            <div className="my-3">
                 <Row>
                     <Col xs={5}>
                         <div className="d-flex gap-3">
@@ -119,14 +100,10 @@ export default function List() {
                                     </tr>
                                     <tr className="text-center">
                                         <th scope="col"> <Form.Check type="checkbox" /></th>
-                                        <th scope="col">Sr. No.</th>
-                                        <th scope="col">Store Name</th>
-                                        <th scope="col">Total Item</th>
-                                        <th scope="col">Available Item</th>
-                                        <th scope="col">About to Stock Out</th>
-                                        <th scope="col">Out of Stock</th>
+                                        <th scope="col">Sr. No. </th>
+                                        <th scope="col">Group Name</th>
+                                        <th scope="col">Sub Group Name</th>
                                         <th scope="col">Action</th>
-                                        <th scope="col">Go to Store</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
@@ -136,16 +113,11 @@ export default function List() {
                                         </td>
                                         <td>1</td>
                                         <td>A.B.C Pvt Ltd</td>
-                                        <td>Total Item</td>
-                                        <td>Available Item</td>
-                                        <td>About to Stock</td>
-                                        <td>Out of Stock</td>
+                                        <td>D.E.F Pvt Ltd</td>
+
                                         <td className="d-flex justify-content-evenly">
-                                            <button type="button" className="btn btn-success btn-sm rounded shadow w-16">Edit</button>
-                                            <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
-                                        </td>
-                                        <td>
-                                            <button type="button" className="btn btn-primary btn-sm rounded shadow ">Go to Store</button>
+                                            <button type="button" className="btn btn-success btn-sm rounded shadow w-25">Edit</button>
+                                            <button type="button" className="btn btn-danger btn-sm rounded shadow w-25">Delete</button>
                                         </td>
 
                                     </tr>

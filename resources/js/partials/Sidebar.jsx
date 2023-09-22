@@ -29,19 +29,13 @@ function Sidebar({ isSidebarOpen }) {
 
           <NavLink title="Customer" to={route.get('customer')} Icon={<MdPerson />} />
 
-          <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>} activeName='stores'>
-              <DropdownItem title="Add New" to='#' />
-              <DropdownItem title="List" to={route.get('store.list')} />
-          </Dropdown>
+          <NavLink title="Stores" Icon={<BiSolidStoreAlt/>} to={route.get('store.list')} />
 
           <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='items'>
-              <DropdownItem title="Items List"></DropdownItem>
-              <DropdownItem title="Units"></DropdownItem>
-              <DropdownItem title="Groups"></DropdownItem>
-              <DropdownItem title="Sub Group"></DropdownItem>
-              <DropdownItem title="Grades"></DropdownItem>
-              <DropdownItem title="Sizes"></DropdownItem>
-              <DropdownItem title="Parts"></DropdownItem>
+              <DropdownItem title="Items List" to={route.get('item_master.item_list')}></DropdownItem>
+              <DropdownItem title="Units" to={route.get('item_master.units')} ></DropdownItem>
+              <DropdownItem title="Groups"  to={route.get('item_master.group')}></DropdownItem>
+              <DropdownItem title="Sub Group" to={route.get('item_master.sub_group')}></DropdownItem>
           </Dropdown>
 
           <NavLink title="Suppliers" to={route.get('supplier')} Icon={<IconSupplier />} />
