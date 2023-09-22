@@ -15,6 +15,7 @@ import RMInventory from "../components/Inventory/R.M/RMInventory";
 import Customer from "../pages/Customer";
 import List from "../pages/Stores/List";
 import StoreView from "../pages/Stores/Screens/StoreView";
+import voucherform from "../pages/voucherform";
 
 
 export function route(path) {
@@ -163,6 +164,12 @@ export const Endpoints = [
         component: StoreView,
         exact: true,
         name: "store.vouchers.create"
+    },
+    {
+        path: route("/Voucherform"),
+        component: voucherform,
+        exact: true,
+        name: "Voucherform"
     },
 
 ]

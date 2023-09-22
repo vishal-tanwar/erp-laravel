@@ -8,13 +8,18 @@ button, [type='button'], [type='reset'], [type='submit'], .btn {
 
     &:not(.swal2-styled) {
 
-        
+
         background-color: var( --bs-btn-bg) !important;
-        
+
         &:hover{
             color: var(--bs-btn-hover-color) !important;
             background-color: var(--bs-btn-hover-bg) !important;
             border-color: var(--bs-btn-hover-border-color) !important;
         }
     }
+}
+
+
+.border-gray-600{
+    border-color: #6b7280 !important;
 }
