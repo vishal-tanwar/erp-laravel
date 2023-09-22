@@ -9,6 +9,7 @@ import Units from "../pages/ItemMaster/Units";
 import Group from "../pages/ItemMaster/Group";
 import SubGroup from "../pages/ItemMaster/SubGroup";
 import ItemList from "../pages/ItemMaster/ItemList";
+import AddItem from "../pages/ItemMaster/AddItem";
 
 
 export function route(path) {
@@ -117,6 +118,12 @@ export const Endpoints = [
         component: ItemList,
         exact: true,
         name: "item_master.item_list"
+    },
+    {
+        path: route("item_master/add_item"),
+        component: AddItem,
+        exact: true,
+        name: "item_master.add_item"
     },
 
 ]
