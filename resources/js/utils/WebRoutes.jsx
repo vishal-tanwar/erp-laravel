@@ -1,6 +1,5 @@
-import SupplierRegister from "../components/Supplier/SupplierRegister";
+
 import Dashboard from "../pages/Dashboard";
-import AddSupplier from '../components/Supplier/AddSupplier';
 import Customer from "../pages/Customer";
 import List from "../pages/Stores/List";
 import StoreView from "../pages/Stores/Screens/StoreView";
@@ -48,18 +47,6 @@ export const Endpoints = [
         component: Dashboard,
         exact: true,
         name: "dashboard"
-    },
-    {
-        path: route("/supplier/registration"),
-        component: SupplierRegister,
-        exact: true,
-        name: "supplier"
-    },
-    {
-        path: route("supplier/addSupplier"),
-        component: AddSupplier,
-        exact: true,
-        name: 'supplier.add'
     },
     
     {
