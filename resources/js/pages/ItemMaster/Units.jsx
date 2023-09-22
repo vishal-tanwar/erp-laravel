@@ -14,14 +14,11 @@ export default function Units(){
              <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow} > Add Units</button>
 
              <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title className="fs-2">Units</Modal.Title>
-                </Modal.Header>
                 <Modal.Body className="pb-3">
-                    <h2 className="fs-4">Add Units</h2>
+                    <h2 className="fs-4">Unit Name</h2>
                     <InputGroup className="my-2">
                         <Form.Control 
-                        placeholder="Add Units"/>
+                        placeholder="Unit Name"/>
                     </InputGroup>
                 </Modal.Body>
                 <Modal.Footer>
@@ -29,7 +26,7 @@ export default function Units(){
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleClose}>
-                        Save Changes
+                        Add Unit
                     </Button>
                 </Modal.Footer>
             </Modal>

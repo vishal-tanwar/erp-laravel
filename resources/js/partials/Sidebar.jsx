@@ -29,10 +29,7 @@ function Sidebar({ isSidebarOpen }) {
 
           <NavLink title="Customer" to={route.get('customer')} Icon={<MdPerson />} />
 
-          <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>} activeName='stores'>
-              <DropdownItem title="Add New" to='#' />
-              <DropdownItem title="List" to={route.get('store.list')} />
-          </Dropdown>
+          <NavLink title="Stores" Icon={<BiSolidStoreAlt/>} to={route.get('store.list')} />
 
           <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='items'>
               <DropdownItem title="Items List"></DropdownItem>

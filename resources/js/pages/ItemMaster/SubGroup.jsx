@@ -1,27 +1,36 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import "./style.scss";
 import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
 
-export default function SubGroup(){
+export default function SubGroup() {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    return(
+    return (
         <Layout title="Sub Groups" hideBanner>
-             <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow} > Add Sub Groups</button>
+            <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow} > Add Sub Groups</button>
 
-             <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title className="fs-2">Sub Groups</Modal.Title>
-                </Modal.Header>
+            <Modal show={show} onHide={handleClose}>
                 <Modal.Body className="pb-3">
-                    <h2 className="fs-4">Add Sub Groups</h2>
-                    <InputGroup className="my-2">
-                        <Form.Control 
-                        placeholder="Add Sub Groups"/>
+                    <h2 className="fs-4">Sub Group</h2>
+                    <Dropdown className="my-2">
+                        <Dropdown.Toggle className="btn-light border" id="dropdown-basic">
+                            Select Group Name
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu className="bg-dark-subtle">
+                            <Dropdown.Item >A.B.C</Dropdown.Item>
+                            <Dropdown.Item >A.B.C</Dropdown.Item>
+                            <Dropdown.Item >A.B.C</Dropdown.Item>
+                            <Dropdown.Item className="text">All</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <InputGroup className="my-3">
+                        <Form.Control
+                            placeholder="Sub Group" />
                     </InputGroup>
                 </Modal.Body>
                 <Modal.Footer>
@@ -29,7 +38,7 @@ export default function SubGroup(){
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleClose}>
-                        Save Changes
+                        Add Sub Group
                     </Button>
                 </Modal.Footer>
             </Modal>

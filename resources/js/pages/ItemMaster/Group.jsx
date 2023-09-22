@@ -14,14 +14,11 @@ export default function Group(){
              <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow} > Add Groups</button>
 
              <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title className="fs-2">Groups</Modal.Title>
-                </Modal.Header>
                 <Modal.Body className="pb-3">
-                    <h2 className="fs-4">Add Groups</h2>
+                    <h2 className="fs-4">Group Name</h2>
                     <InputGroup className="my-2">
                         <Form.Control 
-                        placeholder="Add Groups"/>
+                        placeholder="Group Name"/>
                     </InputGroup>
                 </Modal.Body>
                 <Modal.Footer>
@@ -29,7 +26,7 @@ export default function Group(){
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleClose}>
-                        Save Changes
+                        Add Group Name
                     </Button>
                 </Modal.Footer>
             </Modal>
