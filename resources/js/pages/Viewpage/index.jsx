@@ -4,16 +4,15 @@ import Layout from "../../partials/Layout";
 import { Form, Col, Row, Dropdown, Button, InputGroup } from "react-bootstrap";
 import { Input } from "postcss";
 import DatePicker from "react-flatpickr";
-import { MdAddBox, MdCalendarMonth, MdCheck, MdClose, MdOutlineClose } from "react-icons/md";
+import { MdAddBox, MdCalendarMonth, MdCheck, MdOutlineClose } from "react-icons/md";
 
 
 
-export default function Voucherform() {
-
+export default function Viewpage() {
     const [date, setDate] = React.useState(new Date());
 
     return (
-        <Layout title=" R.M Receiving Voucher" hideBanner>
+        <Layout title="View Voucher" hideBanner>
             <Form>
                 <Row>
                     <Col xs={6} >
@@ -45,7 +44,7 @@ export default function Voucherform() {
 
                     <Col xs={6}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Supplier Name</Form.Label>
+                            <Form.Label>Supplier</Form.Label>
                             <Form.Control type="email" placeholder="Enter name " className="rounded-2" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -80,15 +79,7 @@ export default function Voucherform() {
 
                     </Col>
                 </Row>
-                <Row>
-                    <Col xs="4">
-                        <Form.Select>
-                            <option value={false}> Select to add Item</option>
 
-                        </Form.Select>
-
-                    </Col>
-                </Row>
 
                 <Row className="my-4">
                     <table className="table  table-bordered  table-responsive">
@@ -103,9 +94,7 @@ export default function Voucherform() {
                                 <th scope="col">Total GWT</th>
                                 <th scope="col">Total PKT.</th>
                                 <th scope="col">PKT Receiver</th>
-                                <th scope="col" style={{width: '5%'}}></th>
-
-
+                                <th scope="col" style={{width: '12%'}}></th>
 
                             </tr>
                         </thead>
@@ -114,11 +103,6 @@ export default function Voucherform() {
 
                                 <td>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
-                                    </Form.Group>
-                                </td>
-                                <td>
-                                    <Form.Group className="mb-3" controlId="formBasicEmail">
                                         <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
@@ -139,7 +123,7 @@ export default function Voucherform() {
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
+                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
@@ -147,22 +131,22 @@ export default function Voucherform() {
                                         <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
-                                <td><button type="button" className="btn btn-success"><MdCheck /></button></td>
+                                <td>
+                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                    </Form.Group>
+                                </td>
+                                <td><button type="button" className=" btn btn-primary btn-sm bg-primary ">View Barcode</button>
+                                </td>
 
                             </tr>
                         </tbody>
-
 
                         <tbody className="text-center">
                             <tr className="text-center">
 
                                 <td>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
-                                    </Form.Group>
-                                </td>
-                                <td>
-                                    <Form.Group className="mb-3" controlId="formBasicEmail">
                                         <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
@@ -183,7 +167,7 @@ export default function Voucherform() {
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
+                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
@@ -191,19 +175,17 @@ export default function Voucherform() {
                                         <Form.Control type="email" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
-                                <td><button type="button" className="btn btn-danger"><MdClose /></button></td>
+                                <td>
+                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                    </Form.Group>
+                                </td>
+                                <td><button type="button" className=" btn btn-primary btn-sm bg-primary ">View Barcode</button>
+                                </td>
 
                             </tr>
                         </tbody>
                     </table>
-
-                    <Row>
-                        <Col xs={12} className="justify-content-end d-flex gap-3">
-                        <button type="button" className=" btn btn-secondary btn-md bg-primary ">Cancel</button>
-                        <button type="button" className=" btn btn-primary btn-md bg-primary ">Save</button>
-
-                        </Col>
-                    </Row>
 
                 </Row>
 
