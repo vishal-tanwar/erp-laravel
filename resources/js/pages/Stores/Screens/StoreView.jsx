@@ -29,7 +29,7 @@ export default function StoreView() {
                                 </Col>
 
                                 <Col xs={6}>
-                                <button type="button" className=" btn btn-success btn-sm bg-primary "> Issuance Voucher</button>
+                                <Link to="/Issuancevoucher"><button type="button" className=" btn btn-success btn-sm bg-primary"> Issuance Voucher</button></Link>
 
                                 </Col>
                                 <Col xs={4} className="d-flex justify-content-end">

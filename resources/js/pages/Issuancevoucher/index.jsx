@@ -5,8 +5,10 @@ import Layout from "../../partials/Layout";
 
 export default function Issuancevoucher(){
     return(
-        <Layout>
+        <Layout title="Issuance Voucher" hideBanner>
+
             
+
         </Layout>
     )
 }
