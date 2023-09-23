@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { route } from '../utils/WebRoutes';
-import { MdDashboard, MdPerson, MdSettings } from 'react-icons/md';
+import { MdDashboard, MdHighQuality, MdPerson, MdSettings } from 'react-icons/md';
 import IconSupplier from '../Icons/IconSupplier';
 import { Dropdown, Nav, NavLink, DropdownItem } from '../components/Nav';
 import {BiSolidPurchaseTag, BiSolidStoreAlt} from 'react-icons/bi'
@@ -52,7 +52,7 @@ function Sidebar({ isSidebarOpen }) {
 
           <NavLink title="Gate Entry" to={route.get('supplier')} Icon={<GiEntryDoor />} />
 
-          <NavLink title="Quality" to={route.get('supplier')} Icon={<RiEqualizerFill />} />
+          <NavLink title="Quality" to={route.get('supplier')} Icon={<MdHighQuality />} />
 
           <Dropdown title="Setting" Icon={<MdSettings/>}>
               <DropdownItem title="Items List"></DropdownItem>
