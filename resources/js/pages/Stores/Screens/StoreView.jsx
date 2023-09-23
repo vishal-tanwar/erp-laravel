@@ -25,7 +25,7 @@ export default function StoreView() {
                             <Row>
 
                                 <Col xs={2}>
-                                    <Link to="/Voucherform"><button type="button" className=" btn btn-primary btn-sm bg-primary "> Receiving Voucher</button></Link>
+                                    <Link to={route.get('store.vouchers.create', { name: params.name })} className=" btn btn-primary btn-sm bg-primary"> Receiving Voucher</Link>
                                 </Col>
 
                                 <Col xs={6}>
