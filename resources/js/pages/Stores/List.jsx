@@ -25,7 +25,7 @@ export default function List() {
                 <Modal.Body className="pb-3">
                     <h2 className="fs-4">Add Store Name</h2>
                     <InputGroup className="my-2">
-                        <Form.Control 
+                        <Form.Control
                         placeholder="Store Name"/>
                     </InputGroup>
                 </Modal.Body>
@@ -148,6 +148,29 @@ export default function List() {
                                         </td>
                                         <td>
                                             <Link type="button" to={route.get('store.vouchers', {name: 'rm'})} className="btn btn-primary btn-sm rounded shadow ">Go to Store</Link>
+                                        </td>
+
+                                    </tr>
+
+
+                                </tbody>
+                                <tbody className="text-center">
+                                    <tr className="text-center">
+                                        <td>
+                                            <Form.Check type="checkbox" />
+                                        </td>
+                                        <td>1</td>
+                                        <td>A.B.C Pvt Ltd</td>
+                                        <td>Total Item</td>
+                                        <td>Available Item</td>
+                                        <td>About to Stock</td>
+                                        <td>Out of Stock</td>
+                                        <td className="d-flex justify-content-evenly">
+                                            <button type="button" className="btn btn-success btn-sm rounded shadow w-16">Edit</button>
+                                            <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
+                                        </td>
+                                        <td>
+                                            <Link type="button" to={route.get('BOP', {name: 'BOP'})} className="btn btn-primary btn-sm rounded shadow ">Go to Store</Link>
                                         </td>
 
                                     </tr>

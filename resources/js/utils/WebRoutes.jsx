@@ -13,6 +13,7 @@ import Viewpage from "../pages/Viewpage";
 import Editpage from "../pages/Editpage";
 import Issuancevoucher from "../pages/Issuancevoucher";
 import AddItem from "../pages/ItemMaster/AddItem";
+import BOP from "../pages/BOP";
 
 
 export function route(path) {
@@ -104,6 +105,12 @@ export const Endpoints = [
         component: Editpage,
         exact: true,
         name: "Editpage"
+    },
+    {
+        path: route("/BOP"),
+        component: BOP,
+        exact: true,
+        name: "BOP"
     },
     {
         path: route("/Issuancevoucher"),
