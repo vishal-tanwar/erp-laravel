@@ -32,7 +32,7 @@ function Sidebar({ isSidebarOpen }) {
 
           <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>} activeName='store'>
               <DropdownItem title="List"  to={route.get('store.list')}></DropdownItem>
-              <DropdownItem title="Location"></DropdownItem>
+              <DropdownItem title="Location" to={route.get('store.location')}></DropdownItem>
           </Dropdown>
 
           <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='items'>
