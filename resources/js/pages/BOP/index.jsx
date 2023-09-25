@@ -1,15 +1,13 @@
 import React from "react";
 import "./style.scss";
-import Layout from "../../../partials/Layout";
+import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Button } from "react-bootstrap";
-import { BsCaretDownFill } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
-import { route } from "../../../utils/WebRoutes";
-import NotFound from "../../NotFound";
+import { route } from "../../utils/WebRoutes";
 import { MdFilterAlt, MdOutlinePrint, MdOutlineSearch } from "react-icons/md";
 
 
-export default function StoreView() {
+export default function BOP() {
 
     const params = useParams();
 
@@ -17,10 +15,8 @@ export default function StoreView() {
     return (
 
         <>
-            {
-                params.name != 'rm'
-                    ? <NotFound />
-                    : <Layout hideBanner className="pt-0">
+
+                    <Layout hideBanner className="pt-0">
                         <Col xs={12}>
                             <Row>
 
@@ -29,7 +25,7 @@ export default function StoreView() {
                                 </Col>
 
                                 <Col xs={6}>
-                                <Link to="/Issuancevoucher"><button type="button" className=" btn btn-success btn-sm bg-primary"> Issuance Voucher</button></Link>
+                                    <Link to="/Issuancevoucher"><button type="button" className=" btn btn-success btn-sm bg-primary"> Issuance Voucher</button></Link>
 
                                 </Col>
                                 <Col xs={4} className="d-flex justify-content-end">
@@ -41,7 +37,7 @@ export default function StoreView() {
                         </Col>
                         <Row className="border-2 my-4">
                             <Col xs={12}>
-                                <h2 className="fs-3 m-2 px-4"><b>R.M Summary </b></h2>
+                                <h2 className="fs-3 m-2 px-4"><b>B.O.P Summary </b></h2>
                             </Col>
                             <Col xs={12}>
                                 <Row className="summary-bar">
@@ -144,7 +140,7 @@ export default function StoreView() {
                                         <td>1</td>
                                         <td></td>
                                         <td></td>
-                                        <td>12-09-23</td>
+                                        <td>Received Date</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -172,7 +168,7 @@ export default function StoreView() {
                                         <td>2</td>
                                         <td></td>
                                         <td></td>
-                                        <td>12-09-23</td>
+                                        <td>Received Date</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -203,10 +199,11 @@ export default function StoreView() {
 
                         </Row>
                     </Layout>
-            }
+
         </>
     )
 }
+
 
 
 
