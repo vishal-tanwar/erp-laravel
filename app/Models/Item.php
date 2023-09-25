@@ -11,15 +11,25 @@ class Item extends Model
 
 
     protected $fillable = [
-        "code",
         "name",
         "size",
         "part",
         "grade",
-        "barcode",
         "group",
         "sub_group",
+        "store_id",
         "unit",
-        "description",
+        "suppliers"
     ];
+
+
+    public function group() {
+        return $this->belongsTo(Group::class, 'group');
+    }
+    public function sub_group() {
+        return $this->belongsTo(SubGroup::class, 'sub_group');
+    }
+    public function unit() {
+        return $this->belongsTo(Unit::class, 'unit');
+    }
 }

@@ -2,7 +2,6 @@ import SupplierRegister from "../components/Supplier/SupplierRegister";
 import Dashboard from "../pages/Dashboard";
 import AddSupplier from '../components/Supplier/AddSupplier';
 import Customer from "../pages/Customer";
-import List from "../pages/Stores/List";
 import StoreView from "../pages/Stores/Screens/StoreView";
 import Voucherform from "../pages/voucherform";
 import Units from "../pages/ItemMaster/Units";
@@ -15,6 +14,7 @@ import Issuancevoucher from "../pages/Issuancevoucher";
 import AddItem from "../pages/ItemMaster/AddItem";
 import Location from "../pages/Stores/Location";
 import BOP from "../pages/BOP";
+import Stores from "../pages/Stores";
 
 
 export function route(path) {
@@ -78,7 +78,7 @@ export const Endpoints = [
 
     {
         path: route("stores"),
-        component: List,
+        component: Stores,
         exact: true,
         name: "store.list"
     },
@@ -138,13 +138,13 @@ export const Endpoints = [
         name: "item_master.sub_group"
     },
     {
-        path: route("item_master/item_list"),
+        path: route("item_master/items"),
         component: ItemList,
         exact: true,
         name: "item_master.item_list"
     },
     {
-        path: route("item_master/add_item"),
+        path: route("item_master/item/add"),
         component: AddItem,
         exact: true,
         name: "item_master.add_item"

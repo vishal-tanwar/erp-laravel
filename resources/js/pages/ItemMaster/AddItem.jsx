@@ -3,9 +3,15 @@ import "./style.scss";
 import Layout from "../../partials/Layout";
 import { Form, Col, Row } from "react-bootstrap";
 import Select from 'react-select'
+import { useNavigate } from "react-router-dom";
+import { route } from "../../utils/WebRoutes";
+import Swal from "sweetalert2";
 
 
 export default function AddItem() {
+
+    const navigate = useNavigate();
+
     const [name, setName] = useState('')
     const [part, setPart] = useState('')
     const [grade, setGrade] = useState('')
@@ -66,18 +72,32 @@ export default function AddItem() {
     }, []);
 
 
-    const handleAdd = ( ) => {
+    const handleAdd = event => {
+        event.preventDefault();
         const postData = {
             name,part,grade,size,store_id,unit,group,sub_group,
-            suppliers: suppliers.join(',')
+            suppliers: `${suppliers.join(',')}`
         }
 
-        axios.post('item', postData);
+        axios.post('item', postData).then( res => {
+            Swal.fire({
+                toast: true,
+                title: "Success!",
+                icon: 'success',
+                text: res.data.message,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+            });
+
+            navigate(route.get('item_master.item_list'))
+        });
     }
 
     return (
         <Layout title="Add Item" hideBanner>
-            <Form>
+            <Form onSubmit={e => {  handleAdd(e)  }}>
                 <Row className="mx-1">
                     <Col xs={6}>
                         <Form.Group>
@@ -141,7 +161,7 @@ export default function AddItem() {
                         />
                     </Col>
                     <Col xs={6}>
-                        <Select options={unitOptions} value={unit} onChange={ e => setUnit(e.value)} />
+                        <Select options={unitOptions}  onChange={ e => setUnit(e.value)} />
                     </Col>
                 </Row>
                 <Row className="mx-1">
@@ -150,13 +170,12 @@ export default function AddItem() {
                 </Row>
                 <Row className="p-2  my-1">
                     <Col xs={6}>
-                        <Select options={groupOptions} value={group} onChange={e => { 
+                        <Select options={groupOptions}  onChange={e => { 
                             setGroup( e.value );
-                            console.log( group )
                             }}/>
                     </Col>
                     <Col xs={6}>
-                        <Select options={subGroupOptions} value={sub_group} onChange={e => setSubGroup(e.value)} />
+                        <Select options={subGroupOptions} onChange={e => setSubGroup(e.value)} />
                     </Col>
                 </Row>
                 <Row>
@@ -169,7 +188,7 @@ export default function AddItem() {
                     </Col>
                 </Row>
                 <div className="text-right">
-                    <button className="btn btn-primary btn-lg bg-primary mt-5" onClick={handleAdd}> Add Sub Groups</button>
+                    <button className="btn btn-primary btn-lg bg-primary mt-5" > Save</button>
                 </div>
             </Form>
         </Layout>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./style.scss";
 import Layout from "../../partials/Layout";
@@ -6,14 +6,40 @@ import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-boots
 import { MdOutlineSearch } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { route } from "../../utils/WebRoutes";
+import axios from "axios";
 
 
-export default function List() {
+export default function Stores() {
 
     const [show, setShow] = useState(false);
+    const [name, setName] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+
+    const [stores, setStores] = useState([]);
+
+
+    const handleCreate = () => {
+
+        axios.post('store', { name }).then(res => {
+
+            setStores(prev => [...prev, res.data.data])
+
+            handleClose();
+        });
+    }
+
+
+    useEffect(() => {
+        axios.get('stores').then(res => {
+            const response = res.data;
+
+            setStores(response.data.stores);
+        })
+    }, []);
+
     return (
         <Layout title="Store List" hideBanner>
             <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow}> Create Store</button>
@@ -26,14 +52,14 @@ export default function List() {
                     <h2 className="fs-4">Add Store Name</h2>
                     <InputGroup className="my-2">
                         <Form.Control
-                        placeholder="Store Name"/>
+                            placeholder="Store Name" value={name} onChange={e => setName(e.target.value)} />
                     </InputGroup>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleCreate}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
@@ -132,51 +158,35 @@ export default function List() {
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
-                                    <tr className="text-center">
-                                        <td>
-                                            <Form.Check type="checkbox" />
-                                        </td>
-                                        <td>1</td>
-                                        <td>A.B.C Pvt Ltd</td>
-                                        <td>Total Item</td>
-                                        <td>Available Item</td>
-                                        <td>About to Stock</td>
-                                        <td>Out of Stock</td>
-                                        <td className="d-flex justify-content-evenly">
-                                            <button type="button" className="btn btn-success btn-sm rounded shadow w-16">Edit</button>
-                                            <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
-                                        </td>
-                                        <td>
-                                            <Link type="button" to={route.get('store.vouchers', {name: 'rm'})} className="btn btn-primary btn-sm rounded shadow ">Go to Store</Link>
-                                        </td>
 
-                                    </tr>
+                                    {
+                                        stores.map((store, index) => {
+                                            return (
+                                                <tr className="text-center">
+                                                    <td>
+                                                        <Form.Check type="checkbox" value={store.id} />
+                                                    </td>
+                                                    <td>{++index}</td>
+                                                    <td>{store.name}</td>
+                                                    <td>Total Item</td>
+                                                    <td>Available Item</td>
+                                                    <td>About to Stock</td>
+                                                    <td>Out of Stock</td>
+                                                    <td className="d-flex justify-content-evenly">
+                                                        <button type="button" className="btn btn-success btn-sm rounded shadow w-16">Edit</button>
+                                                        <button type="button" className="btn btn-danger btn-sm rounded shadow">Delete</button>
+                                                    </td>
+                                                    <td>
+                                                        <Link type="button" to={route.get('store.vouchers', { name: store.slug })} className="btn btn-primary btn-sm rounded shadow ">Go to Store</Link>
+                                                    </td>
 
-
-                                </tbody>
-                                <tbody className="text-center">
-                                    <tr className="text-center">
-                                        <td>
-                                            <Form.Check type="checkbox" />
-                                        </td>
-                                        <td>1</td>
-                                        <td>A.B.C Pvt Ltd</td>
-                                        <td>Total Item</td>
-                                        <td>Available Item</td>
-                                        <td>About to Stock</td>
-                                        <td>Out of Stock</td>
-                                        <td className="d-flex justify-content-evenly">
-                                            <button type="button" className="btn btn-success btn-sm rounded shadow w-16">Edit</button>
-                                            <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
-                                        </td>
-                                        <td>
-                                            <Link type="button" to={route.get('BOP', {name: 'BOP'})} className="btn btn-primary btn-sm rounded shadow ">Go to Store</Link>
-                                        </td>
-
-                                    </tr>
-
+                                                </tr>
+                                            );
+                                        })
+                                    }
 
                                 </tbody>
+                                
                             </table>
                         </div>
                     </Col>

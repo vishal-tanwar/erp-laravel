@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
 import Layout from "../../partials/Layout";
 import { Form, Col, Row, Dropdown} from "react-bootstrap";
@@ -8,10 +8,15 @@ import { route } from "../../utils/WebRoutes";
 import DropdownFilter from "../../components/DropdownFilter";
 
 export default function ItemList() {
-    const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [items, setItems] = useState([]);
+
+    useEffect( () => {
+        axios.get('items').then( res => {
+            setItems( res.data.data.items );
+        })
+    }, []);
+
     return (
         <Layout title="Item List" hideBanner>
             <Row>
@@ -96,21 +101,26 @@ export default function ItemList() {
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
-                                    <tr className="text-center">
-                                        <td>
-                                            <Form.Check type="checkbox" />
-                                        </td>
-                                        <td>1</td>
-                                        <td>Item</td>
-                                        <td>Store</td>
-                                        <td>Part</td>
-                                        <td>Grade</td>
-                                        <td>Size</td>
-                                        <td>Ava. Stock</td>
-                                        <td>Total Item</td>
-
-
-                                    </tr>
+                                    {
+                                        items.map( (item, index) => {
+                                            return (
+                                                <tr className="text-center" key={++index}>
+                                                    <td>
+                                                        <Form.Check type="checkbox" />
+                                                    </td>
+                                                    <td>{index}</td>
+                                                    <td>{item.name}</td>
+                                                    <td>{item.store}</td>
+                                                    <td>{item.part}</td>
+                                                    <td>{item.grade}</td>
+                                                    <td>{item.size}</td>
+                                                    <td>Ava. Stock</td>
+                                                    <td>Total Item</td>
+                                                </tr> 
+                                            )
+                                        })
+                                    }
+                                    
 
 
                                 </tbody>

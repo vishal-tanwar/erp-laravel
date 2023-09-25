@@ -5,16 +5,20 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ItemController extends Controller
 {
     public function index()
     {
+
+        $items = Item::with(['group', 'sub_group', 'unit'])->get();
+
         return response()->json([
             "status" => true,
             "code" => Response::HTTP_OK,
-            'message' => 'Groups fetched successfully',
-            'data' => ["groups" => Item::all()]
+            'message' => 'Items fetched successfully',
+            'data' => ["items" => $items ]
         ]);
     }
 
@@ -25,12 +29,12 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-
+        // return print_r( $request->all(), true);
         $item = Item::create($request->all());
         return response()->json([
             "status" => true,
             "code" => Response::HTTP_CREATED,
-            'message' => 'Group created successfully',
+            'message' => 'Item created successfully',
             'data' => $item
         ], Response::HTTP_CREATED);
     }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\GroupsController;
 use App\Http\Controllers\API\ItemController;
+use App\Http\Controllers\API\StoresController;
 use App\Http\Controllers\API\SubGroupsController;
 use App\Http\Controllers\API\SupplierController;
 use App\Http\Controllers\API\UnitsController;
@@ -73,4 +74,15 @@ Route::group(["prefix" => "v1"], function(){
         Route::match(['put', 'patch'], 'sub-group/{id}', 'update');
         Route::delete('sub-group/{id}', 'destroy');
     });
+
+
+    Route::controller(StoresController::class)->group( function(){
+        Route::get('stores', 'index');
+        Route::get('store/{id}', 'show');
+        Route::post('store', 'store' );
+        Route::match(['put', 'patch'], 'store/{id}', 'update');
+        Route::delete('store/{id}', 'destroy');
+    });
+
+
 });
