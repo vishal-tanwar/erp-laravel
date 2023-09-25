@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sub_groups', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('name');
         });
     }
 

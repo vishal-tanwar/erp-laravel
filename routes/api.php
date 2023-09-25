@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\GroupsController;
 use App\Http\Controllers\API\ItemController;
+use App\Http\Controllers\API\SubGroupsController;
 use App\Http\Controllers\API\SupplierController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\UnitsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,8 +49,28 @@ Route::group(["prefix" => "v1"], function(){
     Route::controller(ItemController::class)->group( function(){
         Route::get('items', 'index');
         Route::post('item', 'store' );
-        Route::get('item/{id}', 'show');
-        Route::match(['put', 'patch'], 'item/{id}', 'show');
-        Route::delete('item/{id}', 'show');
+        Route::match(['put', 'patch'], 'item/{id}', 'update');
+        Route::delete('item/{id}', 'destroy');
+    });
+
+    Route::controller(UnitsController::class)->group( function(){
+        Route::get('units', 'index');
+        Route::post('unit', 'store' );
+        Route::match(['put', 'patch'], 'unit/{id}', 'update');
+        Route::delete('unit/{id}', 'destroy');
+    });
+
+    Route::controller(GroupsController::class)->group( function(){
+        Route::get('groups', 'index');
+        Route::post('group', 'store' );
+        Route::match(['put', 'patch'], 'group/{id}', 'update');
+        Route::delete('group/{id}', 'destroy');
+    });
+
+    Route::controller(SubGroupsController::class)->group( function(){
+        Route::get('sub-groups', 'index');
+        Route::post('sub-group', 'store' );
+        Route::match(['put', 'patch'], 'sub-group/{id}', 'update');
+        Route::delete('sub-group/{id}', 'destroy');
     });
 });

@@ -36,7 +36,7 @@ function Sidebar({ isSidebarOpen }) {
               <DropdownItem title="Location"></DropdownItem>
           </Dropdown>
 
-          <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='items'>
+          <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='item_master'>
               <DropdownItem title="Add Item" to={route.get('item_master.add_item')}></DropdownItem>
               <DropdownItem title="Items List" to={route.get('item_master.item_list')}></DropdownItem>
               <DropdownItem title="Units" to={route.get('item_master.units')} ></DropdownItem>
@@ -44,15 +44,15 @@ function Sidebar({ isSidebarOpen }) {
               <DropdownItem title="Sub Group" to={route.get('item_master.sub_group')}></DropdownItem>
           </Dropdown>
          
-          <NavLink title="Suppliers" to={route.get('supplier')} Icon={<IconSupplier />} />
+          <NavLink title="Suppliers" to="#" Icon={<IconSupplier />} />
 
           <Dropdown title="Purchase" Icon={<BiSolidPurchaseTag/>} activeName='purchase'>
               <DropdownItem title="Schedule"></DropdownItem>
           </Dropdown>
 
-          <NavLink title="Gate Entry" to={route.get('supplier')} Icon={<GiEntryDoor />} />
+          <NavLink title="Gate Entry" to="#" Icon={<GiEntryDoor />} />
 
-          <NavLink title="Quality" to={route.get('supplier')} Icon={<MdHighQuality />} />
+          <NavLink title="Quality" to="#" Icon={<MdHighQuality />} />
 
           <Dropdown title="Setting" Icon={<MdSettings/>}>
               <DropdownItem title="Items List"></DropdownItem>

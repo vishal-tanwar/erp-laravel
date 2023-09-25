@@ -106,7 +106,7 @@ export const Endpoints = [
         name: "Editpage"
     },
     {
-        path: route("/Issuancevoucher"),
+        path: route("/store/rm/issuance"),
         component: Issuancevoucher,
         exact: true,
         name: "Issuancevoucher"

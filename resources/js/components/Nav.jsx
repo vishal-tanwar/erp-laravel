@@ -36,7 +36,7 @@ export const Dropdown = ({ children, Icon, title, activeName, className, ...prop
     return (
         <li className={`${ isVisible ? 'showMenu' : '' } ${pathname.includes(activeName)? 'active': ''}`}>
             <div className="iocn-link" onClick={() => { setVisible(!isVisible)}}>
-                <a href="#">
+                <a href="#" onClick={ e => { e.preventDefault() }}>
                     {Icon}
                     <span className="link_name">{title}</span>
                 </a>

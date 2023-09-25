@@ -1,14 +1,47 @@
-import React, { useState }  from "react";
+import React, { useEffect, useState }  from "react";
 import "./style.scss";
 import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
+import axios from "axios";
+
+
 
 export default function Units(){
     const [show, setShow] = useState(false);
 
+    const [unitName, setUnitName ] = useState('');
+    const [units, setUnits] = useState([]);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleAddUnit = () => {
+        if( unitName !== '' ){
+            axios.post('unit', {
+                name: unitName
+            }).then( res => {
+                setUnits(prevState => [...prevState, res.data.data] );
+                handleClose();
+            });
+        }
+    }
+
+    const handleDelete = ( id ) => {
+        axios.delete(`unit/${id}`).then( res => {
+            setUnits(res.data.data);
+        });
+    }
+
+
+    useEffect( () => {
+        axios.get('/units')
+        .then( res => {
+            const response = res.data;
+            setUnits( response.data.units );
+        });
+    }, []);
+
     return(
         <Layout title="Units" hideBanner>
              <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow} > Add Units</button>
@@ -18,14 +51,14 @@ export default function Units(){
                     <h2 className="fs-4">Unit Name</h2>
                     <InputGroup className="my-2">
                         <Form.Control 
-                        placeholder="Unit Name"/>
+                            placeholder="Unit Name" value={unitName} onInput={ e => setUnitName( e.target.value ) }/>
                     </InputGroup>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleAddUnit}>
                         Add Unit
                     </Button>
                 </Modal.Footer>
@@ -94,21 +127,25 @@ export default function Units(){
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
-                                    <tr className="text-center">
-                                        <td>
-                                            <Form.Check type="checkbox" />
-                                        </td>
-                                        <td>1</td>
-                                        <td>A.B.C Pvt Ltd</td>
+                                    {
+                                        units.map((unit, i) => {
+                                            return(
+                                                <tr className="text-center" key={i}>
+                                                    <td>
+                                                        <Form.Check type="checkbox" value={unit.id} />
+                                                    </td>
+                                                    <td>{++i}</td>
+                                                    <td>{unit.name}</td>
 
-                                        <td className="d-flex justify-content-evenly">
-                                            <button type="button" className="btn btn-success btn-sm rounded shadow w-25">Edit</button>
-                                            <button type="button" className="btn btn-danger btn-sm rounded shadow w-25">Delete</button>
-                                        </td>
+                                                    <td className="d-flex justify-content-evenly">
+                                                        <button type="button" data-id={unit.id} className="btn btn-success btn-sm rounded shadow w-25">Edit</button>
+                                                        <button type="button" className="btn btn-danger btn-sm rounded shadow w-25" onClick={() => handleDelete(unit.id) }>Delete</button>
+                                                    </td>
 
-                                    </tr>
-
-
+                                                </tr>
+                                            )
+                                        })
+                                    }
                                 </tbody>
                             </table>
                         </div>

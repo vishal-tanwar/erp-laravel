@@ -3,18 +3,19 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Item;
+use App\Models\SubGroup;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-class ItemController extends Controller
+class SubGroupsController extends Controller
 {
     public function index()
     {
         return response()->json([
             "status" => true,
             "code" => Response::HTTP_OK,
-            'message' => 'Groups fetched successfully',
-            'data' => ["groups" => Item::all()]
+            'message' => 'Sub Groups fetched successfully',
+            'data' => ["groups" => SubGroup::all()]
         ]);
     }
 
@@ -26,12 +27,12 @@ class ItemController extends Controller
     public function store(Request $request)
     {
 
-        $item = Item::create($request->all());
+        $group = SubGroup::create($request->all());
         return response()->json([
             "status" => true,
             "code" => Response::HTTP_CREATED,
-            'message' => 'Group created successfully',
-            'data' => $item
+            'message' => 'Sub Group created successfully',
+            'data' => $group
         ], Response::HTTP_CREATED);
     }
 
@@ -39,7 +40,7 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Item $unit)
+    public function update(Request $request, SubGroup $unit)
     {
         //
     }
@@ -47,15 +48,15 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($item)
+    public function destroy($group)
     {
 
-        Item::destroy($item);
+        SubGroup::destroy($group);
         return response()->json([
             "status" => true,
             "code" => Response::HTTP_OK,
-            'message' => 'Item deleted successfully',
-            'data' => Item::all(),
+            'message' => 'Group deleted successfully',
+            'data' => SubGroup::all(),
         ], Response::HTTP_OK);
     }
 }

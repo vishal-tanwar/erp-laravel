@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Item;
+use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-class ItemController extends Controller
+class GroupsController extends Controller
 {
     public function index()
     {
@@ -14,7 +15,7 @@ class ItemController extends Controller
             "status" => true,
             "code" => Response::HTTP_OK,
             'message' => 'Groups fetched successfully',
-            'data' => ["groups" => Item::all()]
+            'data' => ["groups" => Group::all()]
         ]);
     }
 
@@ -26,12 +27,12 @@ class ItemController extends Controller
     public function store(Request $request)
     {
 
-        $item = Item::create($request->all());
+        $group = Group::create($request->all());
         return response()->json([
             "status" => true,
             "code" => Response::HTTP_CREATED,
             'message' => 'Group created successfully',
-            'data' => $item
+            'data' => $group
         ], Response::HTTP_CREATED);
     }
 
@@ -39,7 +40,7 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Item $unit)
+    public function update(Request $request, Group $unit)
     {
         //
     }
@@ -47,15 +48,15 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($item)
+    public function destroy($group)
     {
 
-        Item::destroy($item);
+        Group::destroy($group);
         return response()->json([
             "status" => true,
             "code" => Response::HTTP_OK,
-            'message' => 'Item deleted successfully',
-            'data' => Item::all(),
+            'message' => 'Group deleted successfully',
+            'data' => Group::all(),
         ], Response::HTTP_OK);
     }
 }

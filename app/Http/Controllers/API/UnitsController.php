@@ -3,22 +3,26 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Item;
+use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-class ItemController extends Controller
+class UnitsController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         return response()->json([
-            "status" => true,
-            "code" => Response::HTTP_OK,
-            'message' => 'Groups fetched successfully',
-            'data' => ["groups" => Item::all()]
+            "status"    => true,
+            "code"  => Response::HTTP_OK,
+            'message' => 'Units fetched successfully',
+            'data' => [ "units" => Unit::all() ]
         ]);
     }
 
-
+   
 
     /**
      * Store a newly created resource in storage.
@@ -26,20 +30,20 @@ class ItemController extends Controller
     public function store(Request $request)
     {
 
-        $item = Item::create($request->all());
+       $unit =  Unit::create($request->all());
         return response()->json([
             "status" => true,
             "code" => Response::HTTP_CREATED,
-            'message' => 'Group created successfully',
-            'data' => $item
-        ], Response::HTTP_CREATED);
+            'message' => 'Unit created successfully',
+            'data' => $unit
+        ], Response::HTTP_CREATED );
     }
 
-
+    
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Item $unit)
+    public function update(Request $request, Unit $unit)
     {
         //
     }
@@ -47,15 +51,15 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($item)
-    {
-
-        Item::destroy($item);
+    public function destroy($unit)
+    {   
+        
+        Unit::destroy( $unit );
         return response()->json([
             "status" => true,
             "code" => Response::HTTP_OK,
-            'message' => 'Item deleted successfully',
-            'data' => Item::all(),
+            'message' => 'Unit deleted successfully',
+            'data' => Unit::all(),
         ], Response::HTTP_OK);
     }
 }
