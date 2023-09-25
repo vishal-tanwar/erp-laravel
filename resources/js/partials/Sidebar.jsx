@@ -6,7 +6,6 @@ import { Dropdown, Nav, NavLink, DropdownItem } from '../components/Nav';
 import {BiSolidPurchaseTag, BiSolidStoreAlt} from 'react-icons/bi'
 import {FaCartArrowDown} from 'react-icons/fa';
 import {GiEntryDoor} from 'react-icons/gi';
-import {RiEqualizerFill} from 'react-icons/ri';
 
 function Sidebar({ isSidebarOpen }) {
 
