@@ -13,6 +13,7 @@ import Viewpage from "../pages/Viewpage";
 import Editpage from "../pages/Editpage";
 import Issuancevoucher from "../pages/Issuancevoucher";
 import AddItem from "../pages/ItemMaster/AddItem";
+import Location from "../pages/Stores/Location";
 import BOP from "../pages/BOP";
 
 
@@ -147,6 +148,13 @@ export const Endpoints = [
         component: AddItem,
         exact: true,
         name: "item_master.add_item"
+    },
+
+    {
+        path: route("stores/location"),
+        component: Location,
+        exact: true,
+        name: "store.location"
     },
 
 ]

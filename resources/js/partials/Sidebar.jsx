@@ -6,7 +6,6 @@ import { Dropdown, Nav, NavLink, DropdownItem } from '../components/Nav';
 import {BiSolidPurchaseTag, BiSolidStoreAlt} from 'react-icons/bi'
 import {FaCartArrowDown} from 'react-icons/fa';
 import {GiEntryDoor} from 'react-icons/gi';
-import {RiEqualizerFill} from 'react-icons/ri';
 
 function Sidebar({ isSidebarOpen }) {
 
@@ -33,7 +32,7 @@ function Sidebar({ isSidebarOpen }) {
 
           <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>} activeName='store'>
               <DropdownItem title="List"  to={route.get('store.list')}></DropdownItem>
-              <DropdownItem title="Location"></DropdownItem>
+              <DropdownItem title="Location" to={route.get('store.location')}></DropdownItem>
           </Dropdown>
 
           <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='items'>
