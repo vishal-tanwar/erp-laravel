@@ -4,6 +4,8 @@ import "./style.scss";
 import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { route } from "../../utils/WebRoutes";
 
 
 export default function List() {
@@ -145,7 +147,7 @@ export default function List() {
                                             <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
                                         </td>
                                         <td>
-                                            <button type="button" className="btn btn-primary btn-sm rounded shadow ">Go to Store</button>
+                                            <Link type="button" to={route.get('store.vouchers', {name: 'rm'})} className="btn btn-primary btn-sm rounded shadow ">Go to Store</Link>
                                         </td>
 
                                     </tr>
