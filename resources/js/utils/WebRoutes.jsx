@@ -3,7 +3,7 @@ import Dashboard from "../pages/Dashboard";
 import AddSupplier from '../components/Supplier/AddSupplier';
 import Customer from "../pages/Customer";
 import StoreView from "../pages/Stores/Screens/StoreView";
-import Voucherform from "../pages/voucherform";
+import Voucherform from "../pages/Voucherform";
 import Units from "../pages/ItemMaster/Units";
 import Group from "../pages/ItemMaster/Group";
 import SubGroup from "../pages/ItemMaster/SubGroup";
