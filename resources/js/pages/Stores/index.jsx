@@ -162,7 +162,7 @@ export default function Stores() {
                                     {
                                         stores.map((store, index) => {
                                             return (
-                                                <tr className="text-center">
+                                                <tr className="text-center" key={index}>
                                                     <td>
                                                         <Form.Check type="checkbox" value={store.id} />
                                                     </td>
