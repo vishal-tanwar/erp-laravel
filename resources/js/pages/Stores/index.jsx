@@ -143,9 +143,7 @@ export default function Stores() {
                         <div className="table-responsive">
                             <table className="table table-bordered table-hover">
                                 <thead>
-                                    <tr className="rm-list-thM1">
-                                    </tr>
-                                    <tr className="text-center">
+                                     <tr className="text-center">
                                         <th scope="col"> <Form.Check type="checkbox" /></th>
                                         <th scope="col">Sr. No.</th>
                                         <th scope="col">Store Name</th>

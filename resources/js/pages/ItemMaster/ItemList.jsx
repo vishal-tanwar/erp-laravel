@@ -11,6 +11,17 @@ export default function ItemList() {
 
     const [items, setItems] = useState([]);
 
+    const formatSizes = ( size ) => {
+        if (JSON.parse(size) instanceof Object ){
+            return Object.values( JSON.parse( size ) ).join('x');
+        }
+        else{
+            return size;
+        }
+    }
+
+    
+
     useEffect( () => {
         axios.get('items').then( res => {
             setItems( res.data.data.items );
@@ -110,10 +121,10 @@ export default function ItemList() {
                                                     </td>
                                                     <td>{index}</td>
                                                     <td>{item.name}</td>
-                                                    <td>{item.store}</td>
+                                                    <td>{item.store.name}</td>
                                                     <td>{item.part}</td>
                                                     <td>{item.grade}</td>
-                                                    <td>{item.size}</td>
+                                                    <td>{formatSizes( item.size )  }</td>
                                                     <td>Ava. Stock</td>
                                                     <td>Total Item</td>
                                                 </tr> 
@@ -132,3 +143,4 @@ export default function ItemList() {
         </Layout>
     )
 }
+

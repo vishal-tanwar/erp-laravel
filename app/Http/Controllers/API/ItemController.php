@@ -9,16 +9,21 @@ use Illuminate\Http\Response;
 
 class ItemController extends Controller
 {
-    public function index()
+    public function index( Request $request )
     {
 
-        $items = Item::with(['group', 'sub_group', 'unit'])->get();
+        $items = Item::with(['group', 'sub_group', 'unit', 'store']);
+
+        if($request->get('store_id')){
+            $items->where('store_id', "=", $request->get('store_id'));
+        }
+        
 
         return response()->json([
             "status" => true,
             "code" => Response::HTTP_OK,
             'message' => 'Items fetched successfully',
-            'data' => ["items" => $items ]
+            'data' => ["items" => $items->get() ],
         ]);
     }
 

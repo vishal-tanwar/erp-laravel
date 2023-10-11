@@ -3,10 +3,12 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\GroupsController;
 use App\Http\Controllers\API\ItemController;
+use App\Http\Controllers\API\LocationsController;
 use App\Http\Controllers\API\StoresController;
 use App\Http\Controllers\API\SubGroupsController;
 use App\Http\Controllers\API\SupplierController;
 use App\Http\Controllers\API\UnitsController;
+use App\Http\Controllers\API\VouchersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,8 +46,17 @@ Route::group(["prefix" => "v1"], function(){
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::get('/validate-session', [AuthController::class, "verifySession"]);
 
-    Route::resource("supplier", SupplierController::class );
 
+
+    // Route::resource("supplier", SupplierController::class );
+
+
+    Route::controller(SupplierController::class)->group( function(){
+        Route::get('suppliers', 'index');
+        Route::post('supplier', 'store' );
+        Route::match(['put', 'patch'], 'supplier/{id}', 'update');
+        Route::delete('supplier/{id}', 'destroy');
+    });
 
     Route::controller(ItemController::class)->group( function(){
         Route::get('items', 'index');
@@ -84,5 +95,21 @@ Route::group(["prefix" => "v1"], function(){
         Route::delete('store/{id}', 'destroy');
     });
 
+
+    Route::controller(VouchersController::class)->group(function(){
+        Route::get('generate_voucher_number', "generate_voucher_number");
+        Route::get('vouchers', 'index');
+        Route::post('voucher', 'store');
+        Route::get('voucher', 'view');
+        Route::match(['put', 'patch'], 'voucher/{id}', 'update');
+        Route::delete('voucher/{id}', 'destroy');
+    });
+
+    Route::controller(LocationsController::class)->group(function(){
+        Route::get('locations', 'index');
+        Route::post('location', 'store');
+        Route::match(['put', 'patch'], 'location/{id}', 'update');
+        Route::delete('location/{id}', 'destroy');
+    });
 
 });
