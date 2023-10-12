@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
-import Layout from "../../partials/Layout";
+import Layout from "../../../../partials/Layout";
 import { Form, Col, Row, InputGroup, Modal, Button } from "react-bootstrap";
 import DatePicker from "react-flatpickr";
 import { MdCalendarMonth } from "react-icons/md";
@@ -10,7 +10,7 @@ import Barcode from "react-barcode";
 
 
 
-export default function Viewpage() {
+export default function VoucherView() {
 
     String.prototype.parseInt = function () {
         return parseInt(this.valueOf());

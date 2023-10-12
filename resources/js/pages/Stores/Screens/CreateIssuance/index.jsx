@@ -1,12 +1,12 @@
 import React from "react";
 import "./style.scss";
-import Layout from "../../partials/Layout";
+import Layout from "../../../../partials/Layout";
 import { Form, Col, Row, Button, InputGroup } from "react-bootstrap";
 import DatePicker from "react-flatpickr";
 import { MdCalendarMonth, MdCheck, MdClose } from "react-icons/md";
 
 
-export default function Editpage() {
+export default function CreateIssuance() {
     const [date, setDate] = React.useState(new Date());
 
     return (

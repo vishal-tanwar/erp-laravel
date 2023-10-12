@@ -9,7 +9,7 @@ import NotFound from '../../NotFound';
 import axios from "axios";
 
 
-export default function StoreView() {
+export default function Vouchers() {
 
     const params = useParams();
     const [isFound, setIsFound] = useState(true);
@@ -24,7 +24,7 @@ export default function StoreView() {
             if (res.data.success) {
                 setStore(res.data.data);
 
-                axios.get('vouchers').then(res => {
+                axios.get('vouchers?store=' + res.data.data.id ).then(res => {
                     setVouchers(res.data.data.vouchers);
                 })
 
@@ -49,8 +49,8 @@ export default function StoreView() {
 
                             <Col xs={6} className="d-flex gap-2">
                                 <Link to={route.get('store.list')} title="Back" className="btn btn-primary btn-sm"><MdArrowBackIosNew /> Back to Stores</Link>
-                                <Link to={route.get('store.vouchers.create', { name: params.name })} className="btn btn-primary btn-sm"> Receiving Voucher</Link>
-                                <Link to={route.get('store.issuance', { name: params.name })}><button type="button" className=" btn btn-success btn-sm"> Issuance Voucher</button></Link>
+                                <Link to={route.get('store.receiving.create', { name: params.name })} className="btn btn-primary btn-sm"> Receiving Voucher</Link>
+                                <Link to={route.get('store.issuance.create', { name: params.name })}><button type="button" className=" btn btn-success btn-sm"> Issuance Voucher</button></Link>
                             </Col>
 
                             <Col xs={6} className="d-flex justify-content-end">

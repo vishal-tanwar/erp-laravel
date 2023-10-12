@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./style.scss";
-import Layout from "../../partials/Layout";
+import Layout from "../../../../partials/Layout";
 import { Form, Col, Row, Button, InputGroup } from "react-bootstrap";
 import DatePicker from "react-flatpickr";
-import {  MdCalendarMonth, MdClose } from "react-icons/md";
+import { MdCalendarMonth, MdClose } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
-import { promiseState } from "../../utils";
 import axios from "axios";
 import ReactSelect from "react-select";
 
 
 
-export default function Voucherform() {
+export default function CreateReceiving() {
 
     const navigate = useNavigate();
 
@@ -21,10 +20,10 @@ export default function Voucherform() {
     const [store, setStore] = useState([]);
     // const [isFound, setIsFound] = useState(true);
 
-    const [items, setItems ] = useState([]);
-    const [itemOptions, setItemOptions ] = useState([]);
-    const [supplierOptions, setSupplierOptions ] = useState([]);
-    const [suppliers, setSuppliers ] = useState('');
+    const [items, setItems] = useState([]);
+    const [itemOptions, setItemOptions] = useState([]);
+    const [supplierOptions, setSupplierOptions] = useState([]);
+    const [suppliers, setSuppliers] = useState('');
 
     const [locationOptions, setLocationOptions] = useState([]);
 
@@ -46,12 +45,13 @@ export default function Voucherform() {
 
 
     useEffect(() => {
-        axios.get('suppliers').then( res => {
+        axios.get('suppliers').then(res => {
             setSuppliers(res.data.data.supplier);
             const options = res.data.data.supplier.map((supplier) => {
                 return {
                     value: supplier.id,
-                    label: supplier.firm_name                }
+                    label: supplier.firm_name
+                }
             })
             setSupplierOptions(options);
         });
@@ -59,32 +59,32 @@ export default function Voucherform() {
         axios.get(`store/${params.name}`).then(res => {
 
             if (res.data.success) {
-                promiseState(res.data.data, setStore ).then(( store ) => {
-                    axios.get(`items?store_id=${store.id}`).then(res => {
-                        setItems(() => {
-                            return res.data.data.items.map( item => {
-                                item.location_id = 0
-                                item.quantity = 1; 
-                                item.total_gwt = '';
-                                item.total_pkt = '';
-                                item.pkt_receiver = '';
-                                return item;
-                            })
-                        });
-                        const options = res.data.data.items.map( item => ({
-                            value: item.id,
-                            label: item.name
-                        }) )
-                        setItemOptions(options);
+                setStore(res.data.data);
+                let store = res.data.data;
+                axios.get(`items?store_id=${store.id}`).then(res => {
+                    setItems(() => {
+                        return res.data.data.items.map(item => {
+                            item.location_id = 0
+                            item.quantity = 1;
+                            item.total_gwt = '';
+                            item.total_pkt = '';
+                            item.pkt_receiver = '';
+                            return item;
+                        })
                     });
+                    const options = res.data.data.items.map(item => ({
+                        value: item.id,
+                        label: item.name
+                    }))
+                    setItemOptions(options);
+                });
 
-                    axios.get(`locations?store_id=${store.id}`).then(res => {
-                        const options = res.data.data.locations.map(l => ({
-                            value: l.id,
-                            label: `${l.name}`
-                        }));
-                        setLocationOptions(options);
-                    });
+                axios.get(`locations?store_id=${store.id}`).then(res => {
+                    const options = res.data.data.locations.map(l => ({
+                        value: l.id,
+                        label: `${l.name}`
+                    }));
+                    setLocationOptions(options);
                 });
             }
             else {
@@ -93,24 +93,24 @@ export default function Voucherform() {
         });
     }, []);
 
-    useEffect( () => {
-        axios.get('generate_voucher_number').then( res => {
-            setVoucherNumber( res.data.data );
+    useEffect(() => {
+        axios.get('generate_voucher_number').then(res => {
+            setVoucherNumber(res.data.data);
         })
     }, []);
 
     const handleAddItem = () => {
         const currentVal = itemRef.current.getValue();
-        if (currentVal.length > 0 ) {
-            const item = items.find(item => item.id == currentVal[0].value );
-            setItemsTable( prev => [...prev, item]);
+        if (currentVal.length > 0) {
+            const item = items.find(item => item.id == currentVal[0].value);
+            setItemsTable(prev => [...prev, item]);
 
         }
 
     }
 
     const handleRemoveItem = key => {
-        setItemsTable( prev => {
+        setItemsTable(prev => {
             const updateTable = [...prev];
             updateTable.splice(key, 1);
             return updateTable;
@@ -119,10 +119,10 @@ export default function Voucherform() {
 
 
     const handleSupllier = value => {
-        const searchedSupplier = suppliers.find( supplier => supplier.id = value );
-        setAddress( searchedSupplier.address )
-        setPhone( searchedSupplier.number )
-        setSupplierID( searchedSupplier.id );
+        const searchedSupplier = suppliers.find(supplier => supplier.id = value);
+        setAddress(searchedSupplier.address)
+        setPhone(searchedSupplier.number)
+        setSupplierID(searchedSupplier.id);
     }
 
 
@@ -152,49 +152,49 @@ export default function Voucherform() {
             items: itemsTable
         }
 
-        axios.post('voucher', postData ).then( res => {
+        axios.post('voucher', postData).then(res => {
             console.log(res.data);
         })
     }
 
     const handleItemsInput = (index, name, value) => {
-    
+
         setItemsTable(prev => {
-            let searched =  prev.splice(index,1);
+            let searched = prev.splice(index, 1);
             searched[index][name] = value;
             return [...prev, ...searched];
         })
-        
+
     }
-    
+
     const handleBack = () => {
         navigate(-1);
     }
 
     return (
-        <Layout title="R.M Receiving Voucher" hideBanner showBackButton>
+        <Layout title="Create Receiving Voucher" hideBanner showBackButton>
             <Form>
                 <Row>
                     <Col xs={6} >
                         <Form.Group className="mb-3">
-                            <Form.Label>RM Voucher Number</Form.Label>
-                            <Form.Control placeholder="Voucher Number" className="rounded-2" value={voucherNumber} disabled/>
+                            <Form.Label>Voucher Number</Form.Label>
+                            <Form.Control placeholder="Voucher Number" className="rounded-2" value={voucherNumber} disabled />
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Invoice Number</Form.Label>
-                            <Form.Control placeholder="Invoice Number" className="rounded-2" value={invoiceNumber} onChange={e => setInvoiceNumber(e.target.value)}/>
+                            <Form.Control placeholder="Invoice Number" className="rounded-2" value={invoiceNumber} onChange={e => setInvoiceNumber(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Date</Form.Label>
 
                             <InputGroup>
-                                <DatePicker id="flatpickr-date" className="form-control m-0 border-end-0 rounded-2 rounded-end-0" style={{ borderColor: 'var(--bs-border-color)'}} value={date} onChange={([date]) => { setDate(date) }} />
+                                <DatePicker id="flatpickr-date" className="form-control m-0 border-end-0 rounded-2 rounded-end-0" style={{ borderColor: 'var(--bs-border-color)' }} value={date} onChange={([date]) => { setDate(date) }} />
                                 <label htmlFor="flatpickr-date" className="input-group-text  rounded-start-0 rounded-1 border-start-0 bg-body cursor-pointer"><MdCalendarMonth /> </label>
                             </InputGroup>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>E-mail</Form.Label>
-                            <Form.Control placeholder="Enter your Mail" className="rounded-2" value={email} onChange={e => setEmail(e.target.value)}/>
+                            <Form.Control placeholder="Enter your Mail" className="rounded-2" value={email} onChange={e => setEmail(e.target.value)} />
                             <Form.Text className="text-muted">
                                 We'll never share your email with anyone else.
                             </Form.Text>
@@ -213,14 +213,14 @@ export default function Voucherform() {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Address</Form.Label>
-                            <Form.Control placeholder="Enter your address " className="rounded-2" value={address} onChange={e => setAddress(e.target.value) }/>
+                            <Form.Control placeholder="Enter your address " className="rounded-2" value={address} onChange={e => setAddress(e.target.value)} />
                         </Form.Group>
 
                         <Row>
                             <Col xs={6}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>City</Form.Label>
-                                    <Form.Control placeholder="Enter Your City " className="rounded-2" value={city} onChange={ e => setCity(e.target.value)} />
+                                    <Form.Control placeholder="Enter Your City " className="rounded-2" value={city} onChange={e => setCity(e.target.value)} />
                                 </Form.Group>
                             </Col>
 
@@ -236,7 +236,7 @@ export default function Voucherform() {
                             <Col xs={12}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Phone No.</Form.Label>
-                                    <Form.Control placeholder="Enter your Number " className="rounded-2" value={phone} onChange={e => setPhone(e.target.value)}/>
+                                    <Form.Control placeholder="Enter your Number " className="rounded-2" value={phone} onChange={e => setPhone(e.target.value)} />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -269,7 +269,7 @@ export default function Voucherform() {
                                 <th scope="col">Total GWT</th>
                                 <th scope="col">Total PKT.</th>
                                 <th scope="col">PKT Receiver</th>
-                                <th scope="col" style={{width: '5%'}}></th>
+                                <th scope="col" style={{ width: '5%' }}></th>
 
 
 
@@ -277,34 +277,34 @@ export default function Voucherform() {
                         </thead>
                         <tbody className="text-center">
                             {
-                                itemsTable.map( (item, index) => {
-                                    return(
+                                itemsTable.map((item, index) => {
+                                    return (
                                         <tr className="text-center" key={index} id={`item-${index}`}>
 
                                             <td>
                                                 <Form.Group className="mb-3">
-                                                    <Form.Control  value={item.name} className="rounded-2" disabled/>
+                                                    <Form.Control value={item.name} className="rounded-2" disabled />
                                                 </Form.Group>
                                             </td>
                                             <td>
                                                 <Form.Group className="mb-3">
-                                                    <Form.Control  value={item.part} className="rounded-2" disabled/>
+                                                    <Form.Control value={item.part} className="rounded-2" disabled />
                                                 </Form.Group>
                                             </td>
                                             <td>
                                                 <Form.Group className="mb-3">
-                                                    <Form.Control  value={formatSizes(item.size)} className="rounded-2" disabled/>
+                                                    <Form.Control value={formatSizes(item.size)} className="rounded-2" disabled />
                                                 </Form.Group>
                                             </td>
                                             <td>
                                                 <Form.Group className="mb-3">
-                                                    <Form.Control  value={item.grade} className="rounded-2" disabled/>
+                                                    <Form.Control value={item.grade} className="rounded-2" disabled />
                                                 </Form.Group>
                                             </td>
-                                            
+
                                             <td>
                                                 <Form.Group className="mb-3">
-                                                    <Form.Control type="number" min={1} step={1} className="rounded-2" value={item?.quantity} onChange={e => handleItemsInput(index,'quantity', e.target.value) }/>
+                                                    <Form.Control type="number" min={1} step={1} className="rounded-2" value={item?.quantity} onChange={e => handleItemsInput(index, 'quantity', e.target.value)} />
                                                 </Form.Group>
                                             </td>
                                             <td>
@@ -314,32 +314,32 @@ export default function Voucherform() {
                                             </td>
                                             <td>
                                                 <Form.Group className="mb-3">
-                                                    <Form.Control placeholder=" " className="rounded-2" value={item?.total_gwt}  onChange={e => handleItemsInput(index, 'total_gwt', e.target.value)} />
+                                                    <Form.Control placeholder=" " className="rounded-2" value={item?.total_gwt} onChange={e => handleItemsInput(index, 'total_gwt', e.target.value)} />
                                                 </Form.Group>
                                             </td>
                                             <td>
                                                 <Form.Group className="mb-3">
-                                                    <Form.Control placeholder="" className="rounded-2" value={item?.total_pkt}  onChange={e => handleItemsInput(index, 'total_pkt', e.target.value)} />
+                                                    <Form.Control placeholder="" className="rounded-2" value={item?.total_pkt} onChange={e => handleItemsInput(index, 'total_pkt', e.target.value)} />
                                                 </Form.Group>
                                             </td>
                                             <td>
                                                 <Form.Group className="mb-3">
-                                                    <Form.Control placeholder=" " className="rounded-2" value={item?.pkt_receiver}  onChange={e => handleItemsInput(index, 'pkt_receiver', e.target.value)} />
+                                                    <Form.Control placeholder=" " className="rounded-2" value={item?.pkt_receiver} onChange={e => handleItemsInput(index, 'pkt_receiver', e.target.value)} />
                                                 </Form.Group>
                                             </td>
-                                            <td><Button type="button" variant="danger" onClick={ e => handleRemoveItem(index) }><MdClose /></Button></td>
+                                            <td><Button type="button" variant="danger" onClick={e => handleRemoveItem(index)}><MdClose /></Button></td>
 
                                         </tr>
                                     )
                                 })
                             }
-                            
+
                         </tbody>
                     </table>
 
                     <Row>
                         <Col xs={12} className="justify-content-end d-flex gap-3">
-                        <button type="button" className=" btn btn-secondary btn-md bg-primary" onClick={ () => handleBack() }>Cancel</button>
+                            <button type="button" className=" btn btn-secondary btn-md bg-primary" onClick={() => handleBack()}>Cancel</button>
                             <button type="button" className=" btn btn-primary btn-md bg-primary " onClick={() => handleSave()}>Save</button>
 
                         </Col>
