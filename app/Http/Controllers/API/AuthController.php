@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         $login = $request->username;
 
-        $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username'; 
 
         if($type == "email" ){
             $request->merge([ "email" => Str::lower($login ) ] );

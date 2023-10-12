@@ -35,6 +35,10 @@ export default function Location() {
                     <h2 className="fs-4">Add Store Location</h2>
                     <InputGroup className="my-2">
                         <Form.Control 
+                        placeholder="Store Name"/>
+                    </InputGroup>
+                    <InputGroup className="my-2">
+                        <Form.Control 
                         placeholder="Store Location"/>
                     </InputGroup>
                    
