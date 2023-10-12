@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { route } from '../utils/WebRoutes';
-import { MdDashboard, MdHighQuality, MdPerson, MdSettings } from 'react-icons/md';
+import { MdDashboard, MdOutlineHighQuality } from 'react-icons/md';
 import IconSupplier from '../Icons/IconSupplier';
 import { Dropdown, Nav, NavLink, DropdownItem } from '../components/Nav';
-import {BiSolidPurchaseTag, BiSolidStoreAlt} from 'react-icons/bi'
-import {FaCartArrowDown} from 'react-icons/fa';
-import {GiEntryDoor} from 'react-icons/gi';
+import { BiSolidStoreAlt } from 'react-icons/bi'
+import { FaCartArrowDown } from 'react-icons/fa';
 
 function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
-  useEffect( () => {
+  useEffect(() => {
     const sidebarExpanded = localStorage.getItem('sidebar-expanded');
-    if(sidebarExpanded !== null ){
-      setSidebarOpen( () => sidebarExpanded === "true" ? true : false );
+    if (sidebarExpanded !== null) {
+      setSidebarOpen(() => sidebarExpanded === "true" ? true : false);
     }
-    
+
   }, [])
 
   return (
@@ -40,20 +39,26 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
           {/* <NavLink title="Customer" to={route.get('customer')} Icon={<MdPerson />} /> */}
 
-          <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>} activeName='store'>
-              <DropdownItem title="List"  to={route.get('store.list')}></DropdownItem>
-              <DropdownItem title="Location" to={route.get('store.location')}></DropdownItem>
-              <DropdownItem title="Inventory Management" to={route.get('store.location')}></DropdownItem>
+          <Dropdown title="Stores" Icon={<BiSolidStoreAlt />} activeName='store'>
+            <DropdownItem title="List" to={route.get('store.list')}></DropdownItem>
+            <DropdownItem title="Location" to={route.get('store.location')}></DropdownItem>
+            <DropdownItem title="Inventory Management" to={route.get('store.location')}></DropdownItem>
           </Dropdown>
 
-          <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='item_master'>
-              <DropdownItem title="Add Item" to={route.get('item_master.add_item')}></DropdownItem>
-              <DropdownItem title="Items List" to={route.get('item_master.item_list')}></DropdownItem>
-              <DropdownItem title="Units" to={route.get('item_master.units')} ></DropdownItem>
-              <DropdownItem title="Groups"  to={route.get('item_master.group')}></DropdownItem>
-              <DropdownItem title="Sub Group" to={route.get('item_master.sub_group')}></DropdownItem>
+          <Dropdown title="Item Master" Icon={<FaCartArrowDown />} activeName='item_master'>
+            <DropdownItem title="Add Item" to={route.get('item_master.add_item')}></DropdownItem>
+            <DropdownItem title="Items List" to={route.get('item_master.item_list')}></DropdownItem>
+            <DropdownItem title="Units" to={route.get('item_master.units')} ></DropdownItem>
+            <DropdownItem title="Groups" to={route.get('item_master.group')}></DropdownItem>
+            <DropdownItem title="Sub Group" to={route.get('item_master.sub_group')}></DropdownItem>
           </Dropdown>
-         
+
+          <Dropdown title="Quality" Icon={< MdOutlineHighQuality />} activeName='quality'>
+            <DropdownItem title="Approved"></DropdownItem>
+            <DropdownItem title="Rejected"></DropdownItem>
+            <DropdownItem title="Pending"></DropdownItem>
+          </Dropdown>
+
 
           {/* <Dropdown title="Purchase" Icon={<BiSolidPurchaseTag/>} activeName='purchase'>
               <DropdownItem title="Schedule"></DropdownItem>
