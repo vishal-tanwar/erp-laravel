@@ -165,8 +165,6 @@ export const Endpoints = [
         component: Approved,
         exact: true,
         name: "quality.approved"
-    },
-
-
+    }
 
 ]
