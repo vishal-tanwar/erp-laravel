@@ -79,7 +79,7 @@ export default function Location() {
         <Layout title="Store Location" hideBanner showBackButton={true}>
             <Row>
                 <Col xs={6}>
-                    <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow}>Add Location</button>
+                    <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow}> Create Store Location</button>
                 </Col>
                 <Col xs={6} className="d-flex justify-content-end">
                     <DropdownFilter align="right" />
