@@ -8,7 +8,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-const Layout = ({ title, children, icon, hideBanner, showBackButton }) => {
+const Layout = ({ title, children, icon, hideBanner = true, showBackButton }) => {
 
     const [loading, setLoading] = useState(true);
 
