@@ -104,8 +104,16 @@ export default function Location() {
                     </InputGroup>
 
                     <InputGroup className="my-2">
+                        <Form.Control 
+                        placeholder="Store Name"/>
+                    </InputGroup>
+                    <InputGroup className="my-2">
+                        <Form.Control 
+                        placeholder="Store Location"/>
+
                         <Form.Control
                             placeholder="Store Location" value={locationName} onChange={e => setLocationName(e.target.value)}/>
+
                     </InputGroup>
 
 
