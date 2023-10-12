@@ -162,17 +162,17 @@ export const Endpoints = [
     },
    
     {
-        path: route("stores/inventory_management"),
+        path: route("stores/inventory"),
         component: Inventory,
         exact: true,
-        name: "store.inventory_management"
+        name: "store.inventory"
     },
    
     {
-        path: route("stores/add_inventory"),
+        path: route("stores/inventory/add"),
         component: AddInventory,
         exact: true,
-        name: "store.add_inventory"
+        name: "store.inventory.add"
     },
 
     {
