@@ -15,8 +15,12 @@ import AddItem from "../pages/ItemMaster/AddItem";
 import Location from "../pages/Stores/Location";
 import BOP from "../pages/BOP";
 import Stores from "../pages/Stores";
+
 import Inventory from "../pages/Stores/Inventory";
 import AddInventory from "../pages/Stores/AddInventory";
+
+import Approved from "../pages/Quality/approved";
+
 
 
 export function route(path) {
@@ -115,6 +119,7 @@ export const Endpoints = [
         exact: true,
         name: "Editpage"
     },
+    
     {
         path: route("/BOP"),
         component: BOP,
@@ -173,5 +178,12 @@ export const Endpoints = [
         exact: true,
         name: "store.add_inventory"
     },
+
+    {
+        path: route("quality/approved"),
+        component: Approved,
+        exact: true,
+        name: "quality.approved"
+    }
 
 ]
