@@ -107,8 +107,6 @@ export default function ItemList() {
                                         <th scope="col">Item Part</th>
                                         <th scope="col">Item Grade</th>
                                         <th scope="col">Item Size</th>
-                                        <th scope="col">Available Stock</th>
-                                        <th scope="col">Total Item</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
@@ -121,12 +119,10 @@ export default function ItemList() {
                                                     </td>
                                                     <td>{index}</td>
                                                     <td>{item.name}</td>
-                                                    <td>{item.store.name}</td>
+                                                    <td>{item.store?.name}</td>
                                                     <td>{item.part}</td>
                                                     <td>{item.grade}</td>
                                                     <td>{formatSizes( item.size )  }</td>
-                                                    <td>Ava. Stock</td>
-                                                    <td>Total Item</td>
                                                 </tr> 
                                             )
                                         })
