@@ -193,7 +193,7 @@ export default function AddInventory() {
             
                 <Row className="mb-8">
                     <Col xs={12} className="text-right">
-                        <button className="btn btn-primary btn-lg mt-5 w-64 fs-2" >Create</button>
+                        <button className="btn btn-primary btn-lg mt-5 " >Create</button>
                     </Col>
                 </Row>
             </Form>
