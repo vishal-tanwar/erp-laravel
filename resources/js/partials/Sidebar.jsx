@@ -43,7 +43,7 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
           <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>} activeName='store'>
               <DropdownItem title="List"  to={route.get('store.list')}></DropdownItem>
               <DropdownItem title="Location" to={route.get('store.location')}></DropdownItem>
-              <DropdownItem title="Inventory Management" to={route.get('store.location')}></DropdownItem>
+              <DropdownItem title="Inventory" to={route.get('store.inventory_management')}></DropdownItem>
           </Dropdown>
 
           <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='item_master'>
@@ -63,15 +63,11 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
           {/* <NavLink title="Quality" to="#" Icon={<MdHighQuality />} /> */}
 
-          {/* <Dropdown title="Setting" Icon={<MdSettings/>}>
-              <DropdownItem title="Items List"></DropdownItem>
-              <DropdownItem title="Units"></DropdownItem>
-              <DropdownItem title="Groups"></DropdownItem>
-              <DropdownItem title="Sub Group"></DropdownItem>
-              <DropdownItem title="Grades"></DropdownItem>
-              <DropdownItem title="Sizes"></DropdownItem>
-              <DropdownItem title="Parts"></DropdownItem>
-          </Dropdown> */}
+          <Dropdown title="Quality" Icon={<MdHighQuality/>}>
+              <DropdownItem title="Approved"></DropdownItem>
+              <DropdownItem title="Rejected"></DropdownItem>
+              <DropdownItem title="Pending"></DropdownItem>
+          </Dropdown>
 
 
 

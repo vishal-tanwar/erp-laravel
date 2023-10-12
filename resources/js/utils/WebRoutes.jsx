@@ -15,6 +15,8 @@ import AddItem from "../pages/ItemMaster/AddItem";
 import Location from "../pages/Stores/Location";
 import BOP from "../pages/BOP";
 import Stores from "../pages/Stores";
+import Inventory from "../pages/Stores/Inventory";
+import AddInventory from "../pages/Stores/AddInventory";
 
 
 export function route(path) {
@@ -156,6 +158,20 @@ export const Endpoints = [
         component: Location,
         exact: true,
         name: "store.location"
+    },
+   
+    {
+        path: route("stores/inventory_management"),
+        component: Inventory,
+        exact: true,
+        name: "store.inventory_management"
+    },
+   
+    {
+        path: route("stores/add_inventory"),
+        component: AddInventory,
+        exact: true,
+        name: "store.add_inventory"
     },
 
 ]
