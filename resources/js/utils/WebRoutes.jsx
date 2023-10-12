@@ -169,10 +169,10 @@ export const Endpoints = [
     },
    
     {
-        path: route("stores/add_inventory"),
+        path: route("stores/inventory/add"),
         component: AddInventory,
         exact: true,
-        name: "store.add_inventory"
+        name: "store.inventory.add"
     },
 
     {
