@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { route } from '../utils/WebRoutes';
-import { MdDashboard, MdOutlineHighQuality } from 'react-icons/md';
+import { MdDashboard, MdHighQuality, MdOutlineHighQuality } from 'react-icons/md';
 import IconSupplier from '../Icons/IconSupplier';
 import { Dropdown, Nav, NavLink, DropdownItem } from '../components/Nav';
 import { BiSolidStoreAlt } from 'react-icons/bi'
@@ -40,14 +40,9 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
           {/* <NavLink title="Customer" to={route.get('customer')} Icon={<MdPerson />} /> */}
 
           <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>} activeName='store'>
-
-              <DropdownItem title="List"  to={route.get('store.list')}></DropdownItem>
-              <DropdownItem title="Location" to={route.get('store.location')}></DropdownItem>
-              <DropdownItem title="Inventory" to={route.get('store.inventory_management')}></DropdownItem>
-
             <DropdownItem title="List" to={route.get('store.list')}></DropdownItem>
             <DropdownItem title="Location" to={route.get('store.location')}></DropdownItem>
-            <DropdownItem title="Inventory Management" to={route.get('store.location')}></DropdownItem>
+            <DropdownItem title="Inventory" to={route.get('store.inventory_management')}></DropdownItem>
 
           </Dropdown>
 
@@ -74,7 +69,13 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
           {/* <NavLink title="Quality" to="#" Icon={<MdHighQuality />} /> */}
 
-         
+
+          {/* <Dropdown title="Quality" Icon={<MdHighQuality/>}>
+              <DropdownItem title="Approved"></DropdownItem>
+              <DropdownItem title="Rejected"></DropdownItem>
+              <DropdownItem title="Pending"></DropdownItem>
+          </Dropdown> */}
+
 
 
 
