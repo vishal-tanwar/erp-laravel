@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Button } from "react-bootstrap";
 import { MdOutlinePrint, MdOutlineSearch } from "react-icons/md";
@@ -20,7 +20,7 @@ export default function Approved() {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu className="bg-dark-subtle">
-                                <Dropdown.Item >10</Dropdown.Item>
+                                <Dropdown.Item >0</Dropdown.Item>
                                 <Dropdown.Item >25</Dropdown.Item>
                                 <Dropdown.Item >50</Dropdown.Item>
                                 <Dropdown.Item className="text">All</Dropdown.Item>
@@ -80,10 +80,13 @@ export default function Approved() {
                         </tr>
                     </thead>
                     <tbody>
-                    <td><Form.Check type="checkbox" /></td>
+                        <td><Form.Check type="checkbox" /></td>
+                        <td className="text-center">1</td>
+
+                        
 
                     </tbody>
-                    
+
                 </table>
 
             </Row>
