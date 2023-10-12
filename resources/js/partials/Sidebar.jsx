@@ -69,11 +69,13 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
           {/* <NavLink title="Quality" to="#" Icon={<MdHighQuality />} /> */}
 
+
           {/* <Dropdown title="Quality" Icon={<MdHighQuality/>}>
               <DropdownItem title="Approved"></DropdownItem>
               <DropdownItem title="Rejected"></DropdownItem>
               <DropdownItem title="Pending"></DropdownItem>
           </Dropdown> */}
+
 
 
 
