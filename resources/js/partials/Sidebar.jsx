@@ -36,11 +36,14 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
           <NavLink title="Dashboard" to={route.get('dashboard')} Icon={<MdDashboard />} />
 
-          <NavLink title="Customer" to={route.get('customer')} Icon={<MdPerson />} />
+          <NavLink title="Suppliers" to={route.get("supplier")} Icon={<IconSupplier />} />
+
+          {/* <NavLink title="Customer" to={route.get('customer')} Icon={<MdPerson />} /> */}
 
           <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>} activeName='store'>
               <DropdownItem title="List"  to={route.get('store.list')}></DropdownItem>
               <DropdownItem title="Location" to={route.get('store.location')}></DropdownItem>
+              <DropdownItem title="Inventory Management" to={route.get('store.location')}></DropdownItem>
           </Dropdown>
 
           <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='item_master'>
@@ -51,17 +54,16 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
               <DropdownItem title="Sub Group" to={route.get('item_master.sub_group')}></DropdownItem>
           </Dropdown>
          
-          <NavLink title="Suppliers" to={route.get("supplier")} Icon={<IconSupplier />} />
 
-          <Dropdown title="Purchase" Icon={<BiSolidPurchaseTag/>} activeName='purchase'>
+          {/* <Dropdown title="Purchase" Icon={<BiSolidPurchaseTag/>} activeName='purchase'>
               <DropdownItem title="Schedule"></DropdownItem>
-          </Dropdown>
+          </Dropdown> */}
 
-          <NavLink title="Gate Entry" to="#" Icon={<GiEntryDoor />} />
+          {/* <NavLink title="Gate Entry" to="#" Icon={<GiEntryDoor />} /> */}
 
-          <NavLink title="Quality" to="#" Icon={<MdHighQuality />} />
+          {/* <NavLink title="Quality" to="#" Icon={<MdHighQuality />} /> */}
 
-          <Dropdown title="Setting" Icon={<MdSettings/>}>
+          {/* <Dropdown title="Setting" Icon={<MdSettings/>}>
               <DropdownItem title="Items List"></DropdownItem>
               <DropdownItem title="Units"></DropdownItem>
               <DropdownItem title="Groups"></DropdownItem>
@@ -69,7 +71,7 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
               <DropdownItem title="Grades"></DropdownItem>
               <DropdownItem title="Sizes"></DropdownItem>
               <DropdownItem title="Parts"></DropdownItem>
-          </Dropdown>
+          </Dropdown> */}
 
 
 
