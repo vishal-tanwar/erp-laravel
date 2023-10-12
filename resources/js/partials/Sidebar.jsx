@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { route } from '../utils/WebRoutes';
-import { MdDashboard, MdOutlineHighQuality } from 'react-icons/md';
+import { MdDashboard, MdHighQuality, MdOutlineHighQuality } from 'react-icons/md';
 import IconSupplier from '../Icons/IconSupplier';
 import { Dropdown, Nav, NavLink, DropdownItem } from '../components/Nav';
 import { BiSolidStoreAlt } from 'react-icons/bi'
@@ -74,11 +74,11 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
           {/* <NavLink title="Quality" to="#" Icon={<MdHighQuality />} /> */}
 
-          <Dropdown title="Quality" Icon={<MdHighQuality/>}>
+          {/* <Dropdown title="Quality" Icon={<MdHighQuality/>}>
               <DropdownItem title="Approved"></DropdownItem>
               <DropdownItem title="Rejected"></DropdownItem>
               <DropdownItem title="Pending"></DropdownItem>
-          </Dropdown>
+          </Dropdown> */}
 
 
 
