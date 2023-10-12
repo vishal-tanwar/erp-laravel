@@ -17,6 +17,7 @@ import VoucherView from "../pages/Stores/Screens/VoucherView";
 import Vouchers from "../pages/Stores/Screens/Vouchers";
 import CreateReceiving from "../pages/Stores/Screens/CreateReceiving";
 import CreateIssuance from "../pages/Stores/Screens/CreateIssuance";
+import Approved from "../pages/Quality/approved";
 
 
 export function route(path) {
@@ -154,7 +155,10 @@ export const Endpoints = [
     },
 
     {
-        
+        path: route("quality/approved"),
+        component: Approved,
+        exact: true,
+        name: "quality.approved"
     }
 
 ]

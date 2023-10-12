@@ -16,7 +16,7 @@ export default function CreateIssuance() {
                     <Col xs={6} >
                         <Form.Group className="mb-3">
                             <Form.Label>Issuance Number</Form.Label>
-                            <Form.Control type="email" placeholder="Enter your number" className="rounded-2" />
+                            <Form.Control type="number" placeholder="Enter your number" className="rounded-2" />
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Department</Form.Label>
@@ -32,7 +32,7 @@ export default function CreateIssuance() {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>EMail</Form.Label>
-                            <Form.Control type="email" placeholder="Enter your Mail" className="rounded-2"/>
+                            <Form.Control type="email" placeholder="Enter your Mail" className="rounded-2" />
                             <Form.Text className="text-muted">
                                 We'll never share your email with anyone else.
                             </Form.Text>
@@ -43,25 +43,25 @@ export default function CreateIssuance() {
                     <Col xs={6}>
                         <Form.Group className="mb-3" >
                             <Form.Label>Requester Name</Form.Label>
-                            <Form.Control type="email" placeholder="Enter name " className="rounded-2"/>
+                            <Form.Control type="text" placeholder="Enter name" className="rounded-2" />
                         </Form.Group>
                         <Form.Group className="mb-3" >
                             <Form.Label>Address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter your address " className="rounded-2"/>
+                            <Form.Control type="text" placeholder="Enter your address" className="rounded-2" />
                         </Form.Group>
 
                         <Row>
                             <Col xs={6}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>City</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter Your City " className="rounded-2"/>
+                                    <Form.Control type="text" placeholder="Enter Your City" className="rounded-2" />
                                 </Form.Group>
                             </Col>
 
                             <Col xs={6}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>State</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter your State " className="rounded-2"/>
+                                    <Form.Control type="text" placeholder="Enter your State" className="rounded-2" />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -70,7 +70,7 @@ export default function CreateIssuance() {
                             <Col xs={6}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Phone No.</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter your Number " className="rounded-2"/>
+                                    <Form.Control type="number" placeholder="Enter your Number" className="rounded-2" />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -114,42 +114,42 @@ export default function CreateIssuance() {
 
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
+                                        <Form.Control type="text" placeholder="" className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
+                                        <Form.Control type="text" placeholder="" className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td><button type="button" className="btn btn-success"><MdCheck /></button></td>
@@ -163,42 +163,42 @@ export default function CreateIssuance() {
 
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
+                                        <Form.Control type="text" placeholder="" className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder="" className="rounded-2" />
+                                        <Form.Control type="text" placeholder="" className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td>
                                     <Form.Group className="mb-3" >
-                                        <Form.Control type="email" placeholder=" " className="rounded-2" />
+                                        <Form.Control type="text" placeholder=" " className="rounded-2" />
                                     </Form.Group>
                                 </td>
                                 <td><button type="button" className="btn btn-danger"><MdClose /></button></td>
