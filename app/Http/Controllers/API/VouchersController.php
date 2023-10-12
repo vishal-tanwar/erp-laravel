@@ -18,8 +18,9 @@ class VouchersController extends Controller
 
         $vouchers = Voucher::with(['store', 'supplier','items']);
 
-        if ($request->get('store_id')) {
-            $vouchers->where('store_id', "=", $request->get('store_id'));
+        if ($request->get('store') || $request->get('store_id') ) {
+            $store_id = $request->get('store') ?? $request->get('store_id');
+            $vouchers->where('store_id', "=", $store_id);
         }
 
         $vouchers = $vouchers->get()->toArray();
@@ -77,7 +78,7 @@ class VouchersController extends Controller
 
     public function view( Request $request ){
 
-        $id = $request->get('id');
+        $id = $request->get('slug');
         $vouchers = Voucher::with(['store', 'supplier', 'items'])->where('id', "=", $id);
 
 
