@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Button } from "react-bootstrap";
-import { MdOutlinePrint, MdOutlineSearch } from "react-icons/md";
+import { MdOutlineSearch } from "react-icons/md";
 
 
 
-export default function Approved() {
+export default function Rejected() {
 
     const [vouchers, setVouchers] = useState([]);
 
     return (
-        <Layout title="Approved">
+        <Layout title="Rejected">
             <Row className="mb-4">
 
                 <Col xs={12}>

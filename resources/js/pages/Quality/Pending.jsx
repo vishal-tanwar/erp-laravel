@@ -5,12 +5,12 @@ import { MdOutlinePrint, MdOutlineSearch } from "react-icons/md";
 
 
 
-export default function Approved() {
+export default function Pending() {
 
     const [vouchers, setVouchers] = useState([]);
 
     return (
-        <Layout title="Approved">
+        <Layout title="Pending">
             <Row className="mb-4">
 
                 <Col xs={12}>
