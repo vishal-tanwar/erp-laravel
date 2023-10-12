@@ -1,23 +1,28 @@
 import SupplierRegister from "../components/Supplier/SupplierRegister";
 import Dashboard from "../pages/Dashboard";
 import AddSupplier from '../components/Supplier/AddSupplier';
-import Customer from "../pages/Customer";
-import StoreView from "../pages/Stores/Screens/StoreView";
-import Voucherform from "../pages/Voucherform";
 import Units from "../pages/ItemMaster/Units";
 import Group from "../pages/ItemMaster/Group";
 import SubGroup from "../pages/ItemMaster/SubGroup";
 import ItemList from "../pages/ItemMaster/ItemList";
-import Viewpage from "../pages/Viewpage";
 import Editpage from "../pages/Editpage";
-import Issuancevoucher from "../pages/Issuancevoucher";
 import AddItem from "../pages/ItemMaster/AddItem";
 import Location from "../pages/Stores/Location";
 import BOP from "../pages/BOP";
+
+// Store file Imports
+
 import Stores from "../pages/Stores";
+
 
 import Inventory from "../pages/Stores/Inventory";
 import AddInventory from "../pages/Stores/AddInventory";
+
+
+import VoucherView from "../pages/Stores/Screens/VoucherView";
+import Vouchers from "../pages/Stores/Screens/Vouchers";
+import CreateReceiving from "../pages/Stores/Screens/CreateReceiving";
+import CreateIssuance from "../pages/Stores/Screens/CreateIssuance";
 
 import Approved from "../pages/Quality/approved";
 
@@ -76,13 +81,6 @@ export const Endpoints = [
     },
 
     {
-        path: route("/customer"),
-        component: Customer,
-        exact: true,
-        name: "customer"
-    },
-
-    {
         path: route("stores"),
         component: Stores,
         exact: true,
@@ -91,27 +89,27 @@ export const Endpoints = [
 
     {
         path: route("/store/:name/vouchers"),
-        component: StoreView,
+        component: Vouchers,
         exact: true,
         name: "store.vouchers"
     },
     {
         path: route("/store/:name/vouchers/:id"),
-        component: Viewpage,
+        component: VoucherView,
         exact: true,
         name: "store.voucher.view"
     },
     {
         path: route("/store/:name/receiving"),
-        component: Voucherform,
+        component: CreateReceiving,
         exact: true,
-        name: "store.vouchers.create"
+        name: "store.receiving.create"
     },
     {
         path: route("/store/:name/issuance"),
-        component: Issuancevoucher,
+        component: CreateIssuance,
         exact: true,
-        name: "store.issuance"
+        name: "store.issuance.create"
     },
     {
         path: route("/Editpage"),
@@ -119,7 +117,6 @@ export const Endpoints = [
         exact: true,
         name: "Editpage"
     },
-    
     {
         path: route("/BOP"),
         component: BOP,
