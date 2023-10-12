@@ -10,7 +10,7 @@ export default function Pending() {
     const [vouchers, setVouchers] = useState([]);
 
     return (
-        <Layout title="Pending">
+        <Layout title="Quality Pending">
             <Row className="mb-4">
 
                 <Col xs={12}>
@@ -45,8 +45,8 @@ export default function Pending() {
                     <tbody className="text-center">
 
                         <tr>
-                            <td><Form.Check /></td>
-                            <td>Lorem</td>
+                            <td><Form.Check/></td>
+                            <td>1</td>
                             <td>Lorem</td>
                             <td>Lorem</td>
                             <td>Lorem</td>

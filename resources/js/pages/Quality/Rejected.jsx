@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../partials/Layout";
-import { Form, Col, InputGroup, Row, Dropdown, Button } from "react-bootstrap";
+import { Form, Col, InputGroup, Row, Button } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
 
 
@@ -10,7 +10,7 @@ export default function Rejected() {
     const [vouchers, setVouchers] = useState([]);
 
     return (
-        <Layout title="Rejected">
+        <Layout title="Quality Rejected">
             <Row className="mb-4">
 
                 <Col xs={12}>
@@ -46,7 +46,7 @@ export default function Rejected() {
 
                         <tr>
                             <td><Form.Check /></td>
-                            <td>Lorem</td>
+                            <td>1</td>
                             <td>Lorem</td>
                             <td>Lorem</td>
                             <td>Lorem</td>
