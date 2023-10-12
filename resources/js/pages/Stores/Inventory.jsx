@@ -36,7 +36,7 @@ export default function Inventory() {
 
     return (
         <Layout title="Inventory" hideBanner>
-          <Link className="btn btn-primary" to={route.get('store.add_inventory')}> Add Inventory</Link>
+          <Link className="btn btn-primary" to={route.get('store.inventory.add')}> Add Inventory</Link>
 
             <Row className="border-2 my-4">
                 <Col xs={12}>
