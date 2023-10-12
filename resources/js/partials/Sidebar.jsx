@@ -33,19 +33,19 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
         <Nav>
 
-          <NavLink title="Dashboard" to={route.get('dashboard')} Icon={<MdDashboard />} />
+          <NavLink title="Dashboard" to={route.get('dashboard')} Icon={<MdDashboard/>} />
 
-          <NavLink title="Suppliers" to={route.get("supplier")} Icon={<IconSupplier />} />
+          <NavLink title="Suppliers" to={route.get("supplier")} Icon={<IconSupplier/>} />
 
           {/* <NavLink title="Customer" to={route.get('customer')} Icon={<MdPerson />} /> */}
 
-          <Dropdown title="Stores" Icon={<BiSolidStoreAlt />} activeName='store'>
+          <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>} activeName='store'>
             <DropdownItem title="List" to={route.get('store.list')}></DropdownItem>
             <DropdownItem title="Location" to={route.get('store.location')}></DropdownItem>
             <DropdownItem title="Inventory Management" to={route.get('store.location')}></DropdownItem>
           </Dropdown>
 
-          <Dropdown title="Item Master" Icon={<FaCartArrowDown />} activeName='item_master'>
+          <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='item_master'>
             <DropdownItem title="Add Item" to={route.get('item_master.add_item')}></DropdownItem>
             <DropdownItem title="Items List" to={route.get('item_master.item_list')}></DropdownItem>
             <DropdownItem title="Units" to={route.get('item_master.units')} ></DropdownItem>
@@ -53,8 +53,8 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
             <DropdownItem title="Sub Group" to={route.get('item_master.sub_group')}></DropdownItem>
           </Dropdown>
 
-          <Dropdown title="Quality" Icon={< MdOutlineHighQuality />} activeName='quality'>
-            <DropdownItem title="Approved"></DropdownItem>
+          <Dropdown title="Quality" Icon={< MdOutlineHighQuality/>} activeName='quality'>
+            <DropdownItem title="Approved" to={route.get('quality.approved')}></DropdownItem>
             <DropdownItem title="Rejected"></DropdownItem>
             <DropdownItem title="Pending"></DropdownItem>
           </Dropdown>
