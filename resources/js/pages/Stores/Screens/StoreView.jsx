@@ -14,21 +14,28 @@ export default function StoreView() {
     const params = useParams();
     const [isFound, setIsFound] = useState(true);
     const [store, setStore] = useState([]);
+    const [vouchers, setVouchers] = useState([]);
 
 
     useEffect(() => {
+
         axios.get(`store/${params.name}`).then(res => {
 
             if (res.data.success) {
                 setStore(res.data.data);
+
+                axios.get('vouchers').then(res => {
+                    setVouchers(res.data.data.vouchers);
+                })
+
             }
             else {
                 setIsFound(false);
             }
-
-        })
-
+        });
     }, []);
+
+
 
 
     return (
@@ -36,14 +43,14 @@ export default function StoreView() {
         <>{
             !isFound ? <NotFound /> :
 
-                <Layout hideBanner className="pt-0">
+                <Layout hideBanner className="pt-0" showBackButton={true}>
                     <Col xs={12}>
                         <Row>
 
                             <Col xs={6} className="d-flex gap-2">
                                 <Link to={route.get('store.list')} title="Back" className="btn btn-primary btn-sm"><MdArrowBackIosNew /> Back to Stores</Link>
                                 <Link to={route.get('store.vouchers.create', { name: params.name })} className="btn btn-primary btn-sm"> Receiving Voucher</Link>
-                                <Link to="/Issuancevoucher"><button type="button" className=" btn btn-success btn-sm"> Issuance Voucher</button></Link>
+                                <Link to={route.get('store.issuance', { name: params.name })}><button type="button" className=" btn btn-success btn-sm"> Issuance Voucher</button></Link>
                             </Col>
 
                             <Col xs={6} className="d-flex justify-content-end">
@@ -55,29 +62,26 @@ export default function StoreView() {
                     </Col>
                     <Row className="border-2 my-4">
                         <Col xs={12}>
-                            <h2 className="fs-3 m-2 px-4"><b>R.M Summary </b></h2>
+                            <h2 className="fs-3 m-2 px-4"><b>{store.name} Summary </b></h2>
                         </Col>
                         <Col xs={12}>
                             <Row className="summary-bar">
-                                <Col xs={2} className="text-center">
+                                <Col className="text-center">
                                     <h4 className="fs-2">21</h4>
-                                    <h4 className="mt-3">Total Item</h4>
+                                    <h4 className="mt-3">Total Receiver</h4>
                                 </Col>
-                                <Col xs={3} className="text-center">
-                                    <h4 className="fs-2">13</h4>
-                                    <h4 className="mt-3">Available Stock</h4>
+                                <Col className="text-center">
+                                    <h4 className="fs-2">45</h4>
+                                    <h4 className="mt-3">Total Issuance</h4>
                                 </Col>
-                                <Col xs={2} className="text-center">
-                                    <h4 className="fs-2">1</h4>
-                                    <h4 className="mt-3">Total Supplier</h4>
-                                </Col>
-                                <Col xs={3} className="text-center">
-                                    <h4 className="fs-2">11</h4>
-                                    <h4 className="mt-3">Out of Stock</h4>
-                                </Col>
-                                <Col xs={2} className="text-center">
+
+                                <Col className="text-center">
                                     <h4 className="fs-2">1</h4>
                                     <h4 className="mt-3">Today Receiver</h4>
+                                </Col>
+                                <Col className="text-center">
+                                    <h4 className="fs-2">6</h4>
+                                    <h4 className="mt-3">Today Issuance</h4>
                                 </Col>
                             </Row>
                         </Col>
@@ -152,63 +156,46 @@ export default function StoreView() {
                                 </tr>
                             </thead>
                             <tbody className="text-center">
-                                <tr className="text-center">
 
-                                    <td><Form.Check type="checkbox" /></td>
-                                    <td>1</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>12-09-23</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td className="d-flex justify-content-evenly">
-                                        <Link to="/Viewpage"><button type="button" className="btn btn-primary btn-sm rounded shadow w-16">View</button></Link>
-                                        <Link to="/Editpage"><button type="button" className="btn btn-success btn-sm rounded shadow ">Edit</button></Link>
-                                        <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
-                                    </td>
-                                    <td>
-                                        <Dropdown>
-                                            <Dropdown.Toggle id="dropdown-basic" className="btn-light border border-black shadow">
-                                                <MdOutlinePrint />
-                                            </Dropdown.Toggle>
+                                {
+                                    vouchers.map((voucher, index) => {
 
-                                            <Dropdown.Menu className="bg-white">
-                                                <Dropdown.Item >Print</Dropdown.Item>
-                                                <Dropdown.Item >Pdf</Dropdown.Item>
-                                            </Dropdown.Menu>
-                                        </Dropdown>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><Form.Check type="checkbox" /></td>
-                                    <td>2</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>12-09-23</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td className="d-flex justify-content-evenly">
-                                        <button type="button" className="btn btn-primary btn-sm rounded shadow w-16">View</button>
-                                        <button type="button" className="btn btn-success btn-sm rounded shadow ">Edit</button>
-                                        <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
-                                    </td>
-                                    <td>
-                                        <Dropdown>
-                                            <Dropdown.Toggle id="dropdown-basic" className="btn-light border border-black shadow">
-                                                <MdOutlinePrint />
-                                            </Dropdown.Toggle>
+                                        return (
+                                            <tr className="text-center" key={index}>
 
-                                            <Dropdown.Menu className="bg-white">
-                                                <Dropdown.Item >Print</Dropdown.Item>
-                                                <Dropdown.Item >Pdf</Dropdown.Item>
-                                            </Dropdown.Menu>
-                                        </Dropdown>
-                                    </td>
-                                </tr>
+                                                <td><Form.Check type="checkbox" /></td>
+                                                <td>{++index}</td>
+                                                <td>{voucher.voucher_number}</td>
+                                                <td>{voucher.invoice_id}</td>
+                                                <td>{ (new Date(voucher.receiving_date)).toLocaleDateString() }</td>
+                                                <td>{voucher.supplier.firm_name}</td>
+                                                <td>{voucher.supplier.gst_number}</td>
+                                                <td>{voucher.supplier.email}</td>
+                                                <td>{voucher.supplier.number}</td>
+                                                <td className="d-flex justify-content-evenly">
+                                                    <Link to={route.get('store.voucher.view', {name: voucher.store.slug, id: voucher.id})}><button type="button" className="btn btn-primary btn-sm rounded shadow w-16">View</button></Link>
+                                                    <Link to="/Editpage"><button type="button" className="btn btn-success btn-sm rounded shadow ">Edit</button></Link>
+                                                    <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
+                                                </td>
+                                                <td>
+                                                    <Dropdown>
+                                                        <Dropdown.Toggle id="dropdown-basic" className="btn-light border border-black shadow">
+                                                            <MdOutlinePrint />
+                                                        </Dropdown.Toggle>
+
+                                                        <Dropdown.Menu className="bg-white">
+                                                            <Dropdown.Item >Print</Dropdown.Item>
+                                                            <Dropdown.Item >Pdf</Dropdown.Item>
+                                                        </Dropdown.Menu>
+                                                    </Dropdown>
+                                                </td>
+                                            </tr>
+                                        )
+
+                                    })
+                                }
+
+
 
 
 

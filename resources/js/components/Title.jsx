@@ -1,13 +1,24 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
+import { MdArrowBack } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
+const BackButton = () => {
 
-export function H1({children, icon, className}){
-    // console.log(className);
+    const navigate = useNavigate();
+
     return(
-        <Row className={className}>
-            <Col xs={12} className="bg--white py-2 border-bottom-2 border-bottom">
-                <h1 className="text-3xl font-bold d-flex align-items-center text-slate-600">{icon ? icon : ''} <span className="ms-2">{children}</span></h1>
+        <Button variant="warning" onClick={() => navigate(-1)}><MdArrowBack /> Back</Button>
+    )
+}
+
+export function H1({children, icon, className, title, showBackButton}){
+    return(
+        <Row className={`${className}`}>
+            <Col xs={12} className="bg--white py-2 border-bottom-2 border-bottom d-flex justify-content-between ">
+                <h1 className="text-3xl font-bold d-flex align-items-center text-slate-600">{icon ? icon : ''} <span className="ms-2">{title??children}</span></h1>
+
+                {showBackButton == true ? <BackButton /> : '' }
             </Col>
         </Row>
     )

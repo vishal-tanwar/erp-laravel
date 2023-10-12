@@ -90,16 +90,22 @@ export const Endpoints = [
         name: "store.vouchers"
     },
     {
+        path: route("/store/:name/vouchers/:id"),
+        component: Viewpage,
+        exact: true,
+        name: "store.voucher.view"
+    },
+    {
         path: route("/store/:name/receiving"),
         component: Voucherform,
         exact: true,
         name: "store.vouchers.create"
     },
     {
-        path: route("/Viewpage"),
-        component: Viewpage,
+        path: route("/store/:name/issuance"),
+        component: Issuancevoucher,
         exact: true,
-        name: "Viewpage"
+        name: "store.issuance"
     },
     {
         path: route("/Editpage"),
@@ -113,12 +119,7 @@ export const Endpoints = [
         exact: true,
         name: "BOP"
     },
-    {
-        path: route("/store/rm/issuance"),
-        component: Issuancevoucher,
-        exact: true,
-        name: "Issuancevoucher"
-    },
+    
     {
         path: route("item_master/units"),
         component: Units,

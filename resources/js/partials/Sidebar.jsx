@@ -7,7 +7,15 @@ import {BiSolidPurchaseTag, BiSolidStoreAlt} from 'react-icons/bi'
 import {FaCartArrowDown} from 'react-icons/fa';
 import {GiEntryDoor} from 'react-icons/gi';
 
-function Sidebar({ isSidebarOpen }) {
+function Sidebar({ isSidebarOpen, setSidebarOpen }) {
+
+  useEffect( () => {
+    const sidebarExpanded = localStorage.getItem('sidebar-expanded');
+    if(sidebarExpanded !== null ){
+      setSidebarOpen( () => sidebarExpanded === "true" ? true : false );
+    }
+    
+  }, [])
 
   return (
     <div>
@@ -43,7 +51,7 @@ function Sidebar({ isSidebarOpen }) {
               <DropdownItem title="Sub Group" to={route.get('item_master.sub_group')}></DropdownItem>
           </Dropdown>
          
-          <NavLink title="Suppliers" to="#" Icon={<IconSupplier />} />
+          <NavLink title="Suppliers" to={route.get("supplier")} Icon={<IconSupplier />} />
 
           <Dropdown title="Purchase" Icon={<BiSolidPurchaseTag/>} activeName='purchase'>
               <DropdownItem title="Schedule"></DropdownItem>

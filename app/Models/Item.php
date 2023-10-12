@@ -32,4 +32,11 @@ class Item extends Model
     public function unit() {
         return $this->belongsTo(Unit::class, 'unit');
     }
+    public function store() {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
+
+    public function voucher_items(){
+        return $this->hasMany(VoucherItem::class);
+    }
 }
