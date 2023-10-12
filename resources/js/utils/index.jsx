@@ -27,3 +27,9 @@ export const formatValue = (value) => Intl.NumberFormat('en-US', {
   maximumSignificantDigits: 3,
   notation: 'compact',
 }).format(value);
+
+
+export const promiseState = async (state, setState) => new Promise(resolve => {
+  setState(state)
+  resolve( state );
+})

@@ -1,7 +1,7 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import "./style.scss";
 import Layout from "../../partials/Layout";
-import { Form, Col, Row } from "react-bootstrap";
+import { Form, Col, Row, InputGroup } from "react-bootstrap";
 import Select from 'react-select'
 import { useNavigate } from "react-router-dom";
 import { route } from "../../utils/WebRoutes";
@@ -15,16 +15,27 @@ export default function AddItem() {
     const [name, setName] = useState('')
     const [part, setPart] = useState('')
     const [grade, setGrade] = useState('')
-    const [size, setSize] = useState('')
+
+    const initSizes = {
+        length: 0,
+        width: 0,
+        height: 0,
+    }; 
+
+    // const [size, setSize] = useState(initSizes );
+
+    const [size, setSize] = useReducer(( prev, newState) => ({...prev, ...newState}), initSizes);
+    
     const [store_id, setStore] = useState('')
     const [unit, setUnit] = useState('')
     const [group, setGroup] = useState('')
     const [sub_group, setSubGroup] = useState('')
-    const [suppliers, setSuppliers ] = useState([]);
+    const [suppliers, setSuppliers] = useState([]);
 
     const [unitOptions, setUnitOptions] = useState([]);
     const [groupOptions, setGroupOptions] = useState([]);
     const [subGroupOptions, setSubGroupOptions] = useState([]);
+    const [storeOptions, setStoreOptions] = useState([]);
 
     const options = [
         { value: 'Supplier A', label: 'Supplier A' },
@@ -37,12 +48,12 @@ export default function AddItem() {
         axios.get('/units')
             .then(res => {
                 const response = res.data;
-                const units = response.data.units.map( ( item ) => {
+                const units = response.data.units.map((item) => {
                     return {
                         value: item.id,
-                        label: item.name 
+                        label: item.name
                     }
-                } )
+                })
                 setUnitOptions(units);
             });
         axios.get('/groups')
@@ -69,17 +80,32 @@ export default function AddItem() {
                 })
                 setSubGroupOptions(subGroups);
             });
+
+
+        axios.get('stores').then(res => {
+
+            const response = res.data;
+
+            const stores = response.data.stores.map((store) => {
+                return {
+                    value: store.id,
+                    label: store.name
+                }
+            })
+            setStoreOptions(stores);
+        });
     }, []);
 
 
     const handleAdd = event => {
         event.preventDefault();
         const postData = {
-            name,part,grade,size,store_id,unit,group,sub_group,
+            name, part, grade, store_id, unit, group, sub_group,
+            size: JSON.stringify( size ),
             suppliers: `${suppliers.join(',')}`
         }
 
-        axios.post('item', postData).then( res => {
+        axios.post('item', postData).then(res => {
             Swal.fire({
                 toast: true,
                 title: "Success!",
@@ -97,13 +123,13 @@ export default function AddItem() {
 
     return (
         <Layout title="Add Item" hideBanner>
-            <Form onSubmit={e => {  handleAdd(e)  }}>
-                <Row className="mx-1">
+            <Form onSubmit={e => { handleAdd(e) }} className="px-4">
+                <Row>
                     <Col xs={6}>
                         <Form.Group>
                             <Form.Label htmlFor="part-name"><b>Name</b></Form.Label>
                             <Form.Control
-                                className="border-black rounded-2"
+                                className="rounded-2"
                                 placeholder="Name"
                                 id="part-name"
                                 value={name}
@@ -115,7 +141,7 @@ export default function AddItem() {
                         <Form.Group >
                             <Form.Label htmlFor="part-number"><b>Part No</b></Form.Label>
                             <Form.Control
-                                className="border-black rounded-2"
+                                className="rounded-2"
                                 placeholder="Part No"
                                 id="part-number"
                                 value={part}
@@ -124,72 +150,94 @@ export default function AddItem() {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Row className="mx-1">
-                    <Col xs={6}><b>Item Store</b></Col>
-                    <Col xs={6}><b>Item Grade</b></Col>
-                </Row>
-                <Row className="p-2  my-1">
+                <Row>
                     <Col xs={6}>
-                        <Form.Control
-                            className="border-black rounded-2"
-                            placeholder=" Item Store"
-                            value={store_id}
-                            onChange={e => setStore(e.target.value)}
-                        />
+                        <Form.Group>
+                            <Form.Label><b>Item Store</b></Form.Label>
+                            <Select
+                                className="rounded-2"
+                                options={storeOptions}
+                                onChange={e => setStore(e.value)}
+                            />
+                        </Form.Group>
                     </Col>
                     <Col xs={6}>
-                        <Form.Control
-                            className="border-black rounded-2"
-                            placeholder="Item Grade"
-                            value={grade}
-                            onChange={e => setGrade(e.target.value)}
-                        />
-                    </Col>
-                </Row>
-                <Row className="mx-1">
-                    <Col xs={6}><b>Item Size</b></Col>
-                    <Col xs={6}><b>Item Unit</b></Col>
-                </Row>
-                <Row className="p-2  my-1">
-                    
-                    <Col xs={6}>
-                        <Form.Control
-                            className="border-black rounded-2"
-                            placeholder="Item Size"
-                            value={size}
-                            onChange={e => setSize(e.target.value)}
-                        />
-                    </Col>
-                    <Col xs={6}>
-                        <Select options={unitOptions}  onChange={ e => setUnit(e.value)} />
-                    </Col>
-                </Row>
-                <Row className="mx-1">
-                    <Col xs={6}><b>Item Group</b></Col>
-                    <Col xs={6}><b>Item SubGroup</b></Col>
-                </Row>
-                <Row className="p-2  my-1">
-                    <Col xs={6}>
-                        <Select options={groupOptions}  onChange={e => { 
-                            setGroup( e.value );
-                            }}/>
-                    </Col>
-                    <Col xs={6}>
-                        <Select options={subGroupOptions} onChange={e => setSubGroup(e.value)} />
+                        <Form.Group>
+                            <Form.Label><b>Item Grade</b></Form.Label>
+                            <Form.Control
+                                className="rounded-2"
+                                placeholder="Item Grade"
+                                value={grade}
+                                onChange={e => setGrade(e.target.value)}
+                            />
+                        </Form.Group>
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12} className="mx-1"> <b>Suppliers</b></Col>
+                    <Col xs={6}>
+                        <Form.Group>
+                            <Form.Label><b>Size</b></Form.Label>
+
+                            <InputGroup>
+                                <Form.Control
+                                    className="rounded-start-2"
+                                    placeholder="Length"
+                                    value={size.length}
+                                    onChange={e => setSize({length: e.target.value})}
+                                />
+                                <Form.Control
+                                    placeholder="Width"
+                                    value={size.width}
+                                    onChange={e => setSize({ width: e.target.value })}
+                                />
+                                <Form.Control
+                                    className="rounded-end-2"
+                                    placeholder="Height"
+                                    value={size.height}
+                                    onChange={e => setSize({ height: e.target.value })}
+                                />
+                            </InputGroup>
+                        </Form.Group>
+                    </Col>
+                    <Col xs={6}>
+                        <Form.Group>
+                            <Form.Label><b>Unit</b></Form.Label>
+                            <Select options={unitOptions} onChange={e => setUnit(e.value)} />
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6}>
+                        <Form.Group>
+                            <Form.Label><b>Group</b></Form.Label>
+                            <Select options={groupOptions} onChange={e => {
+                                setGroup(e.value);
+                            }} />
+                        </Form.Group>
+                    </Col>
+                    <Col xs={6}>
+                        <Form.Group>
+                            <Form.Label><b>Sub Group</b></Form.Label>
+                            <Select options={subGroupOptions} onChange={e => setSubGroup(e.value)} />
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row className="mt-2">
                     <Col xs={12}>
-                        <Select className="border-black rounded-2" options={options} isMulti onChange={ e => {
-                            setSuppliers(Array.isArray(e) ? e.map(x => x.value) : [] );
-                        }}/>
+                        <Form.Group>
+                            <Form.Label><b>Suplliers</b></Form.Label>
+                            <Select className="rounded-2" options={options} isMulti onChange={e => {
+                                setSuppliers(Array.isArray(e) ? e.map(x => x.value) : []);
+                            }} />
+                        </Form.Group>
 
                     </Col>
                 </Row>
-                <div className="text-right">
-                    <button className="btn btn-primary btn-lg bg-primary mt-5" > Save</button>
-                </div>
+                <Row>
+                    <Col xs={12} className="text-right">
+                        <button className="btn btn-primary btn-lg mt-5" > Save</button>
+                    </Col>
+                </Row>
             </Form>
         </Layout>
     )

@@ -5,7 +5,7 @@ import Icon from '../../images/icon-02.svg';
 import EditMenu from '../../components/DropdownEditMenu';
 
 // Import utilities
-import { tailwindConfig, hexToRGB } from '../../utils/Utils';
+import { tailwindConfig, hexToRGB } from '../../utils/index.jsx';
 
 function DashboardCard02() {
 

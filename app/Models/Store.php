@@ -58,4 +58,10 @@ class Store extends Model
         return $slug;
     }
 
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
+
 }

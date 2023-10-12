@@ -13,7 +13,7 @@ export default function RSupplierRegister() {
 
 useEffect(() => {
 
-    axios.get("/supplier").then(res => {
+    axios.get("/suppliers").then(res => {
         setData(res.data.data.supplier);
     })
 }, [])

@@ -3,76 +3,67 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Store;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class StoresController extends Controller
+class LocationsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index( Request $request )
     {
+        $locations = Location::with(['store']);
+
+        if($request->get('store_id')){
+            $locations->where('store_id', "=", $request->get('store_id'));
+        }
+        
+
         return response()->json([
-            "success" => true,
-            'data' => [
-                "stores" => Store::all()
-            ],
+            "status" => true,
             "code" => Response::HTTP_OK,
-            'message' => 'Stores fetched successfully',
-        ], Response::HTTP_OK);
+            'message' => 'Locations fetched successfully',
+            'data' => ["locations" => $locations->get()],
+        ]);
     }
 
-   
+    
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {   
+    {
+        // $request->merge(['slug' => Location::slug($request->name)]);
 
-        $request->merge( ['slug' => Store::slug( $request->name )] );
-
-        if( $store = Store::create( $request->all() )){
+        if ($location = Location::create($request->all())) {
 
             return response()->json([
                 "success" => true,
-                'data' => $store,
+                'data' => Location::with(['store'])->where('id', '=', $location->id )->first(),
                 "code" => Response::HTTP_CREATED,
                 'message' => 'Store created successfully',
             ], Response::HTTP_CREATED);
-        }
-
-        else{
+        } else {
             return response()->json([
                 "success" => false,
-                'data' => $store,
+                'data' => [],
                 "code" => Response::HTTP_UNAUTHORIZED,
                 'message' => 'There was some error while creating store',
             ], Response::HTTP_UNAUTHORIZED);
         }
-
     }
 
+    
 
-    public function show( $slug ) {
-        $store = Store::where( 'slug', $slug )->first()->toArray();
-
-        return response()->json([
-            "success" => is_array($store) && !empty($store),
-            'data' => $store,
-            "code" => Response::HTTP_OK,
-            'message' => 'Store Fetched successfully',
-        ], Response::HTTP_OK);
-    }
-
-   
-
+    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Store $store)
+    public function update(Request $request, Location $location)
     {
         //
     }
@@ -80,7 +71,7 @@ class StoresController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Store $store)
+    public function destroy(Location $location)
     {
         //
     }
