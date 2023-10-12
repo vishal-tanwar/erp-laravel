@@ -56,8 +56,8 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
           <Dropdown title="Quality" Icon={< MdOutlineHighQuality/>} activeName='quality'>
             <DropdownItem title="Approved" to={route.get('quality.approved')}></DropdownItem>
-            <DropdownItem title="Rejected"></DropdownItem>
-            <DropdownItem title="Pending"></DropdownItem>
+            <DropdownItem title="Rejected" to={route.get('quality.rejected')}></DropdownItem>
+            <DropdownItem title="Pending" to={route.get('quality.pending')}></DropdownItem>
           </Dropdown>
 
 
