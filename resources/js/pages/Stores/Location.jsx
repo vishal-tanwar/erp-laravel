@@ -4,11 +4,11 @@ import "./style.scss";
 import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { route } from "../../utils/WebRoutes";
-import DropdownFilter from "../../components/DropdownFilter";
 import axios from "axios";
 import ReactSelect from "react-select";
+
+import { SkeletonTable } from "../../Skeletons";
+import Swal from "sweetalert2";
 
 
 export default function Location() {
@@ -23,6 +23,9 @@ export default function Location() {
 
     const [isCheckAll, setIsCheckAll] = useState(false);
     const [isCheck, setIsCheck] = useState([]);
+
+    const [isLoading, setLoading] = useState(true);
+
 
     const handleSelectAll = e => {
         setIsCheckAll(!isCheckAll);
@@ -54,6 +57,7 @@ export default function Location() {
 
         axios.get('locations').then( res => {
             setLocations( res.data.data.locations );
+            setLoading(false);
         })
     }, []);
 
@@ -75,15 +79,36 @@ export default function Location() {
             });
         }
     }
+
+
+    const handleDelete = (id) => {
+
+        Swal.fire({
+            title: "Do you want to Delate?",
+            icon: 'question',
+            showCloseButton: false,
+            showCancelButton: true,
+            confirmButtonText: "Sure",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+        }).then(res => {
+            if (res.isConfirmed) {
+                const queryParams = new URLSearchParams({
+                    // page: currentPage,
+                    // per_page: perPage,
+                });
+                axios.delete(`location/${id}?${queryParams.toString()}`).then(res => {
+                    setLocations(res.data.data);
+                });
+            }
+        })
+    }
+
     return (
         <Layout title="Store Location" hideBanner showBackButton={true}>
             <Row>
                 <Col xs={6}>
                     <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow}> Create Store Location</button>
-                </Col>
-                <Col xs={6} className="d-flex justify-content-end">
-                    <DropdownFilter align="right" />
-
                 </Col>
             </Row>
 
@@ -102,14 +127,7 @@ export default function Location() {
                             
                         />
                     </InputGroup>
-
                     <InputGroup className="my-2">
-                        <Form.Control 
-                        placeholder="Store Name"/>
-                    </InputGroup>
-                    <InputGroup className="my-2">
-                        <Form.Control 
-                        placeholder="Store Location"/>
 
                         <Form.Control
                             placeholder="Store Location" value={locationName} onChange={e => setLocationName(e.target.value)}/>
@@ -193,6 +211,7 @@ export default function Location() {
                                 </thead>
                                 <tbody className="text-center">
                                     {
+                                        isLoading ? <SkeletonTable columns={5} /> :
                                         locations.map( (location, index) => {
                                             return(
                                                 <tr className="text-center" key={index}>
@@ -205,11 +224,11 @@ export default function Location() {
                                                             checked={isCheck.includes(location.id)? 'checked': false } />
                                                     </td>
                                                     <td>{++index}</td>
-                                                    <td>{location.store.name}</td>
+                                                    <td>{location.store?.name}</td>
                                                     <td>{location.name}</td>
                                                     <td className="d-flex justify-content-evenly">
                                                         <button type="button" className="btn btn-success btn-sm rounded shadow w-16">Edit</button>
-                                                        <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
+                                                        <button type="button" className="btn btn-danger btn-sm rounded shadow" onClick={() => handleDelete(location.id)}>Delete</button>
                                                     </td>
 
                                                 </tr>
@@ -217,8 +236,6 @@ export default function Location() {
                                         })
                                     }
                                     
-
-
                                 </tbody>
                             </table>
                         </div>
