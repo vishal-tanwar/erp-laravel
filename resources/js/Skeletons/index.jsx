@@ -28,4 +28,4 @@ export const SkeletonTable = ({rows = 10 , columns = 10 }) => {
 
 }
 
-export const SkeletonPaginate = () => <Skeleton width={100}/>
+export const SkeletonPaginate = () => <div className='d-flex justify-content-end'><Skeleton width={100}/></div>

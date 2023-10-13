@@ -9,6 +9,8 @@ import ReactSelect from "react-select";
 
 import { SkeletonPaginate, SkeletonTable } from "../../Skeletons";
 import Swal from "sweetalert2";
+import RecordsPerPage from "../../components/RecordsPerPage";
+import { Paginate } from "../../components/Paginate";
 
 
 export default function Location() {
@@ -81,6 +83,7 @@ export default function Location() {
         axios.get('locations').then(res => {
             setLocations(res.data.data.locations);
             setLoading(false);
+            setPaginateLoading(false)
         })
     }, []);
 
@@ -125,28 +128,36 @@ export default function Location() {
 
     }
 
-    useEffect(() => {
+    const handleRecordsPerPage = (record) => { 
+        setPaginateLoading(true);
+        setPerPage(record); 
         const queryParams = new URLSearchParams({
-            page: currentPage,
-            per_page: perPage,
+            page: 1,
+            per_page: record,
         });
-        axios.get(`stores?${queryParams.toString()}`).then(res => {
+        axios.get(`locations?${queryParams.toString()}`).then(res => {
             const response = res.data;
-            setLocations(response.data.stores);
+            setLocations(response.data.locations);
             setPageCount(response.data.pages);
-            setLoading( false );
-            setPaginateLoading( false );
+            setLoading(false);
+            setPaginateLoading(false);
         })
-    }, []);
+    }
+
+   
     const handlePaginateChange = (page) => {
-        setCurrentPage(page);
+        
+        setCurrentPage(() => {
+            return page;
+        });
+
         const queryParams = new URLSearchParams({
             page: page,
             per_page: perPage,
         });
-        axios.get(`stores?${queryParams.toString()}`).then(res => {
+        axios.get(`locations?${queryParams.toString()}`).then(res => {
             const response = res.data;
-            setLocations(response.data.stores);
+            setLocations(response.data.locations);
             setPageCount(response.data.pages);
             setLoading(false);
         })
@@ -154,9 +165,9 @@ export default function Location() {
     }
 
     const handleSearch = () => {
-        axios.get(`search/${searchValue}`).then(res => {
+        axios.get(`/locations/search/${searchValue}`).then(res => {
             const response = res.data;
-            setLocations(response.data.stores);
+            setLocations(response.data.locations);
             setPageCount(response.data.pages);
             setLoading(false);
             setPaginateLoading(false);
@@ -171,9 +182,9 @@ export default function Location() {
             page: currentPage,
             per_page: perPage,
         });
-        axios.get(`stores?${queryParams.toString()}`).then(res => {
+        axios.get(`locations?${queryParams.toString()}`).then(res => {
             const response = res.data;
-            setLocations(response.data.stores);
+            setLocations(response.data.locations);
             setPageCount(response.data.pages);
             setLoading(false);
             setPaginateLoading(false);
@@ -261,31 +272,9 @@ export default function Location() {
                 <Row>
                     <Col xs={5}>
                         <div className="d-flex gap-3">
-                            <Dropdown>
-                                <Dropdown.Toggle className="btn-light border border-black shadow" id="dropdown-basic">
-                                    25
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu className="bg-dark-subtle">
-                                    <Dropdown.Item >10</Dropdown.Item>
-                                    <Dropdown.Item >25</Dropdown.Item>
-                                    <Dropdown.Item >50</Dropdown.Item>
-                                    <Dropdown.Item className="text">All</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                            <Dropdown>
-                                <Dropdown.Toggle id="dropdown-basic" className="btn-light border border-black shadow">
-                                    Export
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu className="bg-dark-subtle">
-                                    <Dropdown.Item >Excel</Dropdown.Item>
-                                    <Dropdown.Item >Print</Dropdown.Item>
-                                    <Dropdown.Item >PDF</Dropdown.Item>
-                                    <Dropdown.Item >CSV</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                            <Dropdown>
+                        <RecordsPerPage currentRecords={perPage} setRecords={handleRecordsPerPage}/>
+                            
+                            {/* <Dropdown>
                                 <Dropdown.Toggle id="dropdown-basic" className="btn-light border border-black shadow">
                                     Bulk Action
                                 </Dropdown.Toggle>
@@ -293,7 +282,7 @@ export default function Location() {
                                 <Dropdown.Menu className="bg-dark-subtle">
                                     <Dropdown.Item >Delete</Dropdown.Item>
                                 </Dropdown.Menu>
-                            </Dropdown>
+                            </Dropdown> */}
                         </div>
                     </Col>
                     <Col xs={7}>
@@ -311,8 +300,6 @@ export default function Location() {
                         <div className="table-responsive">
                             <table className="table table-bordered table-hover">
                                 <thead>
-                                    <tr className="rm-list-thM1">
-                                    </tr>
                                     <tr className="text-center">
                                         <th scope="col"> <Form.Check type="checkbox" onChange={handleSelectAll} checked={isCheckAll} /></th>
                                         <th scope="col">Sr. No.</th>
@@ -350,7 +337,7 @@ export default function Location() {
 
                                 </tbody>
                             </table>
-                            {isPaginateLoading ? <SkeletonPaginate /> : pageCount > 1 ? <Paginate onPageChange={handlePaginateChange} pageCount={pageCount} currentPage={currentPage} /> : '' }
+                            {isPaginateLoading ? <SkeletonPaginate /> : pageCount > 1 ? <Paginate onPageChange={handlePaginateChange} pageCount={pageCount} currentPage={currentPage} setCurrentPage={setCurrentPage}/> : '' }
                         </div>
                     </Col>
                 </Row>
