@@ -3,15 +3,27 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-bootstrap";
-import { MdOutlineSearch } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { route } from "../../utils/WebRoutes";
-import DropdownFilter from "../../components/DropdownFilter";
+import { MdClose, MdOutlineSearch } from "react-icons/md";
 import axios from "axios";
 import ReactSelect from "react-select";
 
+import { SkeletonPaginate, SkeletonTable } from "../../Skeletons";
+import Swal from "sweetalert2";
+
 
 export default function Location() {
+
+    const styles = {
+        searchSpan: {
+            position: "absolute",
+            top: "50%",
+            right: "50px",
+            zIndex: 9,
+            transform: "translateY(-50%)",
+            cursor: "pointer",
+        }
+    }
+
 
     const [show, setShow] = useState(false);
     const [storeOptions, setStoreOptions] = useState([]);
@@ -24,6 +36,20 @@ export default function Location() {
     const [isCheckAll, setIsCheckAll] = useState(false);
     const [isCheck, setIsCheck] = useState([]);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageCount, setPageCount] = useState(0);
+    const [perPage, setPerPage] = useState(10);
+
+    const [isLoading, setLoading] = useState(true);
+    const [isPaginateLoading, setPaginateLoading ] = useState(true);
+
+    const [editId, setEditId] = useState(0);
+
+    const [locationError, setLocationError] = useState(false);
+
+    const [searchValue, setSearchValue ] = useState('');
+
+
     const handleSelectAll = e => {
         setIsCheckAll(!isCheckAll);
         setIsCheck(locations.map(li => li.id));
@@ -35,7 +61,7 @@ export default function Location() {
     const handleClick = e => {
         const { id, checked } = e.target;
         setIsCheck([...isCheck, id]);
-        console.log( id, checked, isCheck );
+        console.log(id, checked, isCheck);
         if (!checked) {
             setIsCheck(isCheck.filter(item => item !== id));
         }
@@ -49,41 +75,151 @@ export default function Location() {
                     label: store.name
                 }
             })
-            setStoreOptions( options );
+            setStoreOptions(options);
         });
 
-        axios.get('locations').then( res => {
-            setLocations( res.data.data.locations );
+        axios.get('locations').then(res => {
+            setLocations(res.data.data.locations);
+            setLoading(false);
         })
     }, []);
 
-    
+
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const handleSaveLocation = () => {
-        if (locationName && store){
-            axios.post('location', {
-                name: locationName, 
-                store_id: store
-            }).then( res => {
-                setLocations(prev => [...prev, res.data.data]);
-                handleClose();
-                setStore('');
-                setLocationName('');
-            });
+    const handleSave = () => {
+
+        if (!locationName) {
+            setLocationError(true);
         }
+        else {
+            if (editId && editId > 0) {
+                axios.put(`location/${editId}`, {
+                    name: locationName,
+                    store_id: store
+                }).then(res => {
+
+                    setLocations(prev => {
+                        let searched = prev.find(location => location.id == editId);
+                        searched["name"] = res.data.data.name;
+                        searched["store"] = res.data.data.store;
+                        return [...prev]
+                    })
+
+                    handleClose();
+                });
+            } else {
+                axios.post('location', {
+                    name: locationName,
+                    store_id: store
+                }).then(res => {
+                    setLocations(prev => [...prev, res.data.data]);
+                    handleClose();
+                    setStore('');
+                    setLocationName('');
+                });
+            }
+        }
+
     }
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams({
+            page: currentPage,
+            per_page: perPage,
+        });
+        axios.get(`stores?${queryParams.toString()}`).then(res => {
+            const response = res.data;
+            setLocations(response.data.stores);
+            setPageCount(response.data.pages);
+            setLoading( false );
+            setPaginateLoading( false );
+        })
+    }, []);
+    const handlePaginateChange = (page) => {
+        setCurrentPage(page);
+        const queryParams = new URLSearchParams({
+            page: page,
+            per_page: perPage,
+        });
+        axios.get(`stores?${queryParams.toString()}`).then(res => {
+            const response = res.data;
+            setLocations(response.data.stores);
+            setPageCount(response.data.pages);
+            setLoading(false);
+        })
+        
+    }
+
+    const handleSearch = () => {
+        axios.get(`search/${searchValue}`).then(res => {
+            const response = res.data;
+            setLocations(response.data.stores);
+            setPageCount(response.data.pages);
+            setLoading(false);
+            setPaginateLoading(false);
+        })
+    }
+
+    const handleClearSearch = () => {
+        setLoading(true);
+        setPaginateLoading(true);
+        setSearchValue('');
+        const queryParams = new URLSearchParams({
+            page: currentPage,
+            per_page: perPage,
+        });
+        axios.get(`stores?${queryParams.toString()}`).then(res => {
+            const response = res.data;
+            setLocations(response.data.stores);
+            setPageCount(response.data.pages);
+            setLoading(false);
+            setPaginateLoading(false);
+        })
+    }
+
+
+
+    const handleDelete = (id) => {
+
+        Swal.fire({
+            title: "Do you want to Delate?",
+            icon: 'question',
+            showCloseButton: false,
+            showCancelButton: true,
+            confirmButtonText: "Sure",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+        }).then(res => {
+            if (res.isConfirmed) {
+                const queryParams = new URLSearchParams({
+                    // page: currentPage,
+                    // per_page: perPage,
+                });
+                axios.delete(`location/${id}?${queryParams.toString()}`).then(res => {
+                    setLocations(res.data.data);
+                });
+            }
+        })
+    }
+
+    const handleEdit = (id) => {
+
+        setEditId(id);
+        let searchedStore = locations.find(l => l.id == id);
+        setStore(searchedStore.store.id);
+        setLocationName(searchedStore.name);
+        handleShow();
+
+    }
+
     return (
         <Layout title="Store Location" hideBanner showBackButton={true}>
             <Row>
                 <Col xs={6}>
                     <button type="button" className="btn btn-primary btn-sm bg-primary" onClick={handleShow}> Create Store Location</button>
-                </Col>
-                <Col xs={6} className="d-flex justify-content-end">
-                    <DropdownFilter align="right" />
-
                 </Col>
             </Row>
 
@@ -96,24 +232,17 @@ export default function Location() {
                         <ReactSelect
                             className="rounded-2 w-100"
                             options={storeOptions}
-                            onChange={e => setStore(e.value)}
-                            isClearable={true}  
+                            onChange={({ value }) => { setStore(value) }}
+                            isClearable={false}
                             name="store_id"
-                            
+                            value={storeOptions.filter(({ value }) => (value === store))}
+
                         />
                     </InputGroup>
-
                     <InputGroup className="my-2">
-                        <Form.Control 
-                        placeholder="Store Name"/>
-                    </InputGroup>
-                    <InputGroup className="my-2">
-                        <Form.Control 
-                        placeholder="Store Location"/>
 
-                        <Form.Control
-                            placeholder="Store Location" value={locationName} onChange={e => setLocationName(e.target.value)}/>
-
+                        <Form.Control placeholder="Store Location" value={locationName} onChange={e => setLocationName(e.target.value)} />
+                        <Form.Control.Feedback type="invalid" className={locationError && 'd-block'}>Location name is required!</Form.Control.Feedback>
                     </InputGroup>
 
 
@@ -122,7 +251,7 @@ export default function Location() {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleSaveLocation}>
+                    <Button variant="primary" onClick={handleSave}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
@@ -168,10 +297,11 @@ export default function Location() {
                         </div>
                     </Col>
                     <Col xs={7}>
-                        <Form className="w-64 ms-auto">
+                        <Form className="w-64 ms-auto" onSubmit={e => { e.preventDefault(); handleSearch()}}>
                             <InputGroup>
-                                <Form.Control className="m-0" type="text" placeholder="Search..."></Form.Control>
-                                <InputGroup.Text><MdOutlineSearch className="fs-4" /></InputGroup.Text>
+                                <Form.Control className="m-0" type="search" placeholder="Search..." value={searchValue} onChange={(e) => setSearchValue(e.target.value)  }></Form.Control>
+                                {searchValue.length > 0 ? <span style={styles.searchSpan} onClick={ handleClearSearch}><MdClose /></span> : ''}
+                                <Button type="button" onClick={handleSearch}><MdOutlineSearch className="fs-4" /></Button>
                             </InputGroup>
                         </Form>
                     </Col>
@@ -193,34 +323,34 @@ export default function Location() {
                                 </thead>
                                 <tbody className="text-center">
                                     {
-                                        locations.map( (location, index) => {
-                                            return(
-                                                <tr className="text-center" key={index}>
-                                                    
-                                                    <td>
-                                                        <Form.Check type="checkbox" 
-                                                            id={location.id}
-                                                            name={`location-${location.id}`}
-                                                            onChange={handleClick}
-                                                            checked={isCheck.includes(location.id)? 'checked': false } />
-                                                    </td>
-                                                    <td>{++index}</td>
-                                                    <td>{location.store.name}</td>
-                                                    <td>{location.name}</td>
-                                                    <td className="d-flex justify-content-evenly">
-                                                        <button type="button" className="btn btn-success btn-sm rounded shadow w-16">Edit</button>
-                                                        <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
-                                                    </td>
+                                        isLoading ? <SkeletonTable columns={5} /> :
+                                            locations.map((location, index) => {
+                                                return (
+                                                    <tr className="text-center" key={index}>
 
-                                                </tr>
-                                            )
-                                        })
+                                                        <td>
+                                                            <Form.Check type="checkbox"
+                                                                id={location.id}
+                                                                name={`location-${location.id}`}
+                                                                onChange={handleClick}
+                                                                checked={isCheck.includes(location.id) ? 'checked' : false} />
+                                                        </td>
+                                                        <td>{++index}</td>
+                                                        <td>{location.store?.name}</td>
+                                                        <td>{location.name}</td>
+                                                        <td className="d-flex justify-content-evenly">
+                                                            <button type="button" className="btn btn-success btn-sm rounded shadow w-16" onClick={() => handleEdit(location.id)}>Edit</button>
+                                                            <button type="button" className="btn btn-danger btn-sm rounded shadow" onClick={() => handleDelete(location.id)}>Delete</button>
+                                                        </td>
+
+                                                    </tr>
+                                                )
+                                            })
                                     }
-                                    
-
 
                                 </tbody>
                             </table>
+                            {isPaginateLoading ? <SkeletonPaginate /> : pageCount > 1 ? <Paginate onPageChange={handlePaginateChange} pageCount={pageCount} currentPage={currentPage} /> : '' }
                         </div>
                     </Col>
                 </Row>

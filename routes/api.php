@@ -93,6 +93,7 @@ Route::group(["prefix" => "v1"], function(){
         Route::post('store', 'store' );
         Route::match(['put', 'patch'], 'store/{id}', 'update');
         Route::delete('store/{id}', 'destroy');
+        Route::get('search/{keywords?}', 'search');
     });
 
 
