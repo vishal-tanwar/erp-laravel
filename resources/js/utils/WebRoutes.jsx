@@ -24,6 +24,8 @@ import Vouchers from "../pages/Stores/Screens/Vouchers";
 import CreateReceiving from "../pages/Stores/Screens/CreateReceiving";
 import CreateIssuance from "../pages/Stores/Screens/CreateIssuance";
 import Approved from "../pages/Quality/Approved";
+import Rejected from "../pages/Quality/Rejected";
+import Pending from "../pages/Quality/Pending";
 
 
 
@@ -180,6 +182,21 @@ export const Endpoints = [
         component: Approved,
         exact: true,
         name: "quality.approved"
-    }
+    },
+    {
+        path: route("quality/rejected"),
+        component: Rejected,
+        exact: true,
+        name: "quality.rejected"
+    },
+
+    {
+        path: route("quality/pending"),
+        component: Pending,
+        exact: true,
+        name: "quality.pending"
+    },
+
+    
 
 ]
