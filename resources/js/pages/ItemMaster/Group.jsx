@@ -3,8 +3,15 @@ import "./style.scss";
 import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
+import { SkeletonTable } from "../../Skeletons";
 
 export default function Group(){
+
+    
+    const [isLoading, setLoading ] = useState(true);
+    const [isPaginateLoading, setPaginateLoading ] = useState(true);
+
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -37,6 +44,7 @@ export default function Group(){
             .then(res => {
                 const response = res.data;
                 setGroups(response.data.groups);
+                setLoading(false);
             });
     }, []);
     return(
@@ -125,6 +133,7 @@ export default function Group(){
                                 </thead>
                                 <tbody className="text-center">
                                     {
+                                        isLoading ? <SkeletonTable columns={4}/> :
                                         groups.map((group, i) => {
                                             return (
                                                 <tr className="text-center" key={i}>

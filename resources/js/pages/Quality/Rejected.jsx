@@ -17,7 +17,7 @@ export default function Rejected() {
                     <Form className="w-64 ms-auto">
                         <InputGroup>
                             <Form.Control className="m-0 border border-end-0" type="text" placeholder="Search..."></Form.Control>
-                            <Button className="border-start-0"><MdOutlineSearch className="fs-4 " /></Button>
+                            <Button className="border-start-0"><MdOutlineSearch className="fs-4"/></Button>
                         </InputGroup>
                     </Form>
                 </Col>
