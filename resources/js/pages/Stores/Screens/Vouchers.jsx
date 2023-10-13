@@ -7,9 +7,14 @@ import { route } from "../../../utils/WebRoutes";
 import { MdArrowBackIosNew, MdFilterAlt, MdOutlinePrint, MdOutlineSearch } from "react-icons/md";
 import NotFound from '../../NotFound';
 import axios from "axios";
+import { SkeletonTable } from "../../../Skeletons";
 
 
 export default function Vouchers() {
+
+    
+    const [isLoading, setLoading ] = useState(true);
+    const [isPaginateLoading, setPaginateLoading ] = useState(true);
 
     const params = useParams();
     const [isFound, setIsFound] = useState(true);
@@ -26,6 +31,7 @@ export default function Vouchers() {
 
                 axios.get('vouchers?store=' + res.data.data.id ).then(res => {
                     setVouchers(res.data.data.vouchers);
+                    setLoading(false);
                 })
 
             }
@@ -158,6 +164,7 @@ export default function Vouchers() {
                             <tbody className="text-center">
 
                                 {
+                                    isLoading ? <SkeletonTable columns={11}/> : 
                                     vouchers.map((voucher, index) => {
 
                                         return (

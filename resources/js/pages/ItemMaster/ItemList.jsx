@@ -6,8 +6,13 @@ import { MdFilterListAlt,  } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { route } from "../../utils/WebRoutes";
 import DropdownFilter from "../../components/DropdownFilter";
+import { SkeletonTable } from "../../Skeletons";
 
 export default function ItemList() {
+
+    
+    const [isLoading, setLoading ] = useState(true);
+    const [isPaginateLoading, setPaginateLoading ] = useState(true);
 
     const [items, setItems] = useState([]);
 
@@ -25,6 +30,7 @@ export default function ItemList() {
     useEffect( () => {
         axios.get('items').then( res => {
             setItems( res.data.data.items );
+            setLoading(false);
         })
     }, []);
 
@@ -110,7 +116,7 @@ export default function ItemList() {
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
-                                    {
+                                    {   isLoading ? <SkeletonTable columns={7}/> :
                                         items.map( (item, index) => {
                                             return (
                                                 <tr className="text-center" key={++index}>

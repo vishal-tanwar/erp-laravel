@@ -4,10 +4,16 @@ import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
 import axios from "axios";
+import Skeleton from "react-loading-skeleton";
+import { SkeletonTable } from "../../Skeletons";
 
 
 
 export default function Units(){
+
+    const [isLoading, setLoading ] = useState(true);
+    const [isPaginateLoading, setPaginateLoading ] = useState(true);
+
     const [show, setShow] = useState(false);
 
     const [unitName, setUnitName ] = useState('');
@@ -30,6 +36,7 @@ export default function Units(){
     const handleDelete = ( id ) => {
         axios.delete(`unit/${id}`).then( res => {
             setUnits(res.data.data);
+            
         });
     }
 
@@ -39,6 +46,7 @@ export default function Units(){
         .then( res => {
             const response = res.data;
             setUnits( response.data.units );
+            setLoading(false);
         });
     }, []);
 
@@ -128,6 +136,7 @@ export default function Units(){
                                 </thead>
                                 <tbody className="text-center">
                                     {
+                                        isLoading ? <SkeletonTable columns={4}/> :
                                         units.map((unit, i) => {
                                             return(
                                                 <tr className="text-center" key={i}>
