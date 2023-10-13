@@ -65,7 +65,6 @@ export default function Stores() {
                         let searched = prev.find(store => store.id == editId);
                         searched["name"] = res.data.data.name;
                         searched["slug"] = res.data.data.slug;
-                        console.log(searched);
                         return [...prev] 
                     })
 

@@ -63,9 +63,20 @@ class LocationsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Location $location)
+    public function update(Request $request, $id)
     {
-        //
+        $location = Location::find($id);
+
+        $location->name = $request->name;
+        $location->store_id = $request->store_id;
+        $location->save();
+
+        return response()->json([
+            "message" => "Location updated Successfully!",
+            "code" => Response::HTTP_ACCEPTED,
+            "success" => true,
+            "data" =>  Location::with(['store'])->where("id", "=", $location->id )->first()
+        ],Response::HTTP_ACCEPTED);
     }
 
     /**
