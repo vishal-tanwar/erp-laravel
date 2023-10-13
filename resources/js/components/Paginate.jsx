@@ -6,7 +6,7 @@ import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import PaginateCss from './paginate.module.css?iniline';
 
 
-export const Paginate = ({ onPageChange, currentPage = 1, pageCount, nextLabel, previousLabel, lastLabel, firstLabel }) => {
+export const Paginate = ({ onPageChange, currentPage, pageCount, nextLabel, previousLabel, lastLabel, firstLabel, setCurrentPage }) => {
 
     const [lowerPages, setLowerPages] = React.useState([]);
     const [upperPages, setUpperPages] = React.useState([]);
@@ -18,15 +18,21 @@ export const Paginate = ({ onPageChange, currentPage = 1, pageCount, nextLabel, 
     const firstPage = 1;
     
     const onClick = (e, value) => {
+        setCurrentPage(value);
         e.preventDefault();
         setPreviousPage(Math.max(1, value - 1));
         setNextPage(Math.min(pageCount, value + 1));
         onPageChange(value);
+
     }
 
     
 
     React.useEffect(() => {
+
+        if( !setCurrentPage || typeof setCurrentPage !== "function"){
+            throw new Error("Error:: setCurrentPage method is required and it should be function");
+        }
 
         setPreviousPage( Math.max(1, currentPage - 1) );
         setNextPage( Math.min(pageCount, currentPage + 1) );
@@ -41,7 +47,7 @@ export const Paginate = ({ onPageChange, currentPage = 1, pageCount, nextLabel, 
                 const lp = [];
                 for (let i = 1; i <= 3; i++) {
                     lp.push(<li className="page-item">
-                        <a className="page-link" role="button" href="#" onClick={(e) => onClick(e, i)}>
+                        <a className={`page-link`} role="button" href="#" onClick={(e) => onClick(e, i)}>
                             <span aria-hidden="true">{i}</span>
                         </a>
                     </li>)
@@ -54,15 +60,12 @@ export const Paginate = ({ onPageChange, currentPage = 1, pageCount, nextLabel, 
         } else {
 
             setLowerPages(() => {
-                const lp = [];
-                for (let i = 1; i <= pageCount; i++) {
-                    lp.push(<li className="page-item">
-                        <a className="page-link" role="button" href="#" onClick={(e) => onClick(e, i)}>
-                            <span aria-hidden="true">{i}</span>
-                        </a>
-                    </li>)
-                }
-                return lp;
+                
+                return Array(pageCount).fill().map( (v,i) => <li className="page-item" key={++i}>
+                <a className={`page-link ${currentPage == i ? 'active' : ''}`} role="button" href="#" onClick={(e) => onClick(e, i)}>
+                    <span aria-hidden="true">{i}</span>
+                </a>
+            </li> )
 
             })
             

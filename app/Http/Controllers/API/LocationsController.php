@@ -19,13 +19,31 @@ class LocationsController extends Controller
         if($request->get('store_id')){
             $locations->where('store_id', "=", $request->get('store_id'));
         }
+
+        $pages = 0;
+
+
+
+        if ($request->get('page') && $request->get('per_page')) {
+
+            $page = $request->get('page');
+            $limit = $request->get('per_page');
+
+            $offset = ($page - 1) * $limit;
+            $locations->limit($limit)->offset($offset);
+            $pages = Location::all()->count();
+
+            $pages = ceil($pages / $limit);
+        }
+
+
         
 
         return response()->json([
             "status" => true,
             "code" => Response::HTTP_OK,
             'message' => 'Locations fetched successfully',
-            'data' => ["locations" => $locations->get()],
+            'data' => ["locations" => $locations->get(), "pages" => $pages],
         ]);
     }
 
@@ -77,6 +95,27 @@ class LocationsController extends Controller
             "success" => true,
             "data" =>  Location::with(['store'])->where("id", "=", $location->id )->first()
         ],Response::HTTP_ACCEPTED);
+    }
+
+    public function search($keywords = "")
+    {
+        $location = Location::with(['store'])->select('*');
+        if ($keywords) {
+
+            $location = $location->where('name', "LIKE", "%{$keywords}%");
+        }
+
+        $location = $location->get();
+
+        return response()->json([
+            "success" => true,
+            'data' => [
+                "locations" => $location,
+                "pages" => 0
+            ],
+            "code" => Response::HTTP_OK,
+            'message' => 'Location fetched successfully',
+        ], Response::HTTP_OK);
     }
 
     /**

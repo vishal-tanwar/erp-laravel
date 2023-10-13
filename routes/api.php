@@ -93,7 +93,7 @@ Route::group(["prefix" => "v1"], function(){
         Route::post('store', 'store' );
         Route::match(['put', 'patch'], 'store/{id}', 'update');
         Route::delete('store/{id}', 'destroy');
-        Route::get('search/{keywords?}', 'search');
+        Route::get('stores/search/{keywords?}', 'search');
     });
 
 
@@ -111,6 +111,7 @@ Route::group(["prefix" => "v1"], function(){
         Route::post('location', 'store');
         Route::match(['put', 'patch'], 'location/{id}', 'update');
         Route::delete('location/{id}', 'destroy');
+        Route::get('locations/search/{keywords?}', 'search');
     });
 
 });
