@@ -71,8 +71,15 @@ class LocationsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Location $location)
+    public function destroy(Request $request, $location)
     {
-        //
+        $location = Location::find($location);
+        $location->delete();
+        return response()->json([
+            "status" => true,
+            "code" => Response::HTTP_OK,
+            'message' => 'locations deleted successfully',
+            'data' => Location::with(['store'])->get(),
+        ], Response::HTTP_OK);
     }
 }
