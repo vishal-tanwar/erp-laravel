@@ -6,9 +6,14 @@ import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-boots
 import { Link } from "react-router-dom";
 import { route } from "../../utils/WebRoutes";
 import axios from "axios";
+import { SkeletonTable } from "../../Skeletons";
 
 
 export default function Inventory() {
+
+    
+    const [isLoading, setLoading ] = useState(true);
+    const [isPaginateLoading, setPaginateLoading ] = useState(true);
 
 
 
@@ -31,6 +36,7 @@ export default function Inventory() {
             const response = res.data;
 
             setStores(response.data.stores);
+            setLoading(false);
         })
     }, []);
 
@@ -105,6 +111,7 @@ export default function Inventory() {
                                 <tbody className="text-center">
 
                                     {
+                                        isLoading ? <SkeletonTable columns={5}/> :
                                         stores.map((store, index) => {
                                             return (
                                                 <tr className="text-center" key={index}>
