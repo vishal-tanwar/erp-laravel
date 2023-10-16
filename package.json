@@ -8,6 +8,7 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@progress/kendo-react-pdf": "^6.0.2",
         "@tailwindcss/forms": "^0.5.3",
         "axios": "^1.4.0",
         "bootstrap": "^5.3.1",

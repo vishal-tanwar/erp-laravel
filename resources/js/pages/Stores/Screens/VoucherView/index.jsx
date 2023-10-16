@@ -8,7 +8,7 @@ import { CgClose } from "react-icons/cg";
 import { useParams } from "react-router-dom";
 import Barcode from "react-barcode";
 
-import { PDFExport } from '../../../../modules/@progress/kendo-react-pdf'
+import { PDFExport } from '../../../../modules/react-pdf'
 
 export default function VoucherView() {
 
