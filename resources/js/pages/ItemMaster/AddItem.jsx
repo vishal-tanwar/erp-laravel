@@ -115,9 +115,10 @@ export default function AddItem() {
                 showConfirmButton: false,
                 timer: 1500,
                 timerProgressBar: true,
+            }).then( () => {
+                navigate(route.get('item_master.item_list'));
             });
 
-            navigate(route.get('item_master.item_list'))
         });
     }
 

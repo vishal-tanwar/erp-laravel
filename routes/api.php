@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\GroupsController;
+use App\Http\Controllers\API\InventoriesController;
 use App\Http\Controllers\API\ItemController;
 use App\Http\Controllers\API\LocationsController;
 use App\Http\Controllers\API\StoresController;
@@ -112,6 +113,10 @@ Route::group(["prefix" => "v1"], function(){
         Route::match(['put', 'patch'], 'location/{id}', 'update');
         Route::delete('location/{id}', 'destroy');
         Route::get('locations/search/{keywords?}', 'search');
+    });
+
+    Route::controller(InventoriesController::class)->group(function(){
+        Route::get('inventories', 'index');
     });
 
 });

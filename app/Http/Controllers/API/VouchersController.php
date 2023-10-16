@@ -32,7 +32,7 @@ class VouchersController extends Controller
             'message' => 'Vouchers fetched successfully',
             'data' => [
                 "vouchers" => $vouchers,
-                // "items" => $vouchers->items
+                // "rece" => $vouchers->items
             ],
         ]);
         
@@ -78,7 +78,7 @@ class VouchersController extends Controller
 
     public function view( Request $request ){
 
-        $id = $request->get('slug');
+        $id = $request->get('id');
         $vouchers = Voucher::with(['store', 'supplier', 'items'])->where('id', "=", $id);
 
 

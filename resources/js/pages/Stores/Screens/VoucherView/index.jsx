@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./style.scss";
 import Layout from "../../../../partials/Layout";
 import { Form, Col, Row, InputGroup, Modal, Button } from "react-bootstrap";
@@ -8,7 +8,7 @@ import { CgClose } from "react-icons/cg";
 import { useParams } from "react-router-dom";
 import Barcode from "react-barcode";
 
-
+import { PDFExport } from '../../../../modules/@progress/kendo-react-pdf'
 
 export default function VoucherView() {
 
@@ -26,6 +26,9 @@ export default function VoucherView() {
 
     const [show, setShow] = useState(false);
     const [barCodes, setBarCodes] = useState([]);
+
+
+    const pdfExportComponent = React.useRef(null);
 
 
     useEffect(() => {
@@ -50,22 +53,29 @@ export default function VoucherView() {
     }, []);
 
 
+
+
     const showBarCodes = (itemId, quantity, voucher) => {
 
-        quantity = quantity.parseInt();
+        if (barCodes.length <= 0) {
 
-        voucher = voucher.replace(/\-/g, '');
+            quantity = quantity.parseInt();
 
-        const itemBarCodes = Array(quantity).fill().map((v, i) => {
-            return (
-                <Barcode key={i} value={`${voucher}-${itemId}00${++i}`} />
-            )
-        });
+            voucher = voucher.replace(/\-/g, '');
 
-        setBarCodes(itemBarCodes);
+            const itemBarCodes = Array(quantity).fill().map((v, i) => {
+                return (
+                    <Barcode key={i} value={`${voucher}-${itemId}00${++i}`}/>
+                )
+            });
+
+            setBarCodes(itemBarCodes);
+
+        }
 
         setShow(true);
     }
+
 
     return (
         <Layout title="View Voucher" hideBanner showBackButton={true}>
@@ -230,8 +240,21 @@ export default function VoucherView() {
                     <Button variant="danger" onClick={() => setShow(false)}><CgClose /></Button>
                 </Modal.Header>
                 <Modal.Body className="d-flex flex-column align-items-center">
+                    <div className="d-flex mb-3">
+                        <Button onClick={() => {
+                            if (pdfExportComponent.current) {
+                                pdfExportComponent.current.save();
+                            }
+                        }}>Export in PDF</Button>
+                    </div>
+                    <PDFExport
+                        keepTogether="p"
+                        paperSize={[300, 150]}
+                        ref={pdfExportComponent}
+                    >
+                        {barCodes.map((barcode, i) => <div key={i} style={{ marginLeft: 10, marginRight: 10 }} align="center" width="100%">{barcode}</div>)}
+                    </PDFExport>
 
-                    {barCodes.map(barcode => barcode)}
                 </Modal.Body>
 
             </Modal>

@@ -7,6 +7,7 @@ import { MdCalendarMonth, MdClose } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ReactSelect from "react-select";
+import { route } from "../../../../utils/WebRoutes";
 
 
 
@@ -152,8 +153,8 @@ export default function CreateReceiving() {
             items: itemsTable
         }
 
-        axios.post('voucher', postData).then(res => {
-            console.log(res.data);
+        axios.post('voucher', postData).then((res) => {
+            navigate(route.get("store.vouchers", {name: store.slug}));
         })
     }
 
@@ -178,7 +179,7 @@ export default function CreateReceiving() {
                     <Col xs={6} >
                         <Form.Group className="mb-3">
                             <Form.Label>Voucher Number</Form.Label>
-                            <Form.Control placeholder="Voucher Number" className="rounded-2" value={voucherNumber} disabled />
+                            <Form.Control placeholder="Voucher Number" className="rounded-2" defaultValue={voucherNumber} disabled />
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Invoice Number</Form.Label>

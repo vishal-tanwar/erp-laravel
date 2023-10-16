@@ -118,8 +118,8 @@ export default function Stores() {
         setPaginateLoading(true);
         setPerPage(record); 
         const queryParams = new URLSearchParams({
-            page: 1,
-            per_page: record,
+            page: currentPage,
+            per_page: perPage,
         });
         axios.get(`stores?${queryParams.toString()}`).then(res => {
             const response = res.data;
@@ -154,7 +154,7 @@ export default function Stores() {
     }
 
     const handleSearch = () => {
-        axios.get(`stores/search/${searchValue}`).then(res => {
+        axios.get(`search/${searchValue}`).then(res => {
             const response = res.data;
             setStores(response.data.stores);
             setPageCount(response.data.pages);

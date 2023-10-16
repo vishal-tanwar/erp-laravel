@@ -14,12 +14,18 @@ export default function Vouchers() {
 
     
     const [isLoading, setLoading ] = useState(true);
+    const [isSummaryLoading, setSummaryLoading] = useState(true); 
     const [isPaginateLoading, setPaginateLoading ] = useState(true);
 
     const params = useParams();
     const [isFound, setIsFound] = useState(true);
     const [store, setStore] = useState([]);
     const [vouchers, setVouchers] = useState([]);
+
+    const [totalReceiver, setTotalReceiver] = useState(0)
+    const [todayReceiver, setTodayReceiver] = useState(0)
+    const [totalIssuance, setTotalIssuance] = useState(0)
+    const [todayIssuance, setTodayIssuance] = useState(0)
 
 
     useEffect(() => {
@@ -31,6 +37,24 @@ export default function Vouchers() {
 
                 axios.get('vouchers?store=' + res.data.data.id ).then(res => {
                     setVouchers(res.data.data.vouchers);
+
+                    let vouchers = res.data.data.vouchers;
+
+                    vouchers.length
+
+                    const today = (new Date()).toDateString();
+
+                    let receivers = vouchers.filter(voucher => voucher?.type === "receiving" );
+                    let issuances = vouchers.filter(voucher => voucher?.type === "issuance" );
+                    let todayReceiverCount = receivers.filter(voucher => (new Date(voucher?.created_at)).toDateString() === today).length;
+                    let todayIssuanceCount = issuances.filter(voucher => (new Date(voucher?.created_at)).toDateString() === today ).length;
+
+                    setTotalReceiver(receivers.length );
+                    setTotalIssuance(issuances.length );
+                    setTodayReceiver(todayReceiverCount);
+                    setTodayIssuance(todayIssuanceCount);
+
+
                     setLoading(false);
                 })
 
@@ -73,20 +97,20 @@ export default function Vouchers() {
                         <Col xs={12}>
                             <Row className="summary-bar">
                                 <Col className="text-center">
-                                    <h4 className="fs-2">21</h4>
+                                    <h4 className="fs-2">{totalReceiver}</h4>
                                     <h4 className="mt-3">Total Receiver</h4>
                                 </Col>
                                 <Col className="text-center">
-                                    <h4 className="fs-2">45</h4>
+                                    <h4 className="fs-2">{totalIssuance}</h4>
                                     <h4 className="mt-3">Total Issuance</h4>
                                 </Col>
 
                                 <Col className="text-center">
-                                    <h4 className="fs-2">1</h4>
+                                    <h4 className="fs-2">{todayReceiver}</h4>
                                     <h4 className="mt-3">Today Receiver</h4>
                                 </Col>
                                 <Col className="text-center">
-                                    <h4 className="fs-2">6</h4>
+                                    <h4 className="fs-2">{todayIssuance}</h4>
                                     <h4 className="mt-3">Today Issuance</h4>
                                 </Col>
                             </Row>
@@ -165,7 +189,7 @@ export default function Vouchers() {
 
                                 {
                                     isLoading ? <SkeletonTable columns={11}/> : 
-                                    vouchers.map((voucher, index) => {
+                                    vouchers.length > 0 ? vouchers.map((voucher, index) => {
 
                                         return (
                                             <tr className="text-center" key={index}>
@@ -199,7 +223,7 @@ export default function Vouchers() {
                                             </tr>
                                         )
 
-                                    })
+                                    }) : <tr><td colSpan={11}><b className="m-2 p-2">Nothing to show</b></td></tr>
                                 }
 
 

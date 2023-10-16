@@ -1,22 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
 import Layout from "../../../../partials/Layout";
 import { Form, Col, Row, Button, InputGroup } from "react-bootstrap";
 import DatePicker from "react-flatpickr";
 import { MdCalendarMonth, MdCheck, MdClose } from "react-icons/md";
+import BarcodeReader from "../../../../components/BarcodeReader";
 
 
 export default function CreateIssuance() {
     const [date, setDate] = React.useState(new Date());
 
+    const [voucherNumber, setVoucherNumber] = useState('');
+
+
+    useEffect(() => {
+        axios.get('generate_voucher_number').then(res => {
+            setVoucherNumber(res.data.data);
+        })
+    }, []);
+
     return (
-        <Layout title="Issuance Voucher" hideBanner>
+        <Layout title="Issuance Voucher" hideBanner showBackButton>
             <Form>
                 <Row>
                     <Col xs={6} >
                         <Form.Group className="mb-3">
                             <Form.Label>Issuance Number</Form.Label>
-                            <Form.Control type="number" placeholder="Enter your number" className="rounded-2" />
+                            <Form.Control placeholder="Enter your number" className="rounded-2" defaultValue={voucherNumber} disabled />
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Department</Form.Label>
@@ -72,6 +82,9 @@ export default function CreateIssuance() {
                                     <Form.Label>Phone No.</Form.Label>
                                     <Form.Control type="number" placeholder="Enter your Number" className="rounded-2" />
                                 </Form.Group>
+                            </Col>
+                            <Col>
+                                <BarcodeReader onEnterBarCode={({ barcode, setBarcode }) => { setBarcode('') }}/>
                             </Col>
                         </Row>
 
