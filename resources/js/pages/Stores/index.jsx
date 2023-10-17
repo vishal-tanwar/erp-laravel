@@ -115,11 +115,12 @@ export default function Stores() {
     }
 
     const handleRecordsPerPage = (record) => { 
+        console.log('');
         setPaginateLoading(true);
         setPerPage(record); 
         const queryParams = new URLSearchParams({
             page: currentPage,
-            per_page: perPage,
+            per_page: record,
         });
         axios.get(`stores?${queryParams.toString()}`).then(res => {
             const response = res.data;

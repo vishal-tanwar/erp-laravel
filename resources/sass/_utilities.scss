@@ -1,13 +1,24 @@
 $utilities: (
-    "border": (
-        property: "--bs-border-width",
+    "border": (property: "--bs-border-width",
         class: 'border-bottom',
-        values: (
-            1: 1px,
+        values: (1: 1px,
             2: 2px,
             3: 3px,
             4: 4px,
             5: 5px,
-        )
-    )
+        )),
+
+    "hover:bg": (
+        property: "background-color",
+        class: "hover-bg",
+        state: hover, 
+        values: ("primary": var(--bs-primary),
+            "secondary": var(--bs-secondary),
+            "success": var(--bs-success),
+            "info": var(--bs-info),
+            "warning": var(--bs-warning),
+            "danger": var(--bs-danger),
+            "light": var(--bs-light),
+            "dark": var(--bs-dark),
+        )),
 );

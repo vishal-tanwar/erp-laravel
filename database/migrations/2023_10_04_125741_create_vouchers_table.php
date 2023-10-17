@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->enum('type', ['issuance', 'receiving']);
             $table->integer('store_id');
+            $table->string('voucher_number');
             $table->integer('supplier_id')->nullable();
-            $table->string('voucher_number')->nullable();
             $table->string('invoice_id', 255 )->nullable();
             $table->text('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
-            $table->string('email');
-            $table->string('phone_number');
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('department')->nullable();
             $table->string('requester')->nullable();
             $table->timestamp('receiving_date')->nullable();

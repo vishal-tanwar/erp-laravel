@@ -11,8 +11,9 @@ const RecordsPerPage = ({ currentRecords, setRecords }) => {
 
     return (
         <Dropdown>
-            <Dropdown.Toggle className="btn-light border border-black shadow" id="dropdown-basic">
-                {currentRecords}
+            <Dropdown.Toggle className="shadow" id="dropdown-basic">
+                <span className="me-1">Records per Page: </span> 
+                <span>{currentRecords}</span>
             </Dropdown.Toggle>
 
             <Dropdown.Menu>

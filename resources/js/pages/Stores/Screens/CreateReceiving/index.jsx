@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ReactSelect from "react-select";
 import { route } from "../../../../utils/WebRoutes";
+import Toast from "../../../../utils/Toast";
 
 
 
@@ -45,7 +46,12 @@ export default function CreateReceiving() {
     const [itemsTable, setItemsTable] = useState([]);
 
 
+
+
+
     useEffect(() => {
+
+
         axios.get('suppliers').then(res => {
             setSuppliers(res.data.data.supplier);
             const options = res.data.data.supplier.map((supplier) => {
@@ -104,7 +110,14 @@ export default function CreateReceiving() {
         const currentVal = itemRef.current.getValue();
         if (currentVal.length > 0) {
             const item = items.find(item => item.id == currentVal[0].value);
-            setItemsTable(prev => [...prev, item]);
+            setItemsTable( prev => {
+                let searched = prev.find(item => item.id == currentVal[0].value );
+                if( searched ){
+                    searched.quantity = + searched.quantity + 1;
+                    return [...prev];
+                }
+                return [...prev, item]
+            });
 
         }
 
@@ -119,11 +132,20 @@ export default function CreateReceiving() {
     }
 
 
-    const handleSupllier = value => {
-        const searchedSupplier = suppliers.find(supplier => supplier.id = value);
-        setAddress(searchedSupplier.address)
-        setPhone(searchedSupplier.number)
-        setSupplierID(searchedSupplier.id);
+    const handleSupllier = supplier => {
+        if (supplier) {
+            const searchedSupplier = suppliers.find(sup => sup.id = supplier.value);
+            setAddress(searchedSupplier.address)
+            setPhone(searchedSupplier.number)
+            setSupplierID(searchedSupplier.id);
+            setEmail(searchedSupplier.email);
+        }
+        else {
+            setAddress('')
+            setPhone('')
+            setSupplierID('');
+            setEmail('');
+        }
     }
 
 
@@ -153,17 +175,75 @@ export default function CreateReceiving() {
             items: itemsTable
         }
 
-        axios.post('voucher', postData).then((res) => {
-            navigate(route.get("store.vouchers", {name: store.slug}));
-        })
+        const errors = {
+            invoice_id: "Invoice number is required!",
+            store_id: "Store is required!",
+            supplier_id: "Supplier is required!",
+            receiving_date: "Receiving Date is required!",
+            address: "Address is required!",
+            city: "City is required!",
+            state: "State is required!",
+            phone_number: "Phone is required!",
+            email: "Email is required!",
+        }
+
+        let itemsError = false;
+
+        if (postData.items.length <= 0) {
+            itemsError = true;
+        } else{
+            let validateItems = itemsTable.map( item => {
+                if (!item.location_id || !item.total_gwt || !item.total_pkt || !item.pkt_receiver ){
+                    item.invalid = true;
+                    itemsError = true;
+                }
+                return item;
+            });
+
+            setItemsTable( validateItems );
+            
+        }
+
+        const validations = []
+
+        for (let key in errors) {
+            if (!postData[key]) {
+                validations.push(`<p>${errors[key]}</p>`);
+
+            }
+        }
+
+        if (validations.length > 0) {
+            Toast({
+                type: 'danger',
+                icon: 'error',
+                title: "Error",
+                html: validations.join('')
+            }).fire();
+        }
+        else if( itemsError ){
+            Toast({
+                title: "Error",
+                type: 'danger',
+                icon: 'error'
+            }).fire({
+                text: "Items are required!",
+            });
+        }
+        else {
+            axios.post('voucher', postData).then((res) => {
+                navigate(route.get("store.vouchers", { name: store.slug }));
+            });
+        }
+
     }
 
-    const handleItemsInput = (index, name, value) => {
+    const handleItemsInput = (id, name, value) => {
 
         setItemsTable(prev => {
-            let searched = prev.splice(index, 1);
-            searched[index][name] = value;
-            return [...prev, ...searched];
+            let searched = prev.find( item => item.id == id );
+            searched[name] = value;
+            return [...prev];
         })
 
     }
@@ -209,7 +289,8 @@ export default function CreateReceiving() {
                             <ReactSelect
                                 className="rounded-2"
                                 options={supplierOptions}
-                                onChange={e => handleSupllier(e.value)}
+                                onChange={e => handleSupllier(e)}
+                                isClearable
                             />
                         </Form.Group>
                         <Form.Group className="mb-3">
@@ -247,7 +328,7 @@ export default function CreateReceiving() {
                 <Row>
                     <Col xs="4">
                         <ReactSelect className="rounded-2"
-                            options={itemOptions} ref={itemRef} />
+                            options={itemOptions} ref={itemRef} isClearable />
 
                     </Col>
                     <Col xs={3}>
@@ -280,52 +361,52 @@ export default function CreateReceiving() {
                             {
                                 itemsTable.map((item, index) => {
                                     return (
-                                        <tr className="text-center" key={index} id={`item-${index}`}>
+                                        <tr className={`text-center ${item.invalid && item.invalid === true ?  "bg-danger-subtle" : ""}`} key={index} id={`item-${index}`}>
 
                                             <td>
-                                                <Form.Group className="mb-3">
+                                                <Form.Group>
                                                     <Form.Control value={item.name} className="rounded-2" disabled />
                                                 </Form.Group>
                                             </td>
                                             <td>
-                                                <Form.Group className="mb-3">
+                                                <Form.Group>
                                                     <Form.Control value={item.part} className="rounded-2" disabled />
                                                 </Form.Group>
                                             </td>
                                             <td>
-                                                <Form.Group className="mb-3">
+                                                <Form.Group>
                                                     <Form.Control value={formatSizes(item.size)} className="rounded-2" disabled />
                                                 </Form.Group>
                                             </td>
                                             <td>
-                                                <Form.Group className="mb-3">
+                                                <Form.Group>
                                                     <Form.Control value={item.grade} className="rounded-2" disabled />
                                                 </Form.Group>
                                             </td>
 
                                             <td>
-                                                <Form.Group className="mb-3">
-                                                    <Form.Control type="number" min={1} step={1} className="rounded-2" value={item?.quantity} onChange={e => handleItemsInput(index, 'quantity', e.target.value)} />
+                                                <Form.Group>
+                                                    <Form.Control type="number" min={1} step={1} className="rounded-2" value={item?.quantity} onChange={e => handleItemsInput(item.id, 'quantity', e.target.value)} />
                                                 </Form.Group>
                                             </td>
                                             <td>
-                                                <Form.Group className="mb-3">
-                                                    <ReactSelect options={locationOptions} defaultValue={item.location_id} onChange={e => handleItemsInput(index, 'location_id', e.value)} />
+                                                <Form.Group>
+                                                    <ReactSelect options={locationOptions} defaultValue={item.location_id} onChange={e => handleItemsInput(item.id, 'location_id', e.value)} />
                                                 </Form.Group>
                                             </td>
                                             <td>
-                                                <Form.Group className="mb-3">
-                                                    <Form.Control placeholder=" " className="rounded-2" value={item?.total_gwt} onChange={e => handleItemsInput(index, 'total_gwt', e.target.value)} />
+                                                <Form.Group>
+                                                    <Form.Control placeholder=" " className="rounded-2" value={item?.total_gwt} onChange={e => handleItemsInput(item.id, 'total_gwt', e.target.value)} />
                                                 </Form.Group>
                                             </td>
                                             <td>
-                                                <Form.Group className="mb-3">
-                                                    <Form.Control placeholder="" className="rounded-2" value={item?.total_pkt} onChange={e => handleItemsInput(index, 'total_pkt', e.target.value)} />
+                                                <Form.Group>
+                                                    <Form.Control placeholder="" className="rounded-2" value={item?.total_pkt} onChange={e => handleItemsInput(item.id, 'total_pkt', e.target.value)} />
                                                 </Form.Group>
                                             </td>
                                             <td>
-                                                <Form.Group className="mb-3">
-                                                    <Form.Control placeholder=" " className="rounded-2" value={item?.pkt_receiver} onChange={e => handleItemsInput(index, 'pkt_receiver', e.target.value)} />
+                                                <Form.Group>
+                                                    <Form.Control placeholder=" " className="rounded-2" value={item?.pkt_receiver} onChange={e => handleItemsInput(item.id, 'pkt_receiver', e.target.value)} />
                                                 </Form.Group>
                                             </td>
                                             <td><Button type="button" variant="danger" onClick={e => handleRemoveItem(index)}><MdClose /></Button></td>

@@ -120,6 +120,7 @@ Route::group(["prefix" => "v1"], function(){
         Route::get('inventory', 'show');
         Route::get('all-inventories', 'all');
         Route::post('inventory', 'store');
+        Route::match(["put", "patch"], 'inventory/{id}', 'update');
     });
 
 });

@@ -6,7 +6,7 @@ import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import PaginateCss from './paginate.module.css?iniline';
 
 
-export const Paginate = ({ onPageChange, currentPage, pageCount, nextLabel, previousLabel, lastLabel, firstLabel, setCurrentPage }) => {
+export const Paginate = ({ onPageChange, currentPage, pageCount, nextLabel, previousLabel, lastLabel, firstLabel }) => {
 
     const [lowerPages, setLowerPages] = React.useState([]);
     const [upperPages, setUpperPages] = React.useState([]);
@@ -18,7 +18,6 @@ export const Paginate = ({ onPageChange, currentPage, pageCount, nextLabel, prev
     const firstPage = 1;
     
     const onClick = (e, value) => {
-        setCurrentPage(value);
         e.preventDefault();
         setPreviousPage(Math.max(1, value - 1));
         setNextPage(Math.min(pageCount, value + 1));
@@ -30,10 +29,7 @@ export const Paginate = ({ onPageChange, currentPage, pageCount, nextLabel, prev
 
     React.useEffect(() => {
 
-        if( !setCurrentPage || typeof setCurrentPage !== "function"){
-            throw new Error("Error:: setCurrentPage method is required and it should be function");
-        }
-
+        
         setPreviousPage( Math.max(1, currentPage - 1) );
         setNextPage( Math.min(pageCount, currentPage + 1) );
 

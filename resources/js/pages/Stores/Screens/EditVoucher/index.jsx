@@ -1,13 +1,12 @@
 import React from "react";
 import "./style.scss";
-import Layout from "../../partials/Layout";
-import {Form, Col, Row, Dropdown, Button, InputGroup} from "react-bootstrap";
-import {Input} from "postcss";
+import Layout from "../../../../partials/Layout";
+import {Form, Col, Row, InputGroup} from "react-bootstrap";
 import DatePicker from "react-flatpickr";
-import {MdAddBox, MdCalendarMonth, MdCheck, MdClose, MdOutlineClose} from "react-icons/md";
+import {MdCalendarMonth, MdCheck, MdClose} from "react-icons/md";
 
 
-export default function Editpage() {
+export default function EditVoucher() {
     const [date, setDate] = React.useState(new Date());
 
     return (
