@@ -4,6 +4,7 @@ import Layout from "../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-bootstrap";
 import { MdOutlineSearch } from "react-icons/md";
 import { SkeletonTable } from "../../Skeletons";
+import Swal from "sweetalert2";
 
 export default function Group(){
 
@@ -21,6 +22,8 @@ export default function Group(){
     const [groupName, setGroupName] = useState('');
     const [groups, setGroups] = useState([]);
 
+    const [editId, setEditId] = useState(0);
+
     const handleAddGroup = () => {
         if (groupName !== '') {
             axios.post('group', {
@@ -32,10 +35,42 @@ export default function Group(){
         }
     }
 
+    // const handleDelete = (id) => {
+    //     axios.delete(`group/${id}`).then(res => {
+    //         setGroups(res.data.data);
+    //     });
+    // }
+
     const handleDelete = (id) => {
-        axios.delete(`group/${id}`).then(res => {
-            setGroups(res.data.data);
-        });
+
+        Swal.fire({
+            title: "Do you want to Delate?",
+            icon: 'question',
+            showCloseButton: false,
+            showCancelButton: true,
+            confirmButtonText: "Sure",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+        }).then(res => {
+            if (res.isConfirmed) {
+                const queryParams = new URLSearchParams({
+                    page: currentPage,
+                    per_page: perPage,
+                });
+                axios.delete(`group/${id}`).then(res => {
+                            setGroups(res.data.data);
+                        });
+            }
+        })
+    }
+
+    const handleEdit = ( id ) => {
+
+        setEditId( id );
+        let searchedGroup = groups.find( group => group.id == id );
+        setGroupName( searchedGroup.name );
+        handleShow();
+
     }
 
 
@@ -144,7 +179,7 @@ export default function Group(){
                                                     <td>{group.name}</td>
 
                                                     <td className="d-flex justify-content-evenly">
-                                                        <button type="button" data-id={group.id} className="btn btn-success btn-sm rounded shadow w-25">Edit</button>
+                                                        <button type="button"  className="btn btn-success btn-sm rounded shadow w-25"  onClick={() => handleEdit(group.id) }>Edit</button>
                                                         <button type="button" className="btn btn-danger btn-sm rounded shadow w-25" onClick={() => handleDelete(group.id)}>Delete</button>
                                                     </td>
 
