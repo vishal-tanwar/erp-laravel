@@ -30,6 +30,15 @@ export default function VoucherView() {
 
     const pdfExportComponent = React.useRef(null);
 
+    const formatSizes = ( size ) => {
+        if (JSON.parse(size) instanceof Object ){
+            return Object.values( JSON.parse( size ) ).join('x');
+        }
+        else{
+            return size;
+        }
+    }
+
 
     useEffect(() => {
 
@@ -184,7 +193,7 @@ export default function VoucherView() {
                                         </td>
                                         <td>
                                             <Form.Group className="mb-3" >
-                                                <Form.Control placeholder=" " className="rounded-2" defaultValue={item.item.size} />
+                                                <Form.Control placeholder=" " className="rounded-2" defaultValue={formatSizes(item.item.size)} />
                                             </Form.Group>
                                         </td>
                                         <td>
