@@ -15,7 +15,7 @@ class StoresController extends Controller
     public function index(Request $request)
     {
 
-        $stores = Store::with(['items'])->select('*');
+        $stores = Store::with(['items', 'locations'])->select('*');
 
         $pages = 0;
 

@@ -94,7 +94,7 @@ export default function VoucherView() {
                             <Form.Label>Date</Form.Label>
 
                             <InputGroup>
-                                <DatePicker id="flatpickr-date" className="form-control m-0 border-end-0 rounded-2" defaultValue={date.toLocaleDateString()} />
+                                <DatePicker id="flatpickr-date" className="form-control m-0 border-end-0 rounded-2" value={date} />
                                 <label htmlFor="flatpickr-date" className="input-group-text border-gray-600 rounded-1 border-start-0 bg-body"><MdCalendarMonth /> </label>
                             </InputGroup>
                         </Form.Group>

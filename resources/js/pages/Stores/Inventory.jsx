@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import "./style.scss";
 import Layout from "../../partials/Layout";
-import { Form, Col, InputGroup, Row, Dropdown, Modal, Button } from "react-bootstrap";
+import { Form, Col, Row, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { route } from "../../utils/WebRoutes";
 import axios from "axios";
-import { SkeletonTable } from "../../Skeletons";
+import { SkeletonPaginate, SkeletonTable } from "../../Skeletons";
+import { Paginate } from "../../components/Paginate";
+import RecordsPerPage from "../../components/RecordsPerPage";
 
 
 export default function Inventory() {
@@ -15,30 +17,70 @@ export default function Inventory() {
     const [isLoading, setLoading ] = useState(true);
     const [isPaginateLoading, setPaginateLoading ] = useState(true);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageCount, setPageCount] = useState(0);
+    const [perPage, setPerPage] = useState(10);
 
 
-    const [stores, setStores] = useState([]);
+    const [inventories, setInventories] = useState([]);
+    const [outOfStocks, setOutOfStocks ] = useState(0); 
+    const [totalItems, setTotalItems ] = useState(0); 
 
 
-    const handleCreate = () => {
-
-        axios.post('store', { name }).then(res => {
-
-            setStores(prev => [...prev, res.data.data])
-
-            handleClose();
-        });
-    }
 
 
     useEffect(() => {
-        axios.get('stores').then(res => {
+        const queryParams = new URLSearchParams({
+            page: currentPage,
+            per_page: perPage,
+        });
+        axios.get(`inventories?${queryParams.toString()}`).then(res => {
             const response = res.data;
-
-            setStores(response.data.stores);
+            setInventories(response.data.inventories);
+            setPageCount(response.data.pages);
             setLoading(false);
+            setPaginateLoading(false);            
+        })
+
+
+        axios.get('all-inventories').then( res => {
+            setTotalItems( res.data.data.count );
+            const outOfStocksCount = res.data.data.all.filter(invt => invt <= 0).length;
+            setOutOfStocks(outOfStocksCount);
         })
     }, []);
+
+
+    const handlePaginateChange = (page) => {
+        setCurrentPage(page);
+        const queryParams = new URLSearchParams({
+            page: page,
+            per_page: perPage,
+        });
+        axios.get(`inventories?${queryParams.toString()}`).then(res => {
+            const response = res.data;
+            setInventories(response.data.inventories);
+            setPageCount(response.data.pages);
+            setLoading(false);
+        })
+
+    }
+
+    const handleRecordsPerPage = (record) => {
+        setPaginateLoading(true);
+        setPerPage(record);
+        const queryParams = new URLSearchParams({
+            page: currentPage,
+            per_page: perPage,
+        });
+        axios.get(`inventories?${queryParams.toString()}`).then(res => {
+            const response = res.data;
+            setInventories(response.data.inventories);
+            setPageCount(response.data.pages);
+            setLoading(false);
+            setPaginateLoading(false);
+        })
+    }
 
     return (
         <Layout title="Inventory" hideBanner>
@@ -50,13 +92,13 @@ export default function Inventory() {
                 </Col>
                 <Col xs={12}>
                     <Row className="summary-bar">
-                        <Col xs={3} className="text-center">
-                            <h4 className="fs-2">21</h4>
+                        <Col className="text-center">
+                            <h4 className="fs-2">{totalItems}</h4>
                             <h4 className="mt-3">Total Item</h4>
                         </Col>
 
-                        <Col xs={3} className="text-center red">
-                            <h4 className="fs-2">1</h4>
+                        <Col className="text-center red">
+                            <h4 className="fs-2">{outOfStocks}</h4>
                             <h4 className="mt-3">Out of Stock</h4>
                         </Col>
                     </Row>
@@ -67,18 +109,7 @@ export default function Inventory() {
                 <Row>
                     <Col xs={5}>
                         <div className="d-flex gap-3">
-                            <Dropdown>
-                                <Dropdown.Toggle className="btn-light border border-black shadow" id="dropdown-basic">
-                                    25
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu className="bg-dark-subtle">
-                                    <Dropdown.Item >10</Dropdown.Item>
-                                    <Dropdown.Item >25</Dropdown.Item>
-                                    <Dropdown.Item >50</Dropdown.Item>
-                                    <Dropdown.Item className="text">All</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                            <RecordsPerPage currentRecords={perPage} setRecords={handleRecordsPerPage} />
 
                         </div>
                     </Col>
@@ -103,8 +134,9 @@ export default function Inventory() {
                                     <tr className="text-center">
                                         <th scope="col"> <Form.Check type="checkbox" /></th>
                                         <th scope="col">Sr. No.</th>
-                                        <th scope="col">Item Name</th>
-                                        <th scope="col">Store Name</th>
+                                        <th scope="col">Item</th>
+                                        <th scope="col">Store</th>
+                                        <th scope="col">Location</th>
                                         <th scope="col">Stock</th>
                                     </tr>
                                 </thead>
@@ -112,16 +144,17 @@ export default function Inventory() {
 
                                     {
                                         isLoading ? <SkeletonTable columns={5}/> :
-                                        stores.map((store, index) => {
+                                            inventories.map((inventory, index) => {
                                             return (
                                                 <tr className="text-center" key={index}>
                                                     <td>
-                                                        <Form.Check type="checkbox" value={store.id} />
+                                                        <Form.Check type="checkbox" value={inventory.id} />
                                                     </td>
                                                     <td>{++index}</td>
-                                                    <td>Item Name</td>
-                                                    <td>{store.name}</td>
-                                                    <td>Stock</td>
+                                                    <td>{inventory.item.name}</td>
+                                                    <td>{inventory.store.name}</td>
+                                                    <td>{inventory.location.name}</td>
+                                                    <td>{inventory.stocks}</td>
 
                                                 </tr>
                                             );
@@ -131,6 +164,7 @@ export default function Inventory() {
                                 </tbody>
 
                             </table>
+                            {isPaginateLoading ? <SkeletonPaginate /> : pageCount > 1 ? <Paginate onPageChange={handlePaginateChange} pageCount={pageCount} currentPage={currentPage} /> : ''}
                         </div>
                     </Col>
                 </Row>
