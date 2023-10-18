@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import Layout from "../../../../partials/Layout";
 import { Form, Col, Row, Button, InputGroup } from "react-bootstrap";
-import DatePicker from "react-flatpickr";
 import { MdCalendarMonth, MdCheck, MdClose } from "react-icons/md";
 import BarcodeReader from "../../../../components/BarcodeReader";
 
@@ -31,13 +30,13 @@ export default function CreateIssuance() {
                 <Col>
                     <Form.Group className="mb-3">
                         <Form.Label>Department</Form.Label>
-                        <Form.Control type="password" placeholder="Enter your Department" className="rounded-2" />
+                        <Form.Control placeholder="Enter your Department" className="rounded-2" />
                     </Form.Group>
                 </Col>
                 <Col>
                     <Form.Group className="mb-3" >
                         <Form.Label>Requester Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter name" className="rounded-2" />
+                        <Form.Control placeholder="Enter name" className="rounded-2" />
                     </Form.Group>
                 </Col>
 
@@ -47,7 +46,7 @@ export default function CreateIssuance() {
 
             <Row>
                 <Col>
-                    <BarcodeReader onEnterBarCode={({ barcode, setBarcode }) => { setBarcode('') }} />
+                    <BarcodeReader onEnterBarCode={({ barcode, setBarcode }) =>  setBarcode('') } />
                 </Col>
             </Row>
 
