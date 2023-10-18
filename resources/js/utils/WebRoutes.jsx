@@ -5,10 +5,8 @@ import Units from "../pages/ItemMaster/Units";
 import Group from "../pages/ItemMaster/Group";
 import SubGroup from "../pages/ItemMaster/SubGroup";
 import ItemList from "../pages/ItemMaster/ItemList";
-import Editpage from "../pages/Editpage";
 import AddItem from "../pages/ItemMaster/AddItem";
 import Location from "../pages/Stores/Location";
-import BOP from "../pages/BOP";
 
 // Store file Imports
 
@@ -26,6 +24,7 @@ import CreateIssuance from "../pages/Stores/Screens/CreateIssuance";
 import Approved from "../pages/Quality/Approved";
 import Rejected from "../pages/Quality/Rejected";
 import Pending from "../pages/Quality/Pending";
+import EditVoucher from "../pages/Stores/Screens/EditVoucher";
 
 
 
@@ -113,16 +112,10 @@ export const Endpoints = [
         name: "store.issuance.create"
     },
     {
-        path: route("/Editpage"),
-        component: Editpage,
+        path: route("/store/:name/voucher/:id/edit"),
+        component: EditVoucher,
         exact: true,
-        name: "Editpage"
-    },
-    {
-        path: route("/BOP"),
-        component: BOP,
-        exact: true,
-        name: "BOP"
+        name: "store.voucher.edit"
     },
     
     {

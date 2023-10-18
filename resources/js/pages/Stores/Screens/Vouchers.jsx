@@ -8,6 +8,7 @@ import { MdArrowBackIosNew, MdFilterAlt, MdOutlinePrint, MdOutlineSearch } from 
 import NotFound from '../../NotFound';
 import axios from "axios";
 import { SkeletonTable } from "../../../Skeletons";
+import Swal from "sweetalert2";
 
 
 export default function Vouchers() {
@@ -40,8 +41,6 @@ export default function Vouchers() {
 
                     let vouchers = res.data.data.vouchers;
 
-                    vouchers.length
-
                     const today = (new Date()).toDateString();
 
                     let receivers = vouchers.filter(voucher => voucher?.type === "receiving" );
@@ -53,8 +52,6 @@ export default function Vouchers() {
                     setTotalIssuance(issuances.length );
                     setTodayReceiver(todayReceiverCount);
                     setTodayIssuance(todayIssuanceCount);
-
-
                     setLoading(false);
                 })
 
@@ -65,6 +62,43 @@ export default function Vouchers() {
         });
     }, []);
 
+
+    const handleDelete = voucher => {
+        Swal.fire({
+            title: "Do you want to Delate?",
+            icon: 'question',
+            showCloseButton: false,
+            showCancelButton: true,
+            confirmButtonText: "Sure",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+        }).then(res => {
+            if (res.isConfirmed) {
+                // const queryParams = new URLSearchParams({
+                //     page: currentPage,
+                //     per_page: perPage,
+                // });
+                axios.delete(`voucher/${voucher}?store=${store.id}`).then(res => {
+                    setVouchers(res.data.data);
+
+                    let vouchers = res.data.data;
+
+                    const today = (new Date()).toDateString();
+
+                    let receivers = vouchers.filter(voucher => voucher?.type === "receiving");
+                    let issuances = vouchers.filter(voucher => voucher?.type === "issuance");
+                    let todayReceiverCount = receivers.filter(voucher => (new Date(voucher?.created_at)).toDateString() === today).length;
+                    let todayIssuanceCount = issuances.filter(voucher => (new Date(voucher?.created_at)).toDateString() === today).length;
+
+                    setTotalReceiver(receivers.length);
+                    setTotalIssuance(issuances.length);
+                    setTodayReceiver(todayReceiverCount);
+                    setTodayIssuance(todayIssuanceCount);
+                    setLoading(false);
+                });
+            }
+        })
+    }
 
 
 
@@ -79,8 +113,8 @@ export default function Vouchers() {
 
                             <Col xs={6} className="d-flex gap-2">
                                 <Link to={route.get('store.list')} title="Back" className="btn btn-primary btn-sm"><MdArrowBackIosNew /> Back to Stores</Link>
-                                <Link to={route.get('store.receiving.create', { name: params.name })} className="btn btn-primary btn-sm"> Receiving Voucher</Link>
-                                <Link to={route.get('store.issuance.create', { name: params.name })}><button type="button" className=" btn btn-success btn-sm"> Issuance Voucher</button></Link>
+                                <Link to={route.get('store.receiving.create', { name: params.name })} className="btn btn-primary btn-sm">+ Receiving Voucher</Link>
+                                <Link to={route.get('store.issuance.create', { name: params.name })}><button type="button" className=" btn btn-success btn-sm">+ Issuance Voucher</button></Link>
                             </Col>
 
                             <Col xs={6} className="d-flex justify-content-end">
@@ -203,10 +237,10 @@ export default function Vouchers() {
                                                 <td>{voucher.supplier.gst_number}</td>
                                                 <td>{voucher.supplier.email}</td>
                                                 <td>{voucher.supplier.number}</td>
-                                                <td className="d-flex justify-content-evenly">
+                                                <td className="d-flex justify-content-evenly gap-1">
                                                     <Link to={route.get('store.voucher.view', {name: voucher.store.slug, id: voucher.id})}><button type="button" className="btn btn-primary btn-sm rounded shadow w-16">View</button></Link>
-                                                    <Link to="/Editpage"><button type="button" className="btn btn-success btn-sm rounded shadow ">Edit</button></Link>
-                                                    <button type="button" className="btn btn-danger btn-sm rounded shadow ">Delete</button>
+                                                    <Link to={route.get('store.voucher.edit', { name: voucher.store.slug, id: voucher.id })}><button type="button" className="btn btn-success btn-sm rounded shadow ">Edit</button></Link>
+                                                    <button type="button" className="btn btn-danger btn-sm rounded shadow" onClick={ () => handleDelete(voucher.id)}>Delete</button>
                                                 </td>
                                                 <td>
                                                     <Dropdown>

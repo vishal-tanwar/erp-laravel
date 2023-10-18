@@ -43,4 +43,8 @@ class Voucher extends Model
     {
         return $this->hasMany(VoucherItem::class)->with(['item', 'location']);
     }
+
+    public function inventories(){
+        return $this->hasMany(Inventory::class)->with(['item', 'location', 'store', 'voucher']);
+    }
 }

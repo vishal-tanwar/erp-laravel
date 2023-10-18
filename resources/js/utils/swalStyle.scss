@@ -1,0 +1,30 @@
+$swal-types : ("success",
+    "danger",
+    "warning",
+    "info",
+    "primary",
+    "secondary",
+    "light"
+);
+
+@each $key in $swal-types {
+    .swal-content--#{$key} {
+        counter-reset: swal-error-count 0;
+        & p {
+            color: var(--bs-#{$key});
+            margin-bottom: 4px;
+            font-size: .9rem;
+            counter-increment: swal-error-count 1;
+
+            &::before {
+                content: counter(swal-error-count) ". "
+            }
+        }
+    }
+}
+
+.swal2-title {
+    border-bottom: 2px solid;
+    padding-bottom: 6px !important;
+    font-style: italic;
+}

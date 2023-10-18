@@ -15,7 +15,7 @@ class InventoriesController extends Controller
     public function index(Request $request)
     {
 
-        $inventories = Inventory::with(['item', 'location', 'store'])->select('*');
+        $inventories = Inventory::with(['item', 'location', 'store', 'voucher'])->select('*');
 
         $pages = 0;
 
@@ -31,6 +31,12 @@ class InventoriesController extends Controller
             $pages = Inventory::all()->count();
 
             $pages = ceil($pages / $limit);
+        }
+
+        if( $request->get("where")  ){
+            foreach( $request->get("where") as $column => $value ){
+                $inventories->where($column, "=", $value );
+            }
         }
 
 
@@ -120,6 +126,52 @@ class InventoriesController extends Controller
             "code" => Response::HTTP_OK,
             "data" => $inventory->first()
         ]);
+    }
+
+    public function update( $id, Request $request ){
+
+        $inventory = Inventory::find($id);
+        $inventory->stocks =  $inventory->stocks + $request->stocks;
+        $inventory->save();
+
+        $inventories = Inventory::with(['item', 'location', 'store', 'voucher'])->select('*');
+
+        $pages = 0;
+
+        if ($request->get('page') && $request->get('per_page')) {
+
+            $page = $request->get('page');
+            $limit = $request->get('per_page');
+
+            $offset = ($page - 1) * $limit;
+            $inventories->limit($limit)->offset($offset);
+            $pages = Inventory::all()->count();
+
+            $pages = ceil($pages / $limit);
+        }
+
+        if ($request->get("where")) {
+            foreach ($request->get("where") as $column => $value) {
+                $inventories->where($column, "=", $value);
+            }
+        }
+
+
+
+        $inventories = $inventories->get();
+
+
+        return response()->json([
+            "success" => true,
+            'data' => [
+                "inventories" => $inventories,
+                "pages" => $pages
+            ],
+            "code" => Response::HTTP_OK,
+            'message' => 'Inventories fetched successfully',
+        ], Response::HTTP_OK);
+
+
     }
 
     /**

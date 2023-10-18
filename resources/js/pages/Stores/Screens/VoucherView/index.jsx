@@ -226,7 +226,8 @@ export default function VoucherView() {
                                                 <Form.Control placeholder=" " className="rounded-2" defaultValue={item.pkt_receiver} />
                                             </Form.Group>
                                         </td>
-                                        <td><button type="button" className=" btn btn-primary btn-sm bg-primary" onClick={() => showBarCodes(item.id, item.quantity, voucher.voucher_number)}>View Barcode</button>
+                                        <td>
+                                            <button type="button" className=" btn btn-primary btn-sm bg-primary" onClick={() => showBarCodes(item.id, item.quantity, voucher.voucher_number)}>View Barcode</button>
                                         </td>
 
                                     </tr>)
