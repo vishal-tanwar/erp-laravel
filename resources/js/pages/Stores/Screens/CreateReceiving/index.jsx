@@ -196,6 +196,8 @@ export default function CreateReceiving() {
                 if (!item.location_id || !item.total_gwt || !item.total_pkt || !item.pkt_receiver ){
                     item.invalid = true;
                     itemsError = true;
+                } else{
+                    item.invalid = false;
                 }
                 return item;
             });

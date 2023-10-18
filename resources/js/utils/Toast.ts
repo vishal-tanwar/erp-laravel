@@ -25,16 +25,6 @@ const Toast = (options: IToastOptions = {}) => {
         html: ''
     }, options);
 
-    const _defaultTitles = {
-        "success":"Success",
-         "danger": "Alert",
-         "warning": "Warning",
-         "info": "Info",
-         "primary": "Primary",
-         "secondary": "Secondary",
-         "light": "Hidde"
-    }
-
     return Swal.mixin({
         html: _default.html,
         toast: true,
