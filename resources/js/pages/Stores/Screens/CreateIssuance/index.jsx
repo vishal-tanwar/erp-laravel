@@ -42,11 +42,9 @@ export default function CreateIssuance() {
 
             </Row>
 
-
-
             <Row>
                 <Col>
-                    <BarcodeReader onEnterBarCode={({ barcode, setBarcode }) =>  setBarcode('') } />
+                    <BarcodeReader onScan={({ barcode, setBarcode }) =>  setBarcode('') } />
                 </Col>
             </Row>
 
