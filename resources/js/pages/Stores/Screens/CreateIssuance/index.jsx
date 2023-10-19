@@ -32,6 +32,7 @@ export default function CreateIssuance() {
     const [barcode, setBarcode] = useState('');
 
     const [requesterName, setRequesterName ] = useState('');
+    const [departmentName, setDepartmentName ] = useState('');
 
 
     useEffect(() => {
