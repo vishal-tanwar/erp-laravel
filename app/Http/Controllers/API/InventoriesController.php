@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Inventory;
-use App\Models\VoucherItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -134,11 +133,6 @@ class InventoriesController extends Controller
         $inventory = Inventory::find($id);
         $inventory->stocks =  $inventory->stocks + $request->stocks;
         $inventory->save();
-
-        $voucherItem = VoucherItem::where('voucher_id', "=", $inventory->voucher_id);
-        $voucherItem = $voucherItem->where("location_id", "=", $inventory->location_id)->first();
-        $voucherItem->quantity = $inventory->stocks;
-        $voucherItem->save();
 
         $inventories = Inventory::with(['item', 'location', 'store', 'voucher'])->select('*');
 

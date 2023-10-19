@@ -25,6 +25,7 @@ class VoucherItem extends Model
         'total_gwt',
         'total_pkt',
         'pkt_receiver',
+        'voucher_parent_id'
     ];
 
     public function item()

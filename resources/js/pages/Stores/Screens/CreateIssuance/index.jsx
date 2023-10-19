@@ -3,15 +3,18 @@ import "./style.scss";
 import Layout from "../../../../partials/Layout";
 import { Form, Col, Row, Button } from "react-bootstrap";
 import { MdClose } from "react-icons/md";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ReactSelect from "react-select";
 import axios from "axios";
 import BounceLoader from "../../../../components/BounceLoader";
+import Toast from "../../../../utils/Toast";
+import { route } from "../../../../utils/WebRoutes";
 
 
 export default function CreateIssuance() {
 
     const params = useParams();
+    const navigate = useNavigate()
     const [voucherNumber, setVoucherNumber] = useState('');
     const [store, setStore] = useState({});
     const [items, setItems] = useState([]);
@@ -33,6 +36,7 @@ export default function CreateIssuance() {
 
     const [requesterName, setRequesterName ] = useState('');
     const [departmentName, setDepartmentName ] = useState('');
+    const [receivedVoucherId, setReceiviedVoucherID ]  = useState(0);
 
 
     useEffect(() => {
@@ -89,9 +93,10 @@ export default function CreateIssuance() {
         if (barcode && typeof barcode == "string") {
 
             const [voucher_number, item_id] = barcode.split('-');
-
             barcodeObj.voucher_number = voucher_number.replace(/(\w{2})(\w{3})(\d{4})(\d)/, "$1-$2-$3-$4");
-            barcodeObj.item_id = Math.abs(item_id.slice(0, item_id.indexOf("I")));
+            if (item_id){
+                barcodeObj.item_id = Math.abs(item_id.slice(0, item_id.indexOf("I")));
+            }
 
         }
 
@@ -119,14 +124,30 @@ export default function CreateIssuance() {
 
                     const resItem = res.data.data.item;
 
+                    setReceiviedVoucherID(res.data.data.voucher.id);
+                    
+
                     const item = items.find(item => item.id == resItem.item.id);
                     item.location = resItem.location;
+                    item.maxQuantity = Math.abs(resItem.quantity)
 
+                    item.total_gwt = resItem.total_gwt
+                    item.total_pkt = resItem.total_pkt
+
+                    
                     setItemsTable(prev => {
                         let searched = prev.find(item => item.id == resItem.item.id);
                         if (searched) {
-                            searched.quantity = + searched.quantity + 1;
+                            if (searched.quantity < resItem.quantity){
+                                searched.quantity = Math.abs(searched.quantity) + 1;
+                            }
+                            else{
+                                searched.quantity = Math.abs( resItem.quantity )
+                            }
                             searched.location = resItem.location;
+                            searched.maxQuantity = Math.abs(resItem.quantity);
+                            searched.total_gwt = resItem.total_gwt
+                            searched.total_pkt = resItem.total_pkt
                             return [...prev];
                         }
                         item.quantity = 1;
@@ -138,15 +159,27 @@ export default function CreateIssuance() {
                     setItemFetching(false);
                     setBarcode('');
                     currentTarget.value = '';
-                    console.log(barcodeRef);
                     barcodeRef.current.focus();
+                }).catch( err => {
+                    Toast({
+                        title: "Error",
+                        type: 'danger',
+                        icon: 'error'
+                    }).fire({
+                        text: "Enter a valid barcode"
+                    }).then( () => {
+                        setItemFetching(false);
+                        setBarcode('');
+                        currentTarget.value = '';
+                        barcodeRef.current.focus();
+                    })
                 })
 
             }
             return;
         }
 
-        if (e.key != "Shift") {
+        if (e.key != "Shift" && e.key != "Alt" && e.key != "Control" && e.key != "Tab") {
             setBarcode(prev => prev + e.key);
             return;
         }
@@ -175,8 +208,13 @@ export default function CreateIssuance() {
 
         setItemsTable(prev => {
             let searched = prev.find(item => item.id == id);
-            searched[name] = value;
+            if (name == "quantity" ){
+                searched[name] = Math.abs( value );
+            }
+            searched[name] = value; 
+            
             return [...prev];
+
         })
 
     }
@@ -201,7 +239,7 @@ export default function CreateIssuance() {
         }
     }
 
-    const handleAllowNumber = (event) => {
+    const handleAllowNumber = (event, maxQuantity) => {
 
 
         let allowedKeys = [
@@ -217,14 +255,93 @@ export default function CreateIssuance() {
 
 
         if (event.key === "ArrowUp") {
-            event.target.value = + event.target.value + 1
+            if (event.target.value < maxQuantity)
+                event.target.value = Math.abs( event.target.value) + 1
         }
 
         if (event.key === "ArrowDown") {
             if (event.target.value > 0) {
-                event.target.value = event.target.value - 1
+                event.target.value = Math.abs(event.target.value) - 1
             } 
         }
+    }
+
+
+    const handleSave  = () =>  {
+
+        
+
+        const postData = {
+            store_id: store.id,
+            voucherNumber,
+            departmentName,
+            requesterName,
+            receivedVoucherId,
+            items: itemsTable
+        }
+
+        const errors = {
+            departmentName: "Department is required!",
+            requesterName: "Requester Name is required!",
+        }
+        let itemsError = false;
+
+        if (postData.items.length <= 0) {
+            itemsError = true;
+        } else {
+            let validateItems = itemsTable.map(item => {
+                if (item.quantity <= 0 ) {
+                    item.invalid = true;
+                    itemsError = true;
+                } else {
+                    item.invalid = false;
+                }
+                return item;
+            });
+
+            setItemsTable(validateItems);
+
+        }
+
+        const validations = []
+
+        for (let key in errors) {
+            if (!postData[key]) {
+                validations.push(`<p>${errors[key]}</p>`);
+
+            }
+        }
+
+        if (validations.length > 0) {
+            Toast({
+                type: 'danger',
+                icon: 'error',
+                title: "Error",
+                html: validations.join('')
+            }).fire();
+        }
+        else if (itemsError) {
+            Toast({
+                title: "Error",
+                type: 'danger',
+                icon: 'error'
+            }).fire({
+                text: "Items are required!",
+            });
+        } else{
+            axios.post('voucher/issuance', postData).then( res => {
+                Toast({
+                    type: "success",
+                    icon: "success",
+                    title: "Success"
+                }).fire({
+                    text: "Items has been issued successfully!"
+                }).then(() => {
+                    navigate(route.get("store.vouchers", { name: store.slug }));
+                })
+            });
+        }
+
     }
 
     return (
@@ -239,17 +356,18 @@ export default function CreateIssuance() {
                 <Col>
                     <Form.Group className="mb-3">
                         <Form.Label>Department</Form.Label>
-                        <Form.Control placeholder="Enter your Department" className="rounded-2" />
+                        <Form.Control placeholder="Enter your Department" className="rounded-2" value={departmentName} onChange={e => setDepartmentName(e.target.value)}/>
                     </Form.Group>
                 </Col>
                 <Col>
                     <Form.Group className="mb-3" >
                         <Form.Label>Requester Name</Form.Label>
-                        <Form.Control placeholder="Enter name" className="rounded-2" value={requesterName} onChange={setRequesterName}/>
+                        <Form.Control placeholder="Enter name" className="rounded-2" value={requesterName} onChange={ e => setRequesterName(e.target.value) }/>
                     </Form.Group>
                 </Col>
 
             </Row>
+
             <Row className="mt-3">
                 {/* <Col xs={3} className="d-flex align-items-center">
                     <Form.Label htmlFor="enable-barcode-scanning" className="align-items-center cursor-pointer d-flex gap-1 mb-0">
@@ -315,7 +433,8 @@ export default function CreateIssuance() {
                         </tr>
                     </thead>
                     <tbody className="text-center">
-                        {
+                        {   
+                            
                             itemsTable.map((item, index) => {
                                 return (
                                     <tr className="text-center" key={index}>
@@ -342,7 +461,7 @@ export default function CreateIssuance() {
                                         </td>
                                         <td>
                                             <Form.Group className="mb-3" >
-                                                <Form.Control type="text" onKeyDown={handleAllowNumber} className="rounded-2" value={item?.quantity} onChange={e => handleItemsInput(item.id, 'quantity', e.target.value)} />
+                                                <Form.Control type="text" onKeyUp={e => { if (e.target.value > item.maxQuantity) e.target.value = item.maxQuantity  } } onKeyDown={e => handleAllowNumber(e, item.maxQuantity) } className="rounded-2" value={item?.quantity} onChange={e => handleItemsInput(item.id, 'quantity', e.target.value)} />
                                             </Form.Group>
                                         </td>
                                         <td>
@@ -363,7 +482,7 @@ export default function CreateIssuance() {
                 <Row>
                     <Col xs={12} className="justify-content-end d-flex gap-3">
                         <button type="button" className=" btn btn-secondary btn-md bg-primary ">Cancel</button>
-                        <button type="button" className=" btn btn-primary btn-md bg-primary ">Save</button>
+                        <button type="button" className=" btn btn-primary btn-md bg-primary" onClick={ handleSave }>Save</button>
 
                     </Col>
                 </Row>

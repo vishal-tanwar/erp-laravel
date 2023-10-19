@@ -7,6 +7,7 @@ use App\Models\Inventory;
 use App\Models\Voucher;
 use App\Models\VoucherItem;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -132,8 +133,25 @@ class VouchersController extends Controller
     public function destroy($voucher, Request $request)
     {
         $voucher = Voucher::find($voucher);
-        $voucher->inventories()->delete();
-        $voucher->delete();
+        if ($voucher->type == 'receiving') {
+            $voucher->inventories()->delete();
+            $voucher->items()->delete();
+            $voucher->delete();
+        } else {
+            $voucherItems = VoucherItem::where('voucher_id', $voucher->id)->get();
+            foreach ($voucherItems as $item) {
+                $inventory = Inventory::where([
+                    ["voucher_id", "=", $item->parent_voucher_id],
+                    ["location_id", "=", $item->location_id],
+                    ["item_id", "=", $item->item_id],
+
+                ])->first();
+                $inventory->stocks = $inventory->stocks + abs($item->quantity);
+                $inventory->save();
+            }
+            $voucher->items()->delete();
+            $voucher->delete();
+        }
 
         $vouchers = Voucher::with(['store', 'supplier', 'items']);
 
@@ -170,16 +188,79 @@ class VouchersController extends Controller
         ]);
     }
 
+    public function issuance(Request $request)
+    {
+
+        $items = $request->items;
+        $voucherReq = $request->all();
+        unset($voucherReq['items']);
+        
+
+        $voucher = Voucher::create([
+            'type' => 'issuance',
+            'store_id' => $voucherReq['store_id'],
+            'voucher_number' => $voucherReq['voucherNumber'],
+            'department' => $voucherReq['departmentName'],
+            'requester' => $voucherReq['requesterName'],
+            'issuance_date' => date("Y-m-d\TH:i:s.u\Z"),
+        ]);
+
+        $items = array_map(function ($item) use ($voucher, $request) {
+            if (is_array($item)) {
+                $item = json_decode(json_encode($item));
+            }
+            return [
+                "voucher_id" => $voucher->id,
+                'item_id' => $item->id,
+                'quantity' => $item->quantity,
+                "location_id" => $item->location->id,
+                "total_gwt" => $item->total_gwt,
+                "total_pkt" => $item->total_pkt,
+                "pkt_receiver" => $item->pkt_receiver,
+                "parent_voucher_id" => $request->receivedVoucherId
+            ];
+        }, $items);
+
+        VoucherItem::insert($items);
+
+        // Update Inventory
+
+        $inventories = [];
+        $now = Carbon::now();
+
+        foreach ($items as $item) {
+
+            $inventory = Inventory::where([
+                ['item_id', '=', $item['item_id']],
+                ['store_id', '=', $voucherReq["store_id"]],
+                ["location_id", "=", $item['location_id']],
+                ["voucher_id", "=", $request->receivedVoucherId]
+            ])->first();
+
+            $inventory->stocks = $inventory->stocks - abs($item['quantity']);
+            $inventory->save();
+        }
+
+        return response()->json([
+            "success" => true,
+            "code" => Response::HTTP_CREATED,
+            "data" => [
+                'request' => $inventories,
+                'items' => $items,
+            ]
+        ], Response::HTTP_CREATED);
+    }
+
 
     public function scanning(Request $request): JsonResponse
     {
 
         $vouchers = Voucher::with(['items'])->where('voucher_number', "=", $request->get('voucher_number'));
-        $vouchers = $vouchers->where('store_id','=', $request->get('store_id'));
-        $vouchers = $vouchers->where('type','=', 'receiving');
+        $vouchers = $vouchers->where('store_id', '=', $request->get('store_id'));
+        $vouchers = $vouchers->where('type', '=', 'receiving');
 
         $vouchers = $vouchers->whereHas('items', function ($query) use ($request) {
-            $query->where('id', '=', $request->get('item_id'));   
+            $query->where('id', '=', $request->get('item_id'));
         });
 
 
@@ -203,11 +284,11 @@ class VouchersController extends Controller
             'success' => true,
             'data' => [
                 'voucher' => $voucher,
-                "item"  => $item
+                "item" => $item
             ],
             'code' => Response::HTTP_OK,
             'message' => 'Item Fetched',
         ], Response::HTTP_OK);
     }
-    
+
 }

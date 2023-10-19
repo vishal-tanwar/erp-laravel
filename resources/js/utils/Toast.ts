@@ -14,7 +14,7 @@ interface IToastOptions {
     html?: string | HTMLElement | JQuery
 }
 
-const Toast = (options: IToastOptions = {}) => {
+const Toast = (options: IToastOptions = {}):typeof Swal => {
 
     const _default: IToastOptions = Object.assign<IToastOptions, IToastOptions>({
         type: "success",
@@ -24,7 +24,7 @@ const Toast = (options: IToastOptions = {}) => {
         icon: 'success',
         html: ''
     }, options);
-
+    
     return Swal.mixin({
         html: _default.html,
         toast: true,

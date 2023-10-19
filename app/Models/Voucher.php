@@ -26,6 +26,9 @@ class Voucher extends Model
         'email',
         'phone_number',
         'receiving_date',
+        "department",
+        "requester",
+        "issuance_date"
     ];
 
     public function store()
@@ -38,13 +41,14 @@ class Voucher extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    
+
     public function items()
     {
         return $this->hasMany(VoucherItem::class)->with(['item', 'location']);
     }
 
-    public function inventories(){
+    public function inventories()
+    {
         return $this->hasMany(Inventory::class)->with(['item', 'location', 'store', 'voucher']);
     }
 }

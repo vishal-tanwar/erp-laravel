@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('quantity');
             $table->string('total_gwt');
             $table->string('total_pkt');
-            $table->string('pkt_receiver');
+            $table->string('pkt_receiver')->nullable();
             $table->string('location_id');
         });
     }

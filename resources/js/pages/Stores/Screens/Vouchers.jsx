@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./style.scss";
 import Layout from "../../../partials/Layout";
 import { Form, Col, InputGroup, Row, Dropdown, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { route } from "../../../utils/WebRoutes";
-import { MdArrowBackIosNew, MdFilterAlt, MdOutlinePrint, MdOutlineSearch } from "react-icons/md";
+import { MdArrowBackIosNew, MdFilterAlt, MdOutlineSearch } from "react-icons/md";
 import NotFound from '../../NotFound';
 import axios from "axios";
 import { SkeletonTable } from "../../../Skeletons";
 import Swal from "sweetalert2";
+import { PDFExport } from "../../../modules/react-pdf";
+import PdfIssuance from "./PDF/PdfIssuance";
+import PdfReceiving from "./PDF/PdfReceiving";
 
 
 export default function Vouchers() {
 
-    
-    const [isLoading, setLoading ] = useState(true);
-    const [isSummaryLoading, setSummaryLoading] = useState(true); 
-    const [isPaginateLoading, setPaginateLoading ] = useState(true);
+
+    const [isLoading, setLoading] = useState(true);
+    const [isSummaryLoading, setSummaryLoading] = useState(true);
+    const [isPaginateLoading, setPaginateLoading] = useState(true);
 
     const params = useParams();
     const [isFound, setIsFound] = useState(true);
@@ -28,6 +31,8 @@ export default function Vouchers() {
     const [totalIssuance, setTotalIssuance] = useState(0)
     const [todayIssuance, setTodayIssuance] = useState(0)
 
+    const pdfExportComponent = useRef();
+
 
     useEffect(() => {
 
@@ -36,20 +41,20 @@ export default function Vouchers() {
             if (res.data.success) {
                 setStore(res.data.data);
 
-                axios.get('vouchers?store=' + res.data.data.id ).then(res => {
+                axios.get('vouchers?store=' + res.data.data.id).then(res => {
                     setVouchers(res.data.data.vouchers);
 
                     let vouchers = res.data.data.vouchers;
 
                     const today = (new Date()).toDateString();
 
-                    let receivers = vouchers.filter(voucher => voucher?.type === "receiving" );
-                    let issuances = vouchers.filter(voucher => voucher?.type === "issuance" );
+                    let receivers = vouchers.filter(voucher => voucher?.type === "receiving");
+                    let issuances = vouchers.filter(voucher => voucher?.type === "issuance");
                     let todayReceiverCount = receivers.filter(voucher => (new Date(voucher?.created_at)).toDateString() === today).length;
-                    let todayIssuanceCount = issuances.filter(voucher => (new Date(voucher?.created_at)).toDateString() === today ).length;
+                    let todayIssuanceCount = issuances.filter(voucher => (new Date(voucher?.created_at)).toDateString() === today).length;
 
-                    setTotalReceiver(receivers.length );
-                    setTotalIssuance(issuances.length );
+                    setTotalReceiver(receivers.length);
+                    setTotalIssuance(issuances.length);
                     setTodayReceiver(todayReceiverCount);
                     setTodayIssuance(todayIssuanceCount);
                     setLoading(false);
@@ -208,6 +213,7 @@ export default function Vouchers() {
                                     <th scope="col">#</th>
                                     <th scope="col">Sr. No.</th>
                                     <th scope="col">Voucher No.</th>
+                                    <th scope="col">Type</th>
                                     <th scope="col">Invoice No.</th>
                                     <th scope="col">Received Date</th>
                                     <th scope="col">Supplier Name</th>
@@ -222,48 +228,52 @@ export default function Vouchers() {
                             <tbody className="text-center">
 
                                 {
-                                    isLoading ? <SkeletonTable columns={11}/> : 
-                                    vouchers.length > 0 ? vouchers.map((voucher, index) => {
+                                    isLoading ? <SkeletonTable columns={11} /> :
+                                        vouchers.length > 0 ? vouchers.map((voucher, index) => {
 
-                                        return (
-                                            <tr className="text-center" key={index}>
+                                            return (
+                                                <tr className="text-center" key={index}>
 
-                                                <td><Form.Check type="checkbox" /></td>
-                                                <td>{++index}</td>
-                                                <td>{voucher.voucher_number}</td>
-                                                <td>{voucher.invoice_id}</td>
-                                                <td>{ (new Date(voucher.receiving_date)).toLocaleDateString() }</td>
-                                                <td>{voucher.supplier.firm_name}</td>
-                                                <td>{voucher.supplier.gst_number}</td>
-                                                <td>{voucher.supplier.email}</td>
-                                                <td>{voucher.supplier.number}</td>
-                                                <td className="d-flex justify-content-evenly gap-1">
-                                                    <Link to={route.get('store.voucher.view', {name: voucher.store.slug, id: voucher.id})}><button type="button" className="btn btn-primary btn-sm rounded shadow w-16">View</button></Link>
-                                                    <Link to={route.get('store.voucher.edit', { name: voucher.store.slug, id: voucher.id })}><button type="button" className="btn btn-success btn-sm rounded shadow ">Edit</button></Link>
-                                                    <button type="button" className="btn btn-danger btn-sm rounded shadow" onClick={ () => handleDelete(voucher.id)}>Delete</button>
-                                                </td>
-                                                <td>
-                                                    <Dropdown>
-                                                        <Dropdown.Toggle id="dropdown-basic" className="btn-light border border-black shadow">
-                                                            <MdOutlinePrint />
-                                                        </Dropdown.Toggle>
+                                                    <td><Form.Check type="checkbox" /></td>
+                                                    <td>{++index}</td>
+                                                    <td>{voucher.voucher_number ?? "N/A"}</td>
+                                                    <td>{voucher.type == "receiving" ? "Receiving" : "Issuance"}</td>
+                                                    <td>{voucher.invoice_id ?? 'N/A'}</td>
+                                                    <td>{voucher.type == "receiving" ? (new Date(voucher.receiving_date)).toLocaleDateString() : (new Date(voucher.issuance_date)).toLocaleDateString()}</td>
+                                                    <td>{voucher?.supplier?.firm_name ?? "N/A"}</td>
+                                                    <td>{voucher?.supplier?.gst_number ?? "N/A"}</td>
+                                                    <td>{voucher?.supplier?.email ?? "N/A"}</td>
+                                                    <td>{voucher?.supplier?.number ?? "N/A"}</td>
+                                                    <td className="d-flex justify-content-evenly gap-1">
+                                                        <Link to={route.get('store.voucher.view', { name: voucher.store.slug, id: voucher.id })}><button type="button" className="btn btn-primary btn-sm rounded shadow w-16">View</button></Link>
+                                                        <Link to={route.get('store.voucher.edit', { name: voucher.store.slug, id: voucher.id })}><button type="button" className="btn btn-success btn-sm rounded shadow ">Edit</button></Link>
+                                                        <button type="button" className="btn btn-danger btn-sm rounded shadow" onClick={() => handleDelete(voucher.id)}>Delete</button>
+                                                    </td>
+                                                    <td>
+                                                        <Button onClick={() => {
+                                                            if (pdfExportComponent.current) {
+                                                                pdfExportComponent.current.save();
+                                                            }
+                                                        }}>Export PDF</Button>
+                                                        <div style={{
+                                                            opacity: 0,
+                                                            appearance: "none",
+                                                            position: "absolute",
+                                                            left: -1000
+                                                        }}>
+                                                            <PDFExport
+                                                                fileName={voucher.voucher_number}
+                                                                paperSize="A4"
+                                                                ref={pdfExportComponent}>
+                                                                {voucher.type == "issuance" ? <PdfIssuance voucherId={voucher.id} /> : <PdfReceiving voucher={voucher.id} /> }
+                                                            </PDFExport>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )
 
-                                                        <Dropdown.Menu className="bg-white">
-                                                            <Dropdown.Item >Print</Dropdown.Item>
-                                                            <Dropdown.Item >Pdf</Dropdown.Item>
-                                                        </Dropdown.Menu>
-                                                    </Dropdown>
-                                                </td>
-                                            </tr>
-                                        )
-
-                                    }) : <tr><td colSpan={11}><b className="m-2 p-2">Nothing to show</b></td></tr>
+                                        }) : <tr><td colSpan={11}><b className="m-2 p-2">Nothing to show</b></td></tr>
                                 }
-
-
-
-
-
                             </tbody>
                         </table>
 

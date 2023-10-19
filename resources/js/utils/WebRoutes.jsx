@@ -25,6 +25,7 @@ import Approved from "../pages/Quality/Approved";
 import Rejected from "../pages/Quality/Rejected";
 import Pending from "../pages/Quality/Pending";
 import EditVoucher from "../pages/Stores/Screens/EditVoucher";
+import VoucherExportPDF from "../pages/Stores/VoucherExportPDF";
 
 
 
@@ -189,6 +190,14 @@ export const Endpoints = [
         exact: true,
         name: "quality.pending"
     },
+    {
+        path: route("store/vouchers/:id"),
+        component: VoucherExportPDF,
+        exact: true,
+        name: "store.voucher.export"
+    },
+
+
 
     
 
