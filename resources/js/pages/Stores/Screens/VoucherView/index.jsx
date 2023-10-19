@@ -74,7 +74,7 @@ export default function VoucherView() {
 
             const itemBarCodes = Array(quantity).fill().map((v, i) => {
                 return (
-                    <Barcode key={i} value={`${voucher}-${itemId}00${++i}`}/>
+                    <Barcode key={i} value={`${voucher}-${itemId}I${++i}`}/>
                 )
             });
 

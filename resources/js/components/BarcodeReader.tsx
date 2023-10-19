@@ -1,40 +1,63 @@
 import React from "react";
-
-export default function BarcodeReader({onEnterBarCode}){
-
-    const [barcode, setBarcode ] = React.useState('');
-    const [isChecked, setChecked ] = React.useState('');
-    const focusRef = React.useRef();
+import BounceLoader from "./BounceLoader";
 
 
-    const handleRead = (e) => {
-       
-        if (e.code == "Enter") {
-            if (barcode) {
-                setBarcode(barcode);
+interface BarcodeProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    onScan: (response: string, setBarcode: React.Dispatch<React.SetStateAction<string>>) => void
+    isLoading?: boolean,
+    className?: string,
+}
+
+export default function BarcodeReader({ onScan = () => {}, isLoading, className, ...props }: BarcodeProps):React.JSX.Element {
+
+    const [barcode, setBarcode] = React.useState<string>('');
+
+
+    React.useEffect((): void => {
+        let scannedStr: string;
+
+        window.document.addEventListener('keypress', function (e: KeyboardEvent) {
+
+            if (e.code == "Enter") {
+                if (scannedStr) {
+                    setBarcode(scannedStr);
+                }
+                onScan(scannedStr, setBarcode);
+                scannedStr = '';
+                return;
             }
-            onEnterBarCode( { barcode, setBarcode });
-            return;
-        }
 
-        if (e.key != "Shift") {
-            setBarcode(prev => prev + e.key);
-            return;
-        }
+            if (e.key != "Shift") {
+                if (!scannedStr) {
+                    scannedStr = e.key;
+                } else {
+                    scannedStr += e.key;
+                }
+                return;
+            }
+        });
 
-    }
+    }, [])
+
 
     return (
         <>
-            
-            <input type="text" defaultValue={barcode} onKeyUp={(e) => handleRead(e)} ref={focusRef} />
-            <input type="checkbox" checked={isChecked} onChange={ () => setChecked( prev => { 
-                let newCheck = !prev;
-                if( newCheck ) {
-                    focusRef.current.focus() 
+            <label>Scan Barcode</label>
+            <div style={{
+                position: "relative"
+            }}>
+                <input className={`${className ? className.concat(' form-control') : 'form-control' }`} type="text" {...props} disabled={isLoading}/>
+                {
+                    isLoading?
+                    <span style={{
+                        position: "absolute",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        right: 8,
+                    }}><BounceLoader /></span>
+                    : ''
                 }
-                return newCheck;
-            } ) }/>
+            </div>
         </>
     )
 }

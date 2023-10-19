@@ -232,7 +232,6 @@ export default function Inventory() {
                                                                             className="bg-transparent mb-0"
                                                                             placeholder="New Stock"
                                                                             value={newStock} onChange={e => {
-                                                                                console.log(e.target.value)
                                                                                 setNewStock(e.target.value)
                                                                             }}
                                                                             onKeyDown={(event) => {

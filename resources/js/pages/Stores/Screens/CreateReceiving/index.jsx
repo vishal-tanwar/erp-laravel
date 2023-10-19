@@ -19,7 +19,7 @@ export default function CreateReceiving() {
     const [date, setDate] = useState(new Date());
     const params = useParams();
 
-    const [store, setStore] = useState([]);
+    const [store, setStore] = useState({});
     // const [isFound, setIsFound] = useState(true);
 
     const [items, setItems] = useState([]);

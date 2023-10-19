@@ -105,6 +105,7 @@ Route::group(["prefix" => "v1"], function(){
         Route::get('voucher', 'view');
         Route::match(['put', 'patch'], 'voucher/{id}', 'update');
         Route::delete('voucher/{id}', 'destroy');
+        Route::get('voucher/scan', 'scanning');
     });
 
     Route::controller(LocationsController::class)->group(function(){
