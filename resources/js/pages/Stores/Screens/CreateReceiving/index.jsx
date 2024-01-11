@@ -244,8 +244,7 @@ export default function CreateReceiving() {
             let searched = prev.find(item => item.id == id);
             searched[name] = value;
             return [...prev];
-        })
-
+        });
     }
 
     const handleBack = () => {
@@ -278,7 +277,6 @@ export default function CreateReceiving() {
                             <Form.Control placeholder="Enter your Mail" className="rounded-2" value={email} disabled />
                         </Form.Group>
                     </Col>
-
 
                     <Col xs={6}>
                         <Form.Group className="mb-3">
@@ -318,7 +316,6 @@ export default function CreateReceiving() {
                                 </Form.Group>
                             </Col>
                         </Row>
-
                     </Col>
                 </Row>
                 <Row>
@@ -352,7 +349,6 @@ export default function CreateReceiving() {
                 <Row className="my-4">
                     <table className="table  table-bordered  table-responsive">
                         <thead>
-
                             <tr className="text-center">
                                 <th scope="col">Item Name</th>
                                 <th scope="col">Item Part</th>
@@ -398,8 +394,6 @@ export default function CreateReceiving() {
                                                     <Form.Control value={item.unit?.name} className="rounded-2" disabled />
                                                 </Form.Group>
                                             </td>
-
-
                                             <td>
                                                 <Form.Group>
                                                     <ReactSelect options={locationOptions} defaultValue={item.location_id} onChange={e => handleItemsInput(item.id, 'location_id', e.value)} />
@@ -426,7 +420,6 @@ export default function CreateReceiving() {
                                                 </Form.Group>
                                             </td>
                                             <td><Button type="button" variant="danger" onClick={e => handleRemoveItem(index)}><MdClose /></Button></td>
-
                                         </tr>
                                     )
                                 })
