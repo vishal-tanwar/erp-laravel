@@ -41,13 +41,13 @@ export default function ItemList() {
                     <Link className="btn btn-primary btn-sm bg-primary" to={route.get('item_master.add_item')}> Add Item</Link>
                 </Col>
                 <Col xs={6} className="d-flex justify-content-end">
-                    <DropdownFilter align="right"/>
+                    {/* <DropdownFilter align="right"/> */}
                     
                 </Col>
             </Row>
 
             <div className="my-3">
-                <Row>
+                {/* <Row>
                     <Col xs={5}>
                         <div className="d-flex gap-3">
                             <Dropdown>
@@ -97,7 +97,7 @@ export default function ItemList() {
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
-                </Row>
+                </Row> */}
                 <Row className="my-4">
                     <Col xs={12}>
                         <div className="table-responsive">

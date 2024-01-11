@@ -1,12 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { MdLogout } from 'react-icons/md';
 
-import SearchModal from '../components/ModalSearch';
-import Notifications from '../components/DropdownNotifications';
-import UserMenu from '../components/DropdownProfile';
-import ThemeToggle from '../components/ThemeToggle';
 
 function Header({ onClick }) {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [username, setUser] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    setUser(`${user.firstname} ${user.lastname}`);
+  }, []);
+
+  const logout = () => {
+
+    Swal.fire({
+      title: "Do you want to logout?",
+      icon: 'question',
+      showCloseButton: false,
+      showCancelButton: true,
+      confirmButtonText: "Logout",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then(res => {
+      if (res.isConfirmed) {
+        axios.post('/logout').then(res => {
+          Swal.fire({
+            toast: true,
+            title: "Success!",
+            icon: 'success',
+            text: res.data.message,
+            position: 'top-right',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          }).then( () => {
+            localStorage.removeItem("user");
+            localStorage.removeItem("X-Auth-Token");
+            navigate('/')
+          });
+        })
+      }
+    })
+
+  }
 
   return (
     <header className="sticky top-0 bg-white dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-30">
@@ -31,7 +71,7 @@ function Header({ onClick }) {
 
           {/* Header: Right side */}
           <div className="flex items-center space-x-3">
-            <div>
+            {/* <div>
               <button
                 className={`w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600/80 rounded-full ml-3 ${
                   searchModalOpen && 'bg-slate-200'
@@ -55,10 +95,24 @@ function Header({ onClick }) {
                 </svg>
               </button>
               <SearchModal id="search-modal" searchId="search" modalOpen={searchModalOpen} setModalOpen={setSearchModalOpen} />
-            </div>
+            </div> */}
             {/*  Divider */}
             <hr className="w-px h-6 bg-slate-200 dark:bg-slate-700 border-none" />
-            <UserMenu align="right" />
+            
+            <div className="inline-flex justify-center items-center group">
+              {/* <img className="w-8 h-8 rounded-full" src={UserAvatar} width="32" height="32" alt="User" /> */}
+              <div className="flex items-center truncate">
+                <span className="truncate ml-2 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{username}</span>
+              </div>
+            </div>
+            <Link
+              className="font-medium text-sm hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center py-1 px-3"
+
+              onClick={logout}
+            >
+              <MdLogout />
+              <span> Sign Out </span>
+            </Link>
           </div>
         </div>
       </div>

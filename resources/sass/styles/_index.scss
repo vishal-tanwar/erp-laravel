@@ -1,17 +1,44 @@
 @import 'sidebar';
+@import 'modal_drawer';
 
-main{
-    background-color: var(--bs-info-bg-subtle);;
+@mixin keyframes ($name) {
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+
+    @-ms-keyframes #{$name} {
+        @content;
+    }
+    @-o-keyframes #{$name} {
+        @content;
+    }
+
+    @keyframes #{$name} {
+        @content;
+    }
 }
 
-button, [type='button'], [type='reset'], [type='submit'], .btn {
+main {
+    background-color: var(--bs-info-bg-subtle);
+    ;
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'],
+.btn {
+
+    border-color: var(--bs-btn-border-color) !important;
 
     &:not(.swal2-styled) {
+        background-color: var(--bs-btn-bg) !important;
 
-
-        background-color: var( --bs-btn-bg) !important;
-
-        &:hover{
+        &:hover {
             color: var(--bs-btn-hover-color) !important;
             background-color: var(--bs-btn-hover-bg) !important;
             border-color: var(--bs-btn-hover-border-color) !important;
@@ -20,6 +47,82 @@ button, [type='button'], [type='reset'], [type='submit'], .btn {
 }
 
 
-.border-gray-600{
+.border-gray-600 {
     border-color: #6b7280 !important;
+}
+
+.permissions-table {
+
+    & input[type="checkbox"] {
+        transition: opacity .3s ease-in;
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: .4;
+        }
+
+        &:not(:disabled) {
+            cursor: pointer;
+        }
+    }
+
+}
+
+.spin {
+    animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        transform-origin: center
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+        transform-origin: center
+    }
+}
+
+.focused {
+    animation: focused 2s infinite linear;
+}
+
+
+@include keyframes('focused') {
+    0% {
+        box-shadow: 0 0 0px var(--bs-success);
+    }
+
+    20% {
+        box-shadow: 0 0 6px var(--bs-success);
+    }
+
+    40% {
+        box-shadow: 0 0 12px var(--bs-success);
+    }
+
+    60% {
+        box-shadow: 0 0 6px var(--bs-success);
+    }
+
+    80% {
+        box-shadow: 0 0 12px var(--bs-success);
+    }
+
+    90% {
+        box-shadow: 0 0 6px var(--bs-success);
+    }
+
+    100% {
+        box-shadow: 0 0 0px var(--bs-success);
+    }
 }

@@ -277,10 +277,7 @@ export default function CreateReceiving() {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>E-mail</Form.Label>
-                            <Form.Control placeholder="Enter your Mail" className="rounded-2" value={email} onChange={e => setEmail(e.target.value)} />
-                            <Form.Text className="text-muted">
-                                We'll never share your email with anyone else.
-                            </Form.Text>
+                            <Form.Control placeholder="Enter your Mail" className="rounded-2" value={email} disabled />
                         </Form.Group>
                     </Col>
 
@@ -297,7 +294,7 @@ export default function CreateReceiving() {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Address</Form.Label>
-                            <Form.Control placeholder="Enter your address " className="rounded-2" value={address} onChange={e => setAddress(e.target.value)} />
+                            <Form.Control placeholder="Enter your address " className="rounded-2" value={address} disabled />
                         </Form.Group>
 
                         <Row>
@@ -307,7 +304,6 @@ export default function CreateReceiving() {
                                     <Form.Control placeholder="Enter Your City " className="rounded-2" value={city} onChange={e => setCity(e.target.value)} />
                                 </Form.Group>
                             </Col>
-
                             <Col xs={6}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>State</Form.Label>
@@ -320,7 +316,7 @@ export default function CreateReceiving() {
                             <Col xs={12}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Phone No.</Form.Label>
-                                    <Form.Control placeholder="Enter your Number " className="rounded-2" value={phone} onChange={e => setPhone(e.target.value)} />
+                                    <Form.Control placeholder="Enter your Number" className="rounded-2" value={phone} disabled/>
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -328,10 +324,27 @@ export default function CreateReceiving() {
                     </Col>
                 </Row>
                 <Row>
+                    <Col xs="6">
+                        <Form.Group className="mb-3">
+                            <Form.Label>Heat Number</Form.Label>
+                            <Form.Control placeholder="Heat Number" className="rounded-2" />
+                        </Form.Group>
+                    </Col>
+                    <Col xs="6">
+                        <Form.Group className="mb-3">
+                            <Form.Label>Judgement</Form.Label>
+                            <ReactSelect className="rounded-2 mb-2" options={[
+                                { value: "OK", label: "OK" },
+                                { value: "NG", label: "NG" },
+                            ]} isClearable />
+                            <Form.Text>Choose betweem OK and NG to approve or reject</Form.Text>
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
                     <Col xs="4">
                         <ReactSelect className="rounded-2"
                             options={itemOptions} ref={itemRef} isClearable />
-
                     </Col>
                     <Col xs={3}>
                         <Button variant="success" onClick={() => handleAddItem()}>+</Button>
@@ -343,20 +356,17 @@ export default function CreateReceiving() {
                         <thead>
 
                             <tr className="text-center">
-
                                 <th scope="col">Item Name</th>
                                 <th scope="col">Item Part</th>
                                 <th scope="col">Item Size</th>
                                 <th scope="col">Item Grade</th>
-                                <th scope="col">Quanity</th>
+                                <th scope="col">Unit</th>
                                 <th scope="col" width={`15%`}>Location</th>
+                                <th scope="col">Pkt Qunatity</th>
                                 <th scope="col">Total GWT</th>
-                                <th scope="col">Total PKT.</th>
+                                <th scope="col">Total net weight.</th>
                                 <th scope="col">PKT Receiver</th>
                                 <th scope="col" style={{ width: '5%' }}></th>
-
-
-
                             </tr>
                         </thead>
                         <tbody className="text-center">
@@ -385,15 +395,21 @@ export default function CreateReceiving() {
                                                     <Form.Control value={item.grade} className="rounded-2" disabled />
                                                 </Form.Group>
                                             </td>
-
                                             <td>
                                                 <Form.Group>
-                                                    <Form.Control type="number" min={1} step={1} className="rounded-2" value={item?.quantity} onChange={e => handleItemsInput(item.id, 'quantity', e.target.value)} />
+                                                    <Form.Control value={item.unit?.name} className="rounded-2" disabled />
+                                                </Form.Group>
+                                            </td>
+
+                                            
+                                            <td>
+                                                <Form.Group>
+                                                    <ReactSelect options={locationOptions} defaultValue={item.location_id} onChange={e => handleItemsInput(item.id, 'location_id', e.value)} />
                                                 </Form.Group>
                                             </td>
                                             <td>
                                                 <Form.Group>
-                                                    <ReactSelect options={locationOptions} defaultValue={item.location_id} onChange={e => handleItemsInput(item.id, 'location_id', e.value)} />
+                                                    <Form.Control type="number" min={1} step={1} className="rounded-2" value={item?.quantity} onChange={e => handleItemsInput(item.id, 'quantity', e.target.value)} />
                                                 </Form.Group>
                                             </td>
                                             <td>
@@ -425,16 +441,10 @@ export default function CreateReceiving() {
                         <Col xs={12} className="justify-content-end d-flex gap-3">
                             <button type="button" className=" btn btn-secondary btn-md bg-primary" onClick={() => handleBack()}>Cancel</button>
                             <button type="button" className=" btn btn-primary btn-md bg-primary " onClick={() => handleSave()}>Save</button>
-
                         </Col>
                     </Row>
-
                 </Row>
-
-
-
             </Form>
-
         </Layout>
     )
 }

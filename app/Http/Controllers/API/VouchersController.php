@@ -174,10 +174,13 @@ class VouchersController extends Controller
     public function generate_voucher_number()
     {
         $voucher = Voucher::orderBy('id', 'DESC')->where("type", "=", "receiving")->pluck('voucher_number')->first();
-
-        $voucher = explode("-", $voucher);
-
-        $new = abs(last($voucher)) + 1;
+        
+        if( $voucher ){
+            $voucher = explode("-", $voucher);
+            $new = abs(last($voucher)) + 1;
+        } else {
+            $new = 1;
+        }
         $date = date('my');
 
         return response()->json([

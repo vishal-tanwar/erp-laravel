@@ -5,17 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 // icons
 import { ToastContainer, toast } from 'react-toastify';
-// Logo
-import Logo from '../images/Logo.png'
+
+import LoginImage from '../images/Login-Image.jpg'
 import axios from 'axios';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
-    
+
     const navigate = useNavigate();
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [isPasswordHidden, setPasswordHidden] = useState( true );
+    const [isPasswordHidden, setPasswordHidden] = useState(true);
 
     const _apicallupdate = (e) => {
         e.preventDefault();
@@ -27,41 +27,41 @@ const Login = () => {
         axios.post('/login', {
             username, password
         })
-        .then(res => {
-            let response = res.data;
-            localStorage.setItem("X-Auth-Token", response.data.authorization.token);
-            localStorage.setItem("user", JSON.stringify(response.data.user));
+            .then(res => {
+                let response = res.data;
+                localStorage.setItem("X-Auth-Token", response.data.authorization.token);
+                localStorage.setItem("user", JSON.stringify(response.data.user));
+                localStorage.setItem("user-roles", response.data.roles);
+                localStorage.setItem("user-permissions", JSON.stringify(response.data.permissions));
 
-            axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("X-Auth-Token")}`;
+                axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("X-Auth-Token")}`;
 
-            Swal.fire({
-                toast: true,
-                title: "Success!",
-                icon: 'success',
-                text: "Logged in successfully!",
-                position: 'top-right',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-            });
+                Swal.fire({
+                    toast: true,
+                    title: "Success!",
+                    icon: 'success',
+                    text: "Logged in successfully!",
+                    position: 'top-right',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                }).then(() => {
+                    navigate("/dashboard");
+                });
 
-
-            setTimeout(() => {
-                navigate("/dashboard");
-            }, 3000);
-        })
-        .catch(res => {
-            Swal.fire({
-                toast: true,
-                title: "Login Error!",
-                icon: 'error',
-                text: res.response.data.message,
-                position: 'top-right',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
             })
-        })
+            .catch(res => {
+                Swal.fire({
+                    toast: true,
+                    title: "Login Error!",
+                    icon: 'error',
+                    text: res.response.data.message,
+                    position: 'top-right',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                })
+            })
     };
 
     if (localStorage.getItem("user")) {
@@ -73,39 +73,23 @@ const Login = () => {
     else {
 
         return (
-            <div className="login-form">
-                <div className="company-details">
-                    <div className='gst'>
-                        <h1 className='gst_heading'>GST</h1>
-                        <div>
-                            <h1 className='gst_heading'>Goods And Service Taxs</h1>
-                        </div>
-                    </div>
-                    <div className="address">
-                        <div className='address_2'>
-                            <h1>GST Complains ERP for GST complains India</h1>
-                            <h1>FundCase - 136</h1>
-                            <h1>Date: 03 - 06 - 2023</h1>
-                            <h1>The Future in House</h1>
-                            <h1>CODDED<span className='coddedbrain'>BRAIN IT SOLUTION</span> PVT LTD.</h1>
-                            <div className='contact_us'>
-                                <p className='p'>CONTACT US:</p>
-                                <div className='contact'>
-                                    <div><h1>Address: ABC, Faridabad</h1></div>
-                                    <div><h1>Mobile:  0123456789</h1></div>
-                                    <div><h1>Email: coddedbrain@gmail.com</h1></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div className="login-form" style={{ backgroundColor: "#4a4cf61c"}}>
+                <div className="company-details" style={{
+                    background: 'transparent',
+                    backgroundImage: `url(${LoginImage})`,
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center center"
+                }}>
+
                 </div>
                 <div className="login-form-right">
                     {/* Right side with login inputs */}
-                    <form className='login_form' onSubmit={ e => _apicallupdate(e)}>
+                    <form className='login_form ms-0' onSubmit={e => _apicallupdate(e)}>
                         <div>
-                            <img src={Logo} alt="Logo" className='logo' />
+                            <h1 className='h1 font-medium text-gray-600 mb-3' style={{ fontFamily: "sans-serif" }}>ERP Login</h1>
                         </div>
-                        <div className='fields'>
+                        <div>
 
                             <label htmlFor="loginID" className='login_lable'>Username/Email:</label>
 
@@ -122,7 +106,7 @@ const Login = () => {
 
                             <div className='password-field'>
                                 <input
-                                    type={isPasswordHidden? "password": "text"}
+                                    type={isPasswordHidden ? "password" : "text"}
                                     className='input'
                                     id="password"
                                     placeholder='Password'

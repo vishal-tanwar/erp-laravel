@@ -5,6 +5,7 @@ use App\Http\Controllers\API\GroupsController;
 use App\Http\Controllers\API\InventoriesController;
 use App\Http\Controllers\API\ItemController;
 use App\Http\Controllers\API\LocationsController;
+use App\Http\Controllers\API\RolesController;
 use App\Http\Controllers\API\StoresController;
 use App\Http\Controllers\API\SubGroupsController;
 use App\Http\Controllers\API\SupplierController;
@@ -40,14 +41,25 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::group(["prefix" => "v1"], function(){
-
+    
+    // User Routes
     Route::post("login", [AuthController::class, "login"]);
     Route::post("register", [AuthController::class, "register"]);
+    Route::get("users", [AuthController::class,"users"]);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::get('/validate-session', [AuthController::class, "verifySession"]);
+    Route::get("user/username_exists/{username}", [AuthController::class,"username_exists"]);
 
-
+    // Roles Routes
+    Route::get("/user/roles", [RolesController::class,"index"]);
+    Route::post("/user/role", [RolesController::class,"store"]);   
+    Route::put("/user/role/{id}", [RolesController::class,"update"])->where(['id' => '[0-9]+']);   
+    Route::delete("/user/role/{id}", [RolesController::class,"destroy"])->where(['id' => '[0-9]+']);   
+    
+    // Permissions Route
+    Route::get('/user/role/permissions/{role_id}', [RolesController::class, 'rolePermissions'])->where(['role_id' => "[0-9]+"]);
+    Route::post('/user/role/permissions', [RolesController::class, 'syncPermissionsWithRoles']);
 
     // Route::resource("supplier", SupplierController::class );
 

@@ -16,6 +16,7 @@ import Login from './auth/Login';
 
 import { Endpoints, route } from './utils/WebRoutes';
 import NotFound from './pages/NotFound';
+import can from './utils/can';
 
 
 function Boot() {
@@ -49,10 +50,16 @@ function Boot() {
 
         <Route element={<ProtectedRoute element={<Outlet />} />}>
           {Endpoints.map( (route, i) => {
-            const {exact,component,path} = route;
-            return(
-              <Route exact={exact} Component={component} path={path} key={i} />
-            );
+            const {exact,component,path, permission} = route;
+            if ( permission){
+              return ( 
+                can(permission) ? <Route exact={exact} Component={component} path={path} key={i} /> : '' 
+              )
+            } else{
+              return(
+                <Route exact={exact} Component={component} path={path} key={i} />
+              );
+            }
           })}
         </Route>
 

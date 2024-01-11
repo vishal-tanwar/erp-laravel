@@ -12,13 +12,14 @@ const BackButton = () => {
     )
 }
 
-export function H1({children, icon, className, title, showBackButton}){
+export function H1({children = <></>, icon, className, title, showBackButton}){
     return(
         <Row className={`${className}`}>
             <Col xs={12} className="bg--white py-2 border-bottom-2 border-bottom d-flex justify-content-between ">
                 <h1 className="text-3xl font-bold d-flex align-items-center text-slate-600">{icon ? icon : ''} <span className="ms-2">{title??children}</span></h1>
 
                 {showBackButton == true ? <BackButton /> : '' }
+                
             </Col>
         </Row>
     )

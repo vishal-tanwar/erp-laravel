@@ -4,7 +4,8 @@ import { MdDashboard, MdHighQuality, MdOutlineHighQuality } from 'react-icons/md
 import IconSupplier from '../Icons/IconSupplier';
 import { Dropdown, Nav, NavLink, DropdownItem } from '../components/Nav';
 import { BiSolidStoreAlt } from 'react-icons/bi'
-import { FaCartArrowDown } from 'react-icons/fa';
+import { FaCartArrowDown, FaUsers } from 'react-icons/fa';
+import can from '../utils/can';
 
 function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
@@ -33,32 +34,41 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
 
         <Nav>
 
-          <NavLink title="Dashboard" to={route.get('dashboard')} Icon={<MdDashboard/>} />
+          <NavLink title="Dashboard" to={route.get('dashboard')} Icon={<MdDashboard />} />
 
-          <NavLink title="Suppliers" to={route.get("supplier")} Icon={<IconSupplier/>} />
+          <NavLink title="Suppliers" to={route.get("supplier")} Icon={<IconSupplier />} />
 
           {/* <NavLink title="Customer" to={route.get('customer')} Icon={<MdPerson />} /> */}
 
-          <Dropdown title="Stores" Icon={<BiSolidStoreAlt/>} activeName='store'>
+          <Dropdown title="Stores" Icon={<BiSolidStoreAlt />} activeName='store'>
             <DropdownItem title="List" to={route.get('store.list')}></DropdownItem>
             <DropdownItem title="Location" to={route.get('store.location')}></DropdownItem>
             <DropdownItem title="Inventory" to={route.get('store.inventory')}></DropdownItem>
 
           </Dropdown>
 
-          <Dropdown title="Item Master" Icon={<FaCartArrowDown/>} activeName='item_master'>
+          <Dropdown title="Item Master" Icon={<FaCartArrowDown />} activeName='item_master'>
             <DropdownItem title="Add Item" to={route.get('item_master.add_item')}></DropdownItem>
             <DropdownItem title="Items List" to={route.get('item_master.item_list')}></DropdownItem>
             <DropdownItem title="Units" to={route.get('item_master.units')} ></DropdownItem>
-            <DropdownItem title="Groups" to={route.get('item_master.group')}></DropdownItem>
-            <DropdownItem title="Sub Group" to={route.get('item_master.sub_group')}></DropdownItem>
+            {/* <DropdownItem title="Groups" to={route.get('item_master.group')}></DropdownItem> */}
+            {/* <DropdownItem title="Sub Group" to={route.get('item_master.sub_group')}></DropdownItem> */}
           </Dropdown>
 
-          <Dropdown title="Quality" Icon={< MdOutlineHighQuality/>} activeName='quality'>
+          <Dropdown title="Quality" Icon={<MdOutlineHighQuality />} activeName='quality'>
             <DropdownItem title="Approved" to={route.get('quality.approved')}></DropdownItem>
             <DropdownItem title="Rejected" to={route.get('quality.rejected')}></DropdownItem>
             <DropdownItem title="Pending" to={route.get('quality.pending')}></DropdownItem>
           </Dropdown>
+
+          {(can('view_user') || can('view_role') || can('view_permission')) &&
+            <Dropdown title="Users" Icon={<FaUsers />} activeName='users'>
+              {can('view_user') ? <DropdownItem title="All" to={route.get('users')}></DropdownItem> : ''}
+              {can('view_role') ? < DropdownItem title="Roles" to={route.get('users.roles')}></DropdownItem> : ''}
+              {can('view_permission') ? <DropdownItem title="Permission Manager" to={route.get('users.roles-manager')}></DropdownItem> : ''}
+            </Dropdown>
+          }
+
 
 
           {/* <Dropdown title="Purchase" Icon={<BiSolidPurchaseTag/>} activeName='purchase'>

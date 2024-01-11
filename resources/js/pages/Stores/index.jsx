@@ -155,7 +155,7 @@ export default function Stores() {
     }
 
     const handleSearch = () => {
-        axios.get(`search/${searchValue}`).then(res => {
+        axios.get(`stores/search/${searchValue}`).then(res => {
             const response = res.data;
             setStores(response.data.stores);
             setPageCount(response.data.pages);
@@ -222,7 +222,7 @@ export default function Stores() {
                 <Col xs={12}>
                     <h2 className="fs-3 m-2 px-4"><b>Store Summary </b></h2>
                 </Col>
-                <Col xs={12}>
+                {/* <Col xs={12}>
                     <Row className="summary-bar">
                         <Col xs={3} className="text-center">
                             <h4 className="fs-2">21</h4>
@@ -241,7 +241,7 @@ export default function Stores() {
                             <h4 className="mt-3">Out of Stock</h4>
                         </Col>
                     </Row>
-                </Col>
+                </Col> */}
 
             </Row>
             <div>

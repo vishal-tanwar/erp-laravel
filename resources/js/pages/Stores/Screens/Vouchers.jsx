@@ -261,12 +261,12 @@ export default function Vouchers() {
                                                             position: "absolute",
                                                             left: -1000
                                                         }}>
-                                                            <PDFExport
+                                                            {/* <PDFExport
                                                                 fileName={voucher.voucher_number}
                                                                 paperSize="A4"
                                                                 ref={pdfExportComponent}>
                                                                 {voucher.type == "issuance" ? <PdfIssuance voucherId={voucher.id} /> : <PdfReceiving voucher={voucher.id} /> }
-                                                            </PDFExport>
+                                                            </PDFExport> */}
                                                         </div>
                                                     </td>
                                                 </tr>

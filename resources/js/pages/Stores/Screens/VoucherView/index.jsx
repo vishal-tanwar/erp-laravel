@@ -30,11 +30,11 @@ export default function VoucherView() {
 
     const pdfExportComponent = React.useRef(null);
 
-    const formatSizes = ( size ) => {
-        if (JSON.parse(size) instanceof Object ){
-            return Object.values( JSON.parse( size ) ).join('x');
+    const formatSizes = (size) => {
+        if (JSON.parse(size) instanceof Object) {
+            return Object.values(JSON.parse(size)).join('x');
         }
-        else{
+        else {
             return size;
         }
     }
@@ -74,7 +74,7 @@ export default function VoucherView() {
 
             const itemBarCodes = Array(quantity).fill().map((v, i) => {
                 return (
-                    <Barcode key={i} value={`${voucher}-${itemId}I${++i}`}/>
+                    <Barcode key={i} value={`${voucher}-${itemId}I${++i}`} />
                 )
             });
 
@@ -166,6 +166,7 @@ export default function VoucherView() {
                                 <th scope="col">Item Part</th>
                                 <th scope="col">Item Size</th>
                                 <th scope="col">Item Grade</th>
+                                <th scope="col">Unit</th>
                                 <th scope="col">Quanity</th>
                                 <th scope="col" width={`15%`}>Location</th>
                                 <th scope="col">Total GWT</th>
@@ -182,49 +183,54 @@ export default function VoucherView() {
                                     return (<tr className="text-center" key={index}>
 
                                         <td>
-                                            <Form.Group className="mb-3" >
-                                                <Form.Control placeholder=" " className="rounded-2" defaultValue={item.item.name} />
-                                            </Form.Group>
+
+                                            <span> {item.item.name}</span>
+
                                         </td>
                                         <td>
-                                            <Form.Group className="mb-3" >
-                                                <Form.Control placeholder=" " className="rounded-2" defaultValue={item.item.part} />
-                                            </Form.Group>
+
+                                            <span> {item.item.part}</span>
+
                                         </td>
                                         <td>
-                                            <Form.Group className="mb-3" >
-                                                <Form.Control placeholder=" " className="rounded-2" defaultValue={formatSizes(item.item.size)} />
-                                            </Form.Group>
+
+                                            <span> {formatSizes(item.item.size)} </span>
+
                                         </td>
                                         <td>
-                                            <Form.Group className="mb-3" >
-                                                <Form.Control placeholder=" " className="rounded-2" defaultValue={item.item.grade} />
-                                            </Form.Group>
+
+                                            <span> {item.item.grade}</span>
+
                                         </td>
                                         <td>
-                                            <Form.Group className="mb-3" >
-                                                <Form.Control placeholder=" " className="rounded-2" defaultValue={item.quantity} />
-                                            </Form.Group>
+
+                                            <span> {item.item.unit?.name}</span>
+
                                         </td>
                                         <td>
-                                            <Form.Group className="mb-3" >
-                                                <Form.Control placeholder=" " className="rounded-2" defaultValue={item.location.name} />
-                                            </Form.Group>
+
+                                            <span> {item.quantity}</span>
+
                                         </td>
                                         <td>
-                                            <Form.Group className="mb-3" >
-                                                <Form.Control placeholder=" " className="rounded-2" defaultValue={item.total_gwt} />
-                                            </Form.Group>
+
+                                            <span> {item.location.name}</span>
+
                                         </td>
                                         <td>
-                                            <Form.Group className="mb-3" >
-                                                <Form.Control placeholder=" " className="rounded-2" defaultValue={item.total_pkt} />
-                                            </Form.Group>
+
+                                            <span> {item.total_gwt}</span>
+
                                         </td>
                                         <td>
-                                            <Form.Group className="mb-3" >
-                                                <Form.Control placeholder=" " className="rounded-2" defaultValue={item.pkt_receiver} />
-                                            </Form.Group>
+
+                                            <span> {item.total_pkt}</span>
+
+                                        </td>
+                                        <td>
+
+                                            <span> {item.pkt_receiver}</span>
+
                                         </td>
                                         <td>
                                             <button type="button" className=" btn btn-primary btn-sm bg-primary" onClick={() => showBarCodes(item.id, item.quantity, voucher.voucher_number)}>View Barcode</button>

@@ -26,6 +26,9 @@ import Rejected from "../pages/Quality/Rejected";
 import Pending from "../pages/Quality/Pending";
 import EditVoucher from "../pages/Stores/Screens/EditVoucher";
 import VoucherExportPDF from "../pages/Stores/VoucherExportPDF";
+import Users from "../pages/Users";
+import Roles from "../pages/Users/Roles";
+import RolesManager from "../pages/Users/RolesManager";
 
 
 
@@ -65,7 +68,7 @@ export const Endpoints = [
         path: route("/dashboard"),
         component: Dashboard,
         exact: true,
-        name: "dashboard"
+        name: "dashboard",
     },
 
     {
@@ -197,6 +200,27 @@ export const Endpoints = [
         name: "store.voucher.export"
     },
 
+    {
+        path: route('users'),
+        component: Users,
+        exact: true,
+        name: "users",
+        permission: 'view_user'
+    },
+    {
+        path: route('users/roles'),
+        component: Roles,
+        exact: true,
+        name: "users.roles",
+        permission: 'view_role'
+    },
+    {
+        path: route('users/roles-permission-manager'),
+        component: RolesManager,
+        exact: true,
+        name: "users.roles-manager",
+        permission: 'view_permission'
+    }
 
 
     

@@ -11,11 +11,23 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
     public function __construct(){
         $this->middleware("auth:api", ["except" => ["login", "verifySession"]]);
+    }
+
+    public function users(Request $request){
+        $users = User::with(['roles', 'permissions'])->get();
+
+         return response()->json([
+            "status" => true,
+            "code" => Response::HTTP_OK,
+            'message' => 'Users fetched successfully',
+            'data' => ["users" => $users]
+        ]);
     }
 
     /**
@@ -74,6 +86,8 @@ class AuthController extends Controller
             "message" => "User has logged in successfully!",
             "data" => [
                 'user' => $user,
+                'roles' => $user->roles()->pluck('name')->first(),
+                'permissions' => $user->roles()->with('permissions')->first()->permissions()->pluck('name'),
                 'authorization' => [
                     'token' => $token,
                     'type' => 'bearer',
@@ -83,33 +97,66 @@ class AuthController extends Controller
 
      }
 
+     public function username_exists( $username){
+        $user = User::where('username', $username)->first();
+        return response()->json([
+            'success'=> $user ? true : false,
+            'code'=> Response::HTTP_OK,
+            'message' => $user ? "Username already exists!" : '' 
+        ]);
+     }
+
     public function register(Request $request)
     {
         if ($request->email) {
             $request->merge(["email" => Str::lower($request->email)]);
         }
 
-        $request->validate([
+
+        $validator = Validator::make( $request->all(), [
             'firstname'     => 'required|string|max:255',
             'lastname'      => 'string|max:255',
-            'phone'         => 'required|numeric|min:10|max:10',
-            'email'         => 'required|string|email|max:255|unique:users',
+            'phone'         => 'required|numeric|min:10|unique:users',
+            'email'         => 'required|email|max:255|unique:users',
+            'username'      => 'required|string|max:255|unique:users',
             'password'      => 'required|confirmed|string|min:6',
+            'role_id'       => 'required|numeric',
         ]);
 
+        if( $validator->fails() ){
+            return response()->json([
+                "success" => false,
+                "code" => Response::HTTP_UNAUTHORIZED,
+                "message" => $validator->errors(),
+                "data" => [
+                    $request->all()
+                ]
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
         $user = User::create([
+            'username'  => $request->username,
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
             'phone' => $request->phone,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        
+        
+        $role = Role::findById($request->role_id);
+
+        $user->assignRole($role);
 
         return response()->json([
             "status"    => true,
             "code"  => Response::HTTP_CREATED,
             'message' => 'User created successfully',
-            'data' => [ "user" => $user ]
+            'data' => [ 
+                "user" => $user,
+                'roles' => $user->roles()->pluck('name')->first(),
+                'permissions' => $user->permissions()->pluck('name'), 
+                ]
         ], Response::HTTP_CREATED);
     }
 

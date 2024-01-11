@@ -2,17 +2,18 @@ import Swal, { SweetAlertIcon, SweetAlertPosition } from 'sweetalert2';
 import './swalStyle.scss';
 
 
-type ToastTypes = "success" | "danger" | "warning" | "info" | "primary" | "secondary" | "light"
+type ToastTypes = "success" | "danger" | "warning" | "info" | "primary" | "secondary" | "light" | 'error'
 
 interface IToastOptions {
     type?: ToastTypes,
-    title?: string,
+    title?: string | HTMLElement,
     icon?: SweetAlertIcon
     timer?: number,
     text?: string,
     position?: SweetAlertPosition,
-    html?: string | HTMLElement | JQuery
+    html?: string | HTMLElement
 }
+
 
 const Toast = (options: IToastOptions = {}):typeof Swal => {
 
@@ -24,6 +25,9 @@ const Toast = (options: IToastOptions = {}):typeof Swal => {
         icon: 'success',
         html: ''
     }, options);
+
+    const type:string|undefined = _default.type == 'error' ? 'danger' : _default.type;
+
     
     return Swal.mixin({
         html: _default.html,
@@ -37,10 +41,10 @@ const Toast = (options: IToastOptions = {}):typeof Swal => {
         timerProgressBar: true,
         customClass: {
             popup: "colored-toast",
-            timerProgressBar: `bg-${_default.type}`,
-            icon: `text-${_default.type}`,
-            title: `text-${_default.type}`,
-            htmlContainer: `swal-content--${_default.type}`
+            timerProgressBar: `bg-${type}`,
+            icon: `text-${type}`,
+            title: `text-${type}`,
+            htmlContainer: `swal-content--${type}`
         },
     })
 }

@@ -17,9 +17,9 @@ export default function AddItem() {
     const [grade, setGrade] = useState('')
 
     const initSizes = {
-        length: 0,
-        width: 0,
-        height: 0,
+        length: "",
+        width: "",
+        height: "",
     }; 
 
     // const [size, setSize] = useState(initSizes );
@@ -36,12 +36,8 @@ export default function AddItem() {
     const [groupOptions, setGroupOptions] = useState([]);
     const [subGroupOptions, setSubGroupOptions] = useState([]);
     const [storeOptions, setStoreOptions] = useState([]);
+    const [supplierOptions, setSupplierOptions] = useState([]);
 
-    const options = [
-        { value: 'Supplier A', label: 'Supplier A' },
-        { value: 'Supplier B', label: 'Supplier B' },
-        { value: 'Supplier C', label: 'Supplier C' }
-    ]
 
 
     useEffect(() => {
@@ -94,6 +90,19 @@ export default function AddItem() {
             })
             setStoreOptions(stores);
         });
+
+        axios.get('suppliers').then(res => {
+            setSuppliers(res.data.data.supplier);
+            const options = res.data.data.supplier.map((supplier) => {
+                return {
+                    value: supplier.id,
+                    label: supplier.firm_name
+                }
+            })
+            setSupplierOptions(options);
+        });
+
+        
     }, []);
 
 
@@ -177,7 +186,7 @@ export default function AddItem() {
                 <Row>
                     <Col xs={6}>
                         <Form.Group>
-                            <Form.Label><b>Size</b></Form.Label>
+                            <Form.Label><b>Size (LxWxT)</b></Form.Label>
 
                             <InputGroup>
                                 <Form.Control
@@ -193,7 +202,7 @@ export default function AddItem() {
                                 />
                                 <Form.Control
                                     className="rounded-end-2"
-                                    placeholder="Height"
+                                    placeholder="Thick"
                                     value={size.height}
                                     onChange={e => setSize({ height: e.target.value })}
                                 />
@@ -227,7 +236,7 @@ export default function AddItem() {
                     <Col xs={12}>
                         <Form.Group>
                             <Form.Label><b>Suplliers</b></Form.Label>
-                            <Select className="rounded-2" options={options} isMulti onChange={e => {
+                            <Select className="rounded-2" options={supplierOptions} isMulti onChange={e => {
                                 setSuppliers(Array.isArray(e) ? e.map(x => x.value) : []);
                             }} />
                         </Form.Group>
