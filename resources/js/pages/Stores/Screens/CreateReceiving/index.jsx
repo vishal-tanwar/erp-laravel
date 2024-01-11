@@ -110,9 +110,9 @@ export default function CreateReceiving() {
         const currentVal = itemRef.current.getValue();
         if (currentVal.length > 0) {
             const item = items.find(item => item.id == currentVal[0].value);
-            setItemsTable( prev => {
-                let searched = prev.find(item => item.id == currentVal[0].value );
-                if( searched ){
+            setItemsTable(prev => {
+                let searched = prev.find(item => item.id == currentVal[0].value);
+                if (searched) {
                     searched.quantity = + searched.quantity + 1;
                     return [...prev];
                 }
@@ -191,19 +191,19 @@ export default function CreateReceiving() {
 
         if (postData.items.length <= 0) {
             itemsError = true;
-        } else{
-            let validateItems = itemsTable.map( item => {
-                if (!item.location_id || !item.total_gwt || !item.total_pkt || !item.pkt_receiver ){
+        } else {
+            let validateItems = itemsTable.map(item => {
+                if (!item.location_id || !item.total_gwt || !item.total_pkt || !item.pkt_receiver) {
                     item.invalid = true;
                     itemsError = true;
-                } else{
+                } else {
                     item.invalid = false;
                 }
                 return item;
             });
 
-            setItemsTable( validateItems );
-            
+            setItemsTable(validateItems);
+
         }
 
         const validations = []
@@ -223,7 +223,7 @@ export default function CreateReceiving() {
                 html: validations.join('')
             }).fire();
         }
-        else if( itemsError ){
+        else if (itemsError) {
             Toast({
                 title: "Error",
                 type: 'danger',
@@ -237,13 +237,11 @@ export default function CreateReceiving() {
                 navigate(route.get("store.vouchers", { name: store.slug }));
             });
         }
-
     }
 
     const handleItemsInput = (id, name, value) => {
-
         setItemsTable(prev => {
-            let searched = prev.find( item => item.id == id );
+            let searched = prev.find(item => item.id == id);
             searched[name] = value;
             return [...prev];
         })
@@ -316,7 +314,7 @@ export default function CreateReceiving() {
                             <Col xs={12}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Phone No.</Form.Label>
-                                    <Form.Control placeholder="Enter your Number" className="rounded-2" value={phone} disabled/>
+                                    <Form.Control placeholder="Enter your Number" className="rounded-2" value={phone} disabled />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -373,7 +371,7 @@ export default function CreateReceiving() {
                             {
                                 itemsTable.map((item, index) => {
                                     return (
-                                        <tr className={`text-center ${item.invalid && item.invalid === true ?  "bg-danger-subtle" : ""}`} key={index} id={`item-${index}`}>
+                                        <tr className={`text-center ${item.invalid && item.invalid === true ? "bg-danger-subtle" : ""}`} key={index} id={`item-${index}`}>
 
                                             <td>
                                                 <Form.Group>
@@ -401,7 +399,7 @@ export default function CreateReceiving() {
                                                 </Form.Group>
                                             </td>
 
-                                            
+
                                             <td>
                                                 <Form.Group>
                                                     <ReactSelect options={locationOptions} defaultValue={item.location_id} onChange={e => handleItemsInput(item.id, 'location_id', e.value)} />
