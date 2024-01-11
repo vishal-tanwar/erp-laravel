@@ -5,12 +5,20 @@ import './swalStyle.scss';
 type ToastTypes = "success" | "danger" | "warning" | "info" | "primary" | "secondary" | "light" | 'error'
 
 interface IToastOptions {
+    /**
+     * Toast types can be "success", "danger", "warning", "info", "primary", "secondary", "light", 'error'
+     * 
+     * @default 'success'
+     */
     type?: ToastTypes,
     title?: string | HTMLElement,
     icon?: SweetAlertIcon
     timer?: number,
     text?: string,
     position?: SweetAlertPosition,
+    /**
+     * @default ''
+     */
     html?: string | HTMLElement
 }
 
